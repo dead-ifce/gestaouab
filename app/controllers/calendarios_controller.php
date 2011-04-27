@@ -34,8 +34,8 @@ class CalendariosController extends AppController {
 		
 		if(!empty($this->data)){
 			
-			//$this->gerar_aulas2($this->data);
-			$this->Evento->saveAll($this->gerar_aulas($this->data));
+			debug($this->gerar_encontros($this->data));
+			//$this->Evento->saveAll($this->gerar_encontros2($this->data));
 			
 		}
 		
@@ -72,7 +72,7 @@ class CalendariosController extends AppController {
 		for($i = 1; $i <= $numSemanas; $i++){
 			
 			$aula;
-			$aula['Evento']['tipoevento_id'] = 1;
+			$aula['Evento']['tipoevento_id'] = 5;
 			$aula['Evento']['disciplina_id'] = $dados['Calendario']['disciplina_id'];
 			$aula['Evento']['turma_id'] = $dados['Calendario']['turma_id'];
 			$aula['Evento']['carga_horaria'] = 0;
@@ -124,48 +124,136 @@ class CalendariosController extends AppController {
 		
 	}
 
+	function gerar_encontros($dados){
+		$this->Disciplina->recursive = 2;
+		$disciplina = $this->Disciplina->findById($dados['Calendario']['disciplina_id']);
+		$polos_disciplina = $disciplina["Turma"]["0"]['Polo'];
+		$numSemanas = $disciplina['Disciplina']['numsemanas']; 
+		
+		$data_inicio_disciplina = $dados['Calendario']['inicio']['year']."-".
+								  $dados['Calendario']['inicio']['month']."-".
+								  $dados['Calendario']['inicio']['day'];
+		$data_fim_disciplina = $dados['Calendario']['fim']['year']."-".
+								  $dados['Calendario']['fim']['month']."-".
+								  $dados['Calendario']['fim']['day'];
+								
+	   //CRIA ARRAY DOS POLOS DA DISCIPLINA
+	   $polos['Polo'] = array();
+	   foreach($polos_disciplina as $polo){
+	   		array_push($polos['Polo'],$polo['id']);
+	   }
 	
-	function gerar_encontros($data_inicio_disciplina,$data_fim_disciplina, $qtd_semanas){
-		$encontros = array();
+	   $encontros = array();
 		
 		for($i = 0; $i < 6; $i++){ 
+			
+			$encontro['Evento']['disciplina_id'] = $dados['Calendario']['disciplina_id'];
+			$encontro['Evento']['turma_id'] = $dados['Calendario']['turma_id'];
 			
 			switch($i){
 				case 0:	
 					//ADICIONA PRIMEIRO ENCONTRO
 					$encontro_1 = $data_inicio_disciplina;
-				    array_push($encontros,$encontro_1);
+					
+				    $encontro['Evento']['tipoevento_id'] = 1;
+					$encontro['Evento']['carga_horaria'] = 4;
+					$encontro['Evento']['turno'] = 0;
+					
+					$encontro['Evento']['inicio'] = $encontro_1;
+					$encontro['Evento']['fim'] = $encontro_1;
+					
+					//ADICIONA OS POLOS PARA CADA EVENTO
+					$encontro['Polo'] = $polos;
+					
+					array_push($encontros,$encontro);
 					break;
 				case 1:
 					//ADICIONA SEGUNDO ENCONTRO
 					$encontro_2 = $this->dateHelper('fifth saturday',$data_inicio_disciplina);
-					array_push($encontros,$encontro_2);
+					
+					$encontro['Evento']['tipoevento_id'] = 1;
+					$encontro['Evento']['carga_horaria'] = 8;
+					$encontro['Evento']['turno'] = 0;
+					
+					$encontro['Evento']['inicio'] = $encontro_2;
+					$encontro['Evento']['fim'] = $encontro_2;
+					
+					//ADICIONA OS POLOS PARA CADA EVENTO
+					$encontro['Polo'] = $polos;
+					
+					array_push($encontros,$encontro);
 					break;
 				case 2:
 					//ADICIONA SEGUNDA CHAMADA
 					$seg_chamada_1 = $this->dateHelper('+1 week',$encontro_2);
-					array_push($encontros,$seg_chamada_1);
+					
+					$encontro['Evento']['tipoevento_id'] = 3;
+					$encontro['Evento']['carga_horaria'] = 8;
+					$encontro['Evento']['turno'] = 0;
+					
+					$encontro['Evento']['inicio'] = $seg_chamada_1;
+					$encontro['Evento']['fim'] = $seg_chamada_1;
+					
+					//ADICIONA OS POLOS PARA CADA EVENTO
+					$encontro['Polo'] = $polos;
+					
+					array_push($encontros,$encontro);
 					break;
 				case 3:
 					//ADICIONA TERCEIRO ENCONTRO
 					$encontro_3 = $this->dateHelper('10 saturday', $data_inicio_disciplina);
-					array_push($encontros,$encontro_3);
+					
+					$encontro['Evento']['tipoevento_id'] = 1;
+					$encontro['Evento']['carga_horaria'] = 8;
+					$encontro['Evento']['turno'] = 0;
+					
+					$encontro['Evento']['inicio'] = $encontro_3;
+					$encontro['Evento']['fim'] = $encontro_3;
+					
+					//ADICIONA OS POLOS PARA CADA EVENTO
+					$encontro['Polo'] = $polos;
+					
+					array_push($encontros,$encontro);
 					break;
 				case 4:
 					//ADICIONA SEGUNDA CHAMADA
 					$seg_chamada_2 = $this->dateHelper('+1 week',$encontro_3);
-					array_push($encontros,$seg_chamada_2);
+					
+					$encontro['Evento']['tipoevento_id'] = 3;
+					$encontro['Evento']['carga_horaria'] = 8;
+					$encontro['Evento']['turno'] = 0;
+					
+					$encontro['Evento']['inicio'] = $seg_chamada_2;
+					$encontro['Evento']['fim'] = $seg_chamada_2;
+					
+					//ADICIONA OS POLOS PARA CADA EVENTO
+					$encontro['Polo'] = $polos;
+					
+					array_push($encontros,$encontro);
 					break;
 				case 5:
 					//ADICIONA EXAME FINAL
 					$exame_final = $data_fim_disciplina;
-					array_push($encontros,$exame_final);
+					
+					$encontro['Evento']['tipoevento_id'] = 4;
+					$encontro['Evento']['carga_horaria'] = 8;
+					$encontro['Evento']['turno'] = 0;
+					
+					$encontro['Evento']['inicio'] = $exame_final;
+					$encontro['Evento']['fim'] = $exame_final;
+					
+					//ADICIONA OS POLOS PARA CADA EVENTO
+					$encontro['Polo'] = $polos;
+					
+					array_push($encontros,$encontro);
 					break;
 			}
 		}
-
+		
 		return $encontros;
+		
 	}
+	
 	
 	function testes(){
 		$num_semanas = 8;
