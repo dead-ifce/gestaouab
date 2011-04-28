@@ -34,8 +34,8 @@ class CalendariosController extends AppController {
 		
 		if(!empty($this->data)){
 			
-			debug($this->gerar_encontros($this->data));
-			//$this->Evento->saveAll($this->gerar_encontros2($this->data));
+			//debug($this->gerar_encontros($this->data));
+			$this->Evento->saveAll($this->gerar_aulas($this->data));
 			
 		}
 		
@@ -254,51 +254,50 @@ class CalendariosController extends AppController {
 		
 	}
 	
+	function feed(){
+		$start = date( 'Y-m-d H:i:s', $this->params['url']['start']);
+		$end = date( 'Y-m-d H:i:s', $this->params['url']['end']);
+		
+		// $start = "2011-04-01";
+		// $end = "2011-04-30";
+		
+		$this->Evento->recursive = 0;
+		$conditions = array('Evento.inicio BETWEEN ? AND ?' => array($start,$end),'Evento.tipoevento_id NOT' => "5");
+		
+		$events = $this->Evento->find('all',array('conditions' =>$conditions));
+		
+		//debug($events);
+		
+		//3. Create the json array
+		$rows = array();
+		for ($a=0; count($events)> $a; $a++) {
+
+			//Is it an all day event?
+			//$all = ($events[$a]['Event']['allday'] == 1);
+
+			//Create an event entry
+			$rows[] = array('id' => $events[$a]['Evento']['id'],
+			'title' => $events[$a]['Tipoevento']['descricao']." - ".$events[$a]['Disciplina']['nome'],
+			'start' => date('Y-m-d H:i', strtotime($events[$a]['Evento']['inicio'])),
+			'end' => date('Y-m-d H:i',strtotime($events[$a]['Evento']['fim'])),
+			'allDay' => true,
+			);
+		}
+
+		//4. Return as a json array
+		Configure::write('debug', 0);
+		$this->autoRender = false;
+		$this->autoLayout = false;
+		$this->header('Content-Type: application/json');
+		echo json_encode($rows);
+		
+	}
 	
-	function testes(){
-		$num_semanas = 8;
-		//$data_inicio_disciplina = "26-03-2011";
-		$data_inicio_disciplina = "2011-03-26";
-		$data_fim_disciplina = "2011-06-18"; 
+	function view(){
+
 		
+
 	
-		$encontros = $this->gerar_encontros($data_inicio_disciplina,$data_fim_disciplina, 8);
-		
-		//debug($encontros);
-		
-		$eventos = "[
-		        {
-		            title  : 'event1',
-		            start  : '2011-04-20'
-		        },
-		        {
-		            title  : 'event2',
-		            start  : '2011-04-20',
-		            end    : '2011-04-25'
-		        },
-		        {
-		            title  : 'event3',
-		            start  : '2010-01-09 12:30:00',
-		            allDay : false // will make the time show
-		        }
-		    ]";
-		
-		$this->set('eventos',$eventos );
-		
-		$this->set('conflitos', $encontros);
-		
-		debug($encontros);
-		
-		//debug($this->gerar_encontros($data_inicio_disciplina,$data_fim_disciplina,8));
-		
-		// $polos = $this->Evento->query('SELECT "Polo"."id" AS "Polo__id", "Polo"."nome" AS "Polo__nome", 
-		// 			"EventosPolo"."evento_id" AS "EventosPolo__evento_id", "EventosPolo"."polo_id" AS "EventosPolo__polo_id", 
-		// 			"EventosPolo"."id" AS "EventosPolo__id", "EventosPolo"."tutor_id" AS "EventosPolo__tutor_id", "EventosPolo"."professor_id" 
-		// 			AS "EventosPolo__professor_id" FROM "uab"."polos" AS "Polo" JOIN "eventos_polos" AS "EventosPolo" 
-		// 			ON ("EventosPolo"."polo_id" = "Polo"."id");');
-		
-		//debug($polos);
-		//debug($this->Evento->findByInicio('2011-04-16'));
 		
 	}
 
