@@ -1,5 +1,14 @@
 div#calendar {
 	width: 60%;
 	margin:auto;
+	float:right;
+	margin-right:200px;
 }
 
+#conflitos{
+	text-align: center;
+	float:left;
+	width: 200px;
+	margin-left: 50px;
+	
+}

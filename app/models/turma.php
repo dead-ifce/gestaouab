@@ -13,7 +13,9 @@ class Turma extends AppModel {
 			'order' => ''
 		)
 	);
-
+	
+	var $hasMany = 'Conflito';
+	
 	var $hasAndBelongsToMany = array(
 		'Disciplina' => array(
 			'className' => 'Disciplina',

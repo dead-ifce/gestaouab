@@ -9,7 +9,7 @@ class EventosController extends AppController {
 		// $test = $this->Evento->query('SELECT "ev"."id" AS "Evento__id", "ev"."turma_id" AS "Evento__turma_id", "tu"."nome" AS "Turma__nome"
 		// 		FROM "public"."eventos" ev 
 		// 		JOIN "uab"."turmas" tu ON "ev"."turma_id" = "tu"."id";');
-	    debug($this->Evento->find('all'));
+	   
 	}
 
 	function view($id = null) {
@@ -39,6 +39,7 @@ class EventosController extends AppController {
 	}
 
 	function edit($id = null) {
+		$this->Evento->recursive = -1;
 		if (!$id && empty($this->data)) {
 			$this->Session->setFlash(__('Invalid evento', true));
 			$this->redirect(array('action' => 'index'));
@@ -54,6 +55,7 @@ class EventosController extends AppController {
 		if (empty($this->data)) {
 			$this->data = $this->Evento->read(null, $id);
 		}
+		
 		$tipoeventos = $this->Evento->Tipoevento->find('list');
 		$polos = $this->Evento->Polo->find('list');
 		$disciplinas = $this->Evento->Disciplina->find('list');

@@ -26,10 +26,6 @@ class CursosController extends AppController {
 			for($i = 0; $i < 3; $i++){
 				array_push($this->data,$dados);
 			}
-		    
-			debug($this->data);
-
-			
 			
 			if ($this->Curso->saveAll($this->data)) {
 				$this->Session->setFlash(__('The curso has been saved', true));

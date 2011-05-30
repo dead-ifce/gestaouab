@@ -9,7 +9,6 @@
 			<th><?php echo $this->Paginator->sort('inicio');?></th>
 			<th><?php echo $this->Paginator->sort('fim');?></th>
 			<th><?php echo $this->Paginator->sort('carga_horaria');?></th>
-			<th><?php echo $this->Paginator->sort('turno');?></th>
 			<th class="actions"><?php __('Actions');?></th>
 	</tr>
 	<?php
@@ -34,7 +33,6 @@
 		<td><?php echo $evento['Evento']['inicio']; ?>&nbsp;</td>
 		<td><?php echo $evento['Evento']['fim']; ?>&nbsp;</td>
 		<td><?php echo $evento['Evento']['carga_horaria']; ?>&nbsp;</td>
-		<td><?php echo $evento['Evento']['turno']; ?>&nbsp;</td>
 		<td class="actions">
 			<?php echo $this->Html->link(__('View', true), array('action' => 'view', $evento['Evento']['id'])); ?>
 			<?php echo $this->Html->link(__('Edit', true), array('action' => 'edit', $evento['Evento']['id'])); ?>
