@@ -26,9 +26,8 @@
 				if (minuteDelta>=0) {
 					minuteDelta="+"+minuteDelta;
 				}
-				"<?php echo Dispatcher::baseUrl();?>/calendarios/move/"+event.id+"/"+dayDelta+"/"+minuteDelta+"/"+allDay);
-				
-					window.location="<?php echo Dispatcher::baseUrl();?>/calendarios/view/<?php echo $turma_id ?>";
+				$.get("<?php echo Dispatcher::baseUrl();?>/calendarios/move/"+event.id+"/"+dayDelta+"/"+minuteDelta+"/"+allDay);
+
 			}
 			
 			
@@ -44,6 +43,6 @@
 		<?php endforeach; ?>
 	</ul>
 </div>
-<div id='calendar'></div>
+<div id="calendar"></div>
 
 

@@ -44,7 +44,7 @@ class CalendariosController extends AppController {
 	function index(){
 		$cursos = $this->Curso->find('list',array('fields' => array('Curso.id','Curso.nome')));
 		$this->set('cursos', $cursos);
-		file_put_contents("/Users/luiz/tes/teste","adashdada");
+		//file_put_contents("/Users/luiz/tes/teste","adashdada");
 	}
 	
 	function add(){
@@ -496,7 +496,7 @@ class CalendariosController extends AppController {
 		
 		$num_eventos = count($eventos);
 	
-		file_put_contents("/Users/luiz/tes/num-eventos","Num de Eventos: ".$num_eventos."\nDIA: ".$dia );
+		//file_put_contents("/Users/luiz/tes/num-eventos","Num de Eventos: ".$num_eventos."\nDIA: ".$dia );
 		
 		if($num_eventos <= 2){
 			
