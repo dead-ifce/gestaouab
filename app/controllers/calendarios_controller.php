@@ -145,6 +145,22 @@ class CalendariosController extends AppController {
 		
 	}
 	
+	function edit_evento($evento_id = null){
+		$inicio = $_REQUEST['novaData'];
+		$fim = $inicio;
+		
+		$hora = date('Y-m-d H:i:s', strtotime($_REQUEST['velhaData']));    
+		
+		$this->log("Hooooooora: ".$hora,'date');
+		
+		$this->data['Evento']['id'] = $evento_id;
+		$this->data['Evento']['inicio'] = $inicio;
+		$this->data['Evento']['fim'] = $fim;
+
+		
+		
+		file_put_contents("/Users/luiz/tes/post-edit","NOME: ".$dia."evento: ".$evento."\n");
+	}
 	/**
 	 * 
 	 * Metodos privados

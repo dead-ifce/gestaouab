@@ -19,7 +19,7 @@
 			
 		});
 		
-		
+		$("#edit_dialog").dialog()
 	});
 </script>
 
@@ -30,3 +30,6 @@
 	echo $form->button('Ver calendário',array('id' => "button"));
 ?>
 
+<div id="edit_dialog">
+	<?php echo "teste"; ?>
+</div>
