@@ -14,32 +14,7 @@ class CalendariosController extends AppController {
 	   }
 	}
 	
-	function getTurmasByCurso($curso_id){
-		$this->layout = 'ajax';
-		$this->beforeRender();
-		$this->autoRender = false;
-		$turmas = $this->Turma->find("list",array('conditions' => array('Turma.curso_id' => $curso_id),
-												  'fields' => array('Turma.id','Turma.nome')));
-		echo "<option value=0>Selecione...</option>";
-	    foreach($turmas as $key => $val) {
-			echo "<option value=$key>$val</option>";
-	    }									
-	}  
 	
-	function getDisciplinasByTurma($turma_id){
-		$this->layout = 'ajax';
-		$this->beforeRender();
-		$this->autoRender = false;
-		$turma = $this->Turma->findById($turma_id);
-		$disciplinas = $turma['Disciplina'];
-
-		echo "<option value=0>Selecione...</option>";
-		foreach($disciplinas as $disciplina){
-			$id = $disciplina['id'];
-			$nome = $disciplina['nome'];
-			echo "<option value=$id>$nome</option>";
-		}
-	}
 	
 	function index(){
 		$cursos = $this->Curso->find('list',array('fields' => array('Curso.id','Curso.nome')));
@@ -64,6 +39,45 @@ class CalendariosController extends AppController {
 		}
 		
 	}
+	
+	function view($turma_id = null){
+		
+		$this->Evento->recursive = -1;
+		$this->layout = "ajax";
+		
+		$this->set('turma_id', $turma_id);
+		
+		$conflitos = $this->Conflito->find('all',array('conditions' => array('Conflito.turma_id' => $turma_id)));
+		$this->set('conflitos', $conflitos);
+		
+		$detalhes_turma = $this->Turma->findById($turma_id);
+		$this->set("detalhes_turma",$detalhes_turma);
+		
+		$disciplinas = array();
+		foreach($detalhes_turma['Disciplina'] as $disciplina){
+			$disciplinas[$disciplina['id']] = $disciplina['nome'];
+		}
+    
+		$this->set("disciplinas",$disciplinas);
+		
+		
+	}
+	
+	function imprimir($turma_id = null, $disc_id = null){
+		$this->Evento->recursive= -1;
+		$conditions = array('Evento.turma_id' => $turma_id,'Evento.disciplina_id' => $disc_id);	
+		$eventos = $this->Evento->find('all', array('conditions' => $conditions,'order' => array('Evento.inicio asc')));
+		$this->set("eventos",$eventos);
+	
+	
+		
+	}
+	
+	
+	/**
+	*
+	*AJAX REQUESTS
+	*/
 	
 	function feed($turma_id=null){
 		$start = date( 'Y-m-d H:i:s', $this->params['url']['start']);
@@ -109,6 +123,11 @@ class CalendariosController extends AppController {
 	}
 	
 	function move($id=null, $dayDelta, $minDelta, $allDay){
+		Configure::write('debug', 0);
+		$this->autoRender = false;
+		$this->autoLayout = false;
+		$this->Evento->recursive = -1;
+		
 		if ($id!=null) {
 			$ev = $this->Evento->findById($id);  //1 - locate the event in the DB
 			if ($allDay=='true') { //2- handle all day events
@@ -125,44 +144,16 @@ class CalendariosController extends AppController {
 		
 		$this->Evento->save($ev); //4 - Save the event with the new data
 		
-		$this->__remover_conflito($dia_conflito, $ev['Evento']['turma_id']);
+		
+		if($response = $this->__remover_conflito($dia_conflito, $ev['Evento']['turma_id'])){
+			echo $response;
+		}
+		
 		//$this->redirect(array('action'=>'index'));
 		//5 - redirect and reload
-		$this->redirect(array('controller' => "calendarios", 'action' => "view",substr($ev['Evento']['inicio'],0,4),substr($ev['Evento']['inicio'],5,2),substr($ev['Evento']['inicio'],8,2)));
+		//$this->redirect(array('controller' => "calendarios", 'action' => "view",substr($ev['Evento']['inicio'],0,4),substr($ev['Evento']['inicio'],5,2),substr($ev['Evento']['inicio'],8,2)));
+		
 		}
-	}
-	
-	function view($turma_id = null){
-		
-		$this->Evento->recursive = -1;
-		$this->layout = "ajax";
-		
-		$this->set('turma_id', $turma_id);
-		
-		$conflitos = $this->Conflito->find('all',array('conditions' => array('Conflito.turma_id' => $turma_id)));
-		$this->set('conflitos', $conflitos);
-		
-		$detalhes_turma = $this->Turma->findById($turma_id);
-		$this->set("detalhes_turma",$detalhes_turma);
-		
-		$disciplinas = array();
-		foreach($detalhes_turma['Disciplina'] as $disciplina){
-			$disciplinas[$disciplina['id']] = $disciplina['nome'];
-		}
-    
-		$this->set("disciplinas",$disciplinas);
-		
-		
-	}
-	
-	function imprimir($turma_id = null, $disc_id = null){
-		$this->Evento->recursive= -1;
-		$conditions = array('Evento.turma_id' => $turma_id,'Evento.disciplina_id' => $disc_id);	
-		$eventos = $this->Evento->find('all', array('conditions' => $conditions,'order' => array('Evento.inicio asc')));
-		$this->set("eventos",$eventos);
-	
-	
-		
 	}
 	
 	function edit_evento($evento_id = null){
@@ -190,6 +181,32 @@ class CalendariosController extends AppController {
 		
 	}
 	
+	function getTurmasByCurso($curso_id){
+		$this->layout = 'ajax';
+		$this->beforeRender();
+		$this->autoRender = false;
+		$turmas = $this->Turma->find("list",array('conditions' => array('Turma.curso_id' => $curso_id),
+												  'fields' => array('Turma.id','Turma.nome')));
+		echo "<option value=0>Selecione...</option>";
+	    foreach($turmas as $key => $val) {
+			echo "<option value=$key>$val</option>";
+	    }									
+	}  
+	
+	function getDisciplinasByTurma($turma_id){
+		$this->layout = 'ajax';
+		$this->beforeRender();
+		$this->autoRender = false;
+		$turma = $this->Turma->findById($turma_id);
+		$disciplinas = $turma['Disciplina'];
+
+		echo "<option value=0>Selecione...</option>";
+		foreach($disciplinas as $disciplina){
+			$id = $disciplina['id'];
+			$nome = $disciplina['nome'];
+			echo "<option value=$id>$nome</option>";
+		}
+	}
 	
 	
 	/**
@@ -537,17 +554,23 @@ class CalendariosController extends AppController {
 		
 		$num_eventos = count($eventos);
 	
-		//file_put_contents("/Users/luiz/tes/num-eventos","Num de Eventos: ".$num_eventos."\nDIA: ".$dia );
-		
 		if($num_eventos <= 2){
 			
-			//file_put_contents("/Users/luiz/tes/num-eventos","Num de Eventos: ".$eventos."\nDIA: ".$dia );
 			$conflito = $this->Conflito->findByDia($dia);
 			if($this->Conflito->delete($conflito['Conflito']['id'])) {
-				$this->Session->setFlash(__('Conflito deleted', true));
-				$this->redirect(array('action'=>'index'));
+				
+				$conflitos = $this->Conflito->find('all',array('conditions' => array('Conflito.turma_id' => $turma_id)));
+				
+				$response = "";
+				foreach($conflitos as $conflito){
+					$response .= "<li>".$conflito['Conflito']['dia']."</li>";
+				}
+				return $response;
+				
 			}
 		}
+		
+		return null;
 		
 	}
 	

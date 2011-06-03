@@ -12,12 +12,12 @@
 	<div class="span-24">
 		<h1>Calend&#225;rio: <?php echo $detalhes_turma["Curso"]["nome"]." - ".$detalhes_turma["Turma"]["nome"] ?> </h1>
 	</div>
-	<div id="conflitos" class="column span-6">
+	<div class="column span-6">
 		<h2>Dias com conflitos</h2>
-		<ul>
+		<ul id="conflitos">
 			<?php foreach($conflitos as $conflito): ?>
-				<li><?php echo $conflito['Conflito']['dia'] ?></li>
-			<?php endforeach; ?>
+				<li><?php echo $conflito["Conflito"]["dia"]; ?> </li>
+			<?php endforeach;  ?>
 		</ul>
 	</div>
 	
@@ -77,9 +77,8 @@
 								 						$.post("<?php echo Dispatcher::baseUrl();?>/calendarios/edit_evento/"+calEvent.id,
 								 					   {novaData: dia, velhaData: calEvent.start.toString()},
 														   function(data) {
-																$('#edit-dialog').dialog("close");
-																	window.location="<?php echo Dispatcher::baseUrl();?>/calendarios/view/<?php echo $turma_id?>"
-															  
+																	$('#edit-dialog').dialog("close");
+																	$('#calendar').fullCalendar( 'refetchEvents' );
 														   }); 
 								
 								 				}
@@ -101,7 +100,15 @@
 				if (minuteDelta>=0) {
 					minuteDelta="+"+minuteDelta;
 				}
-				$.get("<?php echo Dispatcher::baseUrl();?>/calendarios/move/"+event.id+"/"+dayDelta+"/"+minuteDelta+"/"+allDay);
+				$.get("<?php echo Dispatcher::baseUrl();?>/calendarios/move/"+event.id+"/"+dayDelta+"/"+minuteDelta+"/"+allDay, 
+						function(data) {
+				  		//$('.result').html(data);
+							if(data){
+								$('#conflitos').html(data);
+							}
+				  		
+						}
+				);
 
 			}
 			
