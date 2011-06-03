@@ -1,3 +1,4 @@
+<?php echo $this->Html->charset(); ?>
 <?php 
 			echo $javascript->link(array('jquery/jquery-1.5.2.min','jquery/jquery-ui-1.8.13.custom.min',
 																	 'fullcalendar/fullcalendar')); 
@@ -7,10 +8,11 @@
 
 
 <div class="container">
+	<?php echo $this->Session->flash(); ?>
 	<div class="span-24">
-		<h1>Calendarios</h1>
+		<h1>Calend&#225;rio: <?php echo $detalhes_turma["Curso"]["nome"]." - ".$detalhes_turma["Turma"]["nome"] ?> </h1>
 	</div>
-	<div id="conflitos" class="span-6">
+	<div id="conflitos" class="column span-6">
 		<h2>Dias com conflitos</h2>
 		<ul>
 			<?php foreach($conflitos as $conflito): ?>
@@ -19,18 +21,35 @@
 		</ul>
 	</div>
 	
-	<div id="calendar" class="span-17 last"></div>
+	<div id="calendar" class="column span-17 last"></div>
+	<div id="imprimir-button" class="span-24">
+		<?php echo $form->input('Disciplina',array('options' => $disciplinas,'empty' => 'Selecione...')); ?>
+		<?php echo $form->button('Imprimir Calendario',array('id' => "button")); ?>
+	</div>
 </div>
 
 <div id="edit-dialog" title='Editar'>
+	<label>Turma:</label><br />
+	<span id="turma"><?php echo $detalhes_turma["Curso"]["nome"]." - ".$detalhes_turma["Turma"]["nome"] ?></span><br />
+	<label>Evento:</label><br />
+	<span id="evento-title"></span>
 	<form>
-	  <label>Name</label><br/>
-	  <input type="text" class="title" name="name" id="name"/><br/>
+	  <label>Dia</label><br/>
+	  <input type="text" focus="remove" class="title" name="dia" id="dia"/><br/>
 	 </form>
 </div>
 
 <script type="text/javascript" charset="utf-8">
 	$(document).ready(function() {
+			$("#button").button();
+			
+			$("#button").click(function(){
+				var value = $('#Disciplina :selected').val();
+				window.location = "<?php echo Dispatcher::baseUrl();?>/calendarios/imprimir/<?php echo $turma_id;?>/"+value;
+
+			});
+			
+			$( "#dia" ).datepicker({ dateFormat: 'yy-mm-dd' });
 			$("#edit-dialog").hide();
 	    $('#calendar').fullCalendar({
 	        // put your options and callbacks here
@@ -42,8 +61,9 @@
 					},
 	        events: "<?php echo Dispatcher::baseUrl();?>/calendarios/feed/<?php echo $turma_id?>",
 			eventClick: function(calEvent, jsEvent, view) {
-				//open("<?php echo Dispatcher::baseUrl();?>/eventos/edit/"+calEvent.id);
-				console.log(calEvent.start.toString());
+				
+				$("#evento-title").html(calEvent.title);
+				
 				$( '#edit-dialog' ).
 						dialog(
 							 { 
@@ -51,11 +71,17 @@
 					 				width: 330,
 									buttons: [
 									    {
-									        text: "Editar",
+									        text: "Ok",
 									        click: function() { 
-								 						var dia = $('#name').val();
+								 						var dia = $('#dia').val();
 								 						$.post("<?php echo Dispatcher::baseUrl();?>/calendarios/edit_evento/"+calEvent.id,
-								 						{novaData: dia, velhaData: calEvent.start.toString()}); 
+								 					   {novaData: dia, velhaData: calEvent.start.toString()},
+														   function(data) {
+																$('#edit-dialog').dialog("close");
+																	window.location="<?php echo Dispatcher::baseUrl();?>/calendarios/view/<?php echo $turma_id?>"
+															  
+														   }); 
+								
 								 				}
 									    },
 											{

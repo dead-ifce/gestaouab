@@ -3,7 +3,7 @@ class CalendariosController extends AppController {
 
 	var $name = 'Calendarios';
 	var $uses = array('Curso','Disciplina','Turma','Polo','Tipoevento','Evento','Conflito');
-	var $helpers = array('Javascript');
+	var $helpers = array('Javascript','Date');
 	var $components = array('Date','RequestHandler');
 	
 	
@@ -108,7 +108,7 @@ class CalendariosController extends AppController {
 		
 	}
 	
-	function move($id=null,$dayDelta,$minDelta,$allDay){
+	function move($id=null, $dayDelta, $minDelta, $allDay){
 		if ($id!=null) {
 			$ev = $this->Evento->findById($id);  //1 - locate the event in the DB
 			if ($allDay=='true') { //2- handle all day events
@@ -137,30 +137,61 @@ class CalendariosController extends AppController {
 		$this->Evento->recursive = -1;
 		$this->layout = "ajax";
 		
-		$conflitos = $this->Conflito->find('all',array('conditions' => array('Conflito.turma_id' => $turma_id)));
+		$this->set('turma_id', $turma_id);
 		
+		$conflitos = $this->Conflito->find('all',array('conditions' => array('Conflito.turma_id' => $turma_id)));
 		$this->set('conflitos', $conflitos);
 		
-		$this->set('turma_id', $turma_id);
+		$detalhes_turma = $this->Turma->findById($turma_id);
+		$this->set("detalhes_turma",$detalhes_turma);
+		
+		$disciplinas = array();
+		foreach($detalhes_turma['Disciplina'] as $disciplina){
+			$disciplinas[$disciplina['id']] = $disciplina['nome'];
+		}
+    
+		$this->set("disciplinas",$disciplinas);
+		
+		
+	}
+	
+	function imprimir($turma_id = null, $disc_id = null){
+		$this->Evento->recursive= -1;
+		$conditions = array('Evento.turma_id' => $turma_id,'Evento.disciplina_id' => $disc_id);	
+		$eventos = $this->Evento->find('all', array('conditions' => $conditions,'order' => array('Evento.inicio asc')));
+		$this->set("eventos",$eventos);
+	
+	
 		
 	}
 	
 	function edit_evento($evento_id = null){
-		$inicio = $_REQUEST['novaData'];
-		$fim = $inicio;
 		
-		$hora = date('Y-m-d H:i:s', strtotime($_REQUEST['velhaData']));    
+		$this->autoRender = false;
 		
-		$this->log("Hooooooora: ".$hora,'date');
+		
+		$hora = date('H:i:s', strtotime($_REQUEST['velhaData']));
+		
+		$inicio = $_REQUEST['novaData']." ".$hora;
+		$fim = date('Y-m-d H:i:s', strtotime('+4 hours', strtotime($inicio)));
+		
 		
 		$this->data['Evento']['id'] = $evento_id;
 		$this->data['Evento']['inicio'] = $inicio;
 		$this->data['Evento']['fim'] = $fim;
-
 		
+		// $this->log("Inicio: ".$inicio." Fim: ".$fim,'date');
 		
-		file_put_contents("/Users/luiz/tes/post-edit","NOME: ".$dia."evento: ".$evento."\n");
+		$this->Evento->create();
+		
+		if($this->Evento->save($this->data)){
+			$this->Session->setFlash('Evento editado corretamente','default',array("class" => "success"));
+		}
+		
 	}
+	
+	
+	
 	/**
 	 * 
 	 * Metodos privados
@@ -432,7 +463,7 @@ class CalendariosController extends AppController {
 	}
 	 
 	/**
-	 * Verifica se um determiado dia tem conflito
+	 * Verifica se um determinado dia tem conflito
 	 * Se tiver conflito retorna TRUE
 	 * 
 	 * */
@@ -446,16 +477,10 @@ class CalendariosController extends AppController {
 		//debug($eventos);
 		$num_eventos = count($eventos);
 		
-		//debug($num_eventos);
-		
-		if($num_eventos == 0){
-			return false;
-		}
-		
-		if($num_eventos == 1){
-			return ($eventos['0']['Evento']['carga_horaria'] == 8)? true : false;
-		}else {
+		if($num_eventos >=2){
 			return true;
+		}else{
+			return false;
 		}
 		
 	}

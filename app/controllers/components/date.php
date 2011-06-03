@@ -7,6 +7,7 @@ class DateComponent extends Object {
 	function format($acao = null, $data = null ){
 		return date('Y-m-d', strtotime($acao, strtotime($data)));
 	}
+
 }
 
 ?>
