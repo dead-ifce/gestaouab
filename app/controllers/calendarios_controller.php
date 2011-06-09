@@ -14,9 +14,8 @@ class CalendariosController extends AppController {
 	   }
 	}
 	
-	
-	
 	function index(){
+		//$this->layout = "teste";
 		$cursos = $this->Curso->find('list',array('fields' => array('Curso.id','Curso.nome')));
 		$this->set('cursos', $cursos);
 		//file_put_contents("/Users/luiz/tes/teste","adashdada");
@@ -29,11 +28,10 @@ class CalendariosController extends AppController {
 		
 		if(!empty($this->data)){
 			
-			//debug($this->data);
 			$this->Evento->saveAll($this->__gerar_aulas($this->data));
 			$this->Evento->saveAll($this->__gerar_encontros($this->data));
-			
-			//$this->Session->setFlash(__('The evento has been saved', true));
+
+			$this->Session->setFlash(__('The evento has been saved', true));
 			$this->redirect(array('action' => 'view',$this->data['Calendario']['turma_id']));
 			
 		}
@@ -215,61 +213,6 @@ class CalendariosController extends AppController {
 	 * 
 	 * */
 	function __gerar_aulas($dados){
-		$this->Disciplina->recursive = 2;
-		$disciplina = $this->Disciplina->findById($dados['Calendario']['disciplina_id']);
-		$polos_disciplina = $disciplina["Turma"]["0"]['Polo'];
-		$numSemanas = $disciplina['Disciplina']['numsemanas']; 
-		$data_inicio_disciplina = $dados['Calendario']['inicio'];
-		$data_inicio = $data_inicio_disciplina;
-		
-		
-		$aulas = array();
-		
-		//CRIA ARRAY DOS POLOS DA DISCIPLINA
-		$polos['Polo'] = array();
-		foreach($polos_disciplina as $polo){
-			array_push($polos['Polo'],$polo['id']);
-		}
-		
-		//ADICIONA TODOS OS EVENTOS NUM ARRAY
-		for($i = 1; $i <= $numSemanas; $i++){
-			
-			$aula;
-			$aula['Evento']['tipoevento_id'] = 5;
-			$aula['Evento']['disciplina_id'] = $dados['Calendario']['disciplina_id'];
-			$aula['Evento']['turma_id'] = $dados['Calendario']['turma_id'];
-			$aula['Evento']['carga_horaria'] = 0;
-			$aula['Evento']['diatodo'] = 0;
-			
-			
-			//É necessário o condicional pois se mandar pegar o próximo domingo, ele irá pegar o imediatamente após o dia inicial
-			//e faz-se necessário pegar o domingo da semana seguinte
-			if($i == 1){
-				
-				$aula['Evento']['inicio'] = $data_inicio;
-				
-				$data_fim = $this->Date->format('next Sunday',$this->Date->format('+1 day',$data_inicio_disciplina));
-				$aula['Evento']['fim'] = $data_fim;
-				
-			}else{
-				$data_inicio = $this->Date->format('+1 day',$data_fim);
-				$aula['Evento']['inicio'] = $data_inicio;
-				
-				$data_fim = $this->Date->format('next Sunday',$data_inicio);
-				$aula['Evento']['fim'] = $data_fim;
-				
-			}
-			
-			//ADICIONA OS POLOS PARA CADA EVENTO
-			$aula['Polo'] = $polos;
-			
-			//ADICIONA OS EVENTOS NO ARRAY
-			array_push($aulas,$aula);
-			
-		}
-		return $aulas;
-		
-	}
 	
 	function __gerar_encontros($dados){
 		$this->Disciplina->recursive = 2;
@@ -294,183 +237,60 @@ class CalendariosController extends AppController {
 			$encontro['Evento']['turma_id'] = $dados['Calendario']['turma_id'];
 			$encontro['Evento']['diatodo'] = 0;
 			$encontro['Evento']['carga_horaria'] = 4;
+			$encontro['Polo'] = $polos;
 			
 			switch($i){
 				case 0:	
 					//ADICIONA PRIMEIRO ENCONTRO
 					$encontro_1 = $data_inicio_disciplina;
-					
-					if($this->__verificar_conflitos($encontro_1, $encontro['Evento']['turma_id'])){
-						$this->__adiciona_conflito($encontro_1,$encontro['Evento']['turma_id']);
-					}
-					
-					
-				    $encontro['Evento']['tipoevento_id'] = 1;
-					
-					$turno = $this->__verificar_turno($encontro_1, $encontro['Evento']['turma_id']);
-					
-					$horario = $this->__getHorarioCerto($turno, $encontro_1);
-					
-					$encontro['Evento']['inicio'] = $horario['inicio'];
-					$encontro['Evento']['fim'] = $horario['fim'];
-					
-					
-					//ADICIONA OS POLOS PARA CADA EVENTO
-					$encontro['Polo'] = $polos;
-					
-					array_push($encontros,$encontro);
+					$this->__adicionar_encontro($encontros, $encontro, $encontro_1, 1 );
+				
 					break;
 				case 1:
 					//ADICIONA SEGUNDO ENCONTRO
 					$encontro_2 = $this->Date->format('fifth saturday',$data_inicio_disciplina);
 					
-					if($this->__verificar_conflitos($encontro_2, $encontro['Evento']['turma_id'])){
-						$this->__adiciona_conflito($encontro_2, $encontro['Evento']['turma_id']);
-					}
-					
-					$encontro['Evento']['tipoevento_id'] = 1;
-
-					$turno = $this->__verificar_turno($encontro_2, $encontro['Evento']['turma_id']);
-					
-					$horario = $this->__getHorarioCerto($turno, $encontro_2);
-					
-					$encontro['Evento']['inicio'] = $horario['inicio'];
-					$encontro['Evento']['fim'] = $horario['fim'];	
-				
-					
-					//ADICIONA OS POLOS PARA CADA EVENTO
-					$encontro['Polo'] = $polos;
-					
-					array_push($encontros,$encontro);
+					$this->__adicionar_encontro($encontros, $encontro, $encontro_2, 1 );
 					break;
 				case 2:
 				 	//ADICIONA EXAME PRESENCIAL
 					 $exame_presencial = $this->Date->format('fifth saturday',$data_inicio_disciplina);
 				    
-					 //if($this->__verificar_conflitos($exame_presencial, $encontro['Evento']['turma_id'])){
-					 //	$this->__adiciona_conflito($exame_presencial);
-					 //}
-				    
-					 $encontro['Evento']['tipoevento_id'] = 2;
-				    
-					 //$turno = $this->__verificar_turno($exame_presencial, $encontro['Evento']['turma_id']);
-				    
-					 $horario = $this->__getHorarioCerto(2, $exame_presencial);
-				     $encontro['Evento']['inicio'] = $horario['inicio'];
-					 $encontro['Evento']['fim'] = $horario['fim'];
-				
-				
-					 //ADICIONA OS POLOS PARA CADA EVENTO
-					 $encontro['Polo'] = $polos;
-				    
-					 array_push($encontros,$encontro);
+					 $this->__adicionar_encontro($encontros, $encontro, $exame_presencial, 2 );
 					 break;
 				case 3:
 					//ADICIONA SEGUNDA CHAMADA
 					$seg_chamada_1 = $this->Date->format('+1 week',$encontro_2);
 					
-					if($this->__verificar_conflitos($seg_chamada_1, $encontro['Evento']['turma_id'])){
-						$this->__adiciona_conflito($seg_chamada_1, $encontro['Evento']['turma_id']);
-					}
-					
-					$encontro['Evento']['tipoevento_id'] = 3;
-					
-					$turno = $this->__verificar_turno($seg_chamada_1, $encontro['Evento']['turma_id']);
-					
-					$horario = $this->__getHorarioCerto($turno, $seg_chamada_1);
-				    $encontro['Evento']['inicio'] = $horario['inicio'];
-					$encontro['Evento']['fim'] = $horario['fim'];
-					
-					//ADICIONA OS POLOS PARA CADA EVENTO
-					$encontro['Polo'] = $polos;
-					
-					array_push($encontros,$encontro);
+					$this->__adicionar_encontro($encontros, $encontro, $seg_chamada_1, 3 );
 					break;
 				case 4:
 					//ADICIONA TERCEIRO ENCONTRO
 					$encontro_3 = $this->Date->format('9 saturday', $data_inicio_disciplina);
 					
-					if($this->__verificar_conflitos($encontro_3, $encontro['Evento']['turma_id'])){
-						$this->__adiciona_conflito($encontro_3, $encontro['Evento']['turma_id']);
-					}
-					
-					$encontro['Evento']['tipoevento_id'] = 1;
-					
-					$turno = $this->__verificar_turno($encontro_3, $encontro['Evento']['turma_id']);
-					
-					$horario = $this->__getHorarioCerto($turno, $encontro_3);
-				    $encontro['Evento']['inicio'] = $horario['inicio'];
-					$encontro['Evento']['fim'] = $horario['fim'];
-					
-					//ADICIONA OS POLOS PARA CADA EVENTO
-					$encontro['Polo'] = $polos;
-					
-					array_push($encontros,$encontro);
+					$this->__adicionar_encontro($encontros, $encontro, $encontro_3, 1 );
 					break;
 				case 5:
 				 	//ADICIONA EXAME PRESENCIAL
-					 $exame_presencial = $this->Date->format('9 saturday',$data_inicio_disciplina);
-                
-					 //if($this->__verificar_conflitos($exame_presencial, $encontro['Evento']['turma_id'])){
-					 //	$this->__adiciona_conflito($exame_presencial);
-					 //}
-                
-					 $encontro['Evento']['tipoevento_id'] = 2;
-                
-					 //$turno = $this->__verificar_turno($exame_presencial, $encontro['Evento']['turma_id']);
-                
-					 $horario = $this->__getHorarioCerto(2, $exame_presencial);
-				     $encontro['Evento']['inicio'] = $horario['inicio'];
-					 $encontro['Evento']['fim'] = $horario['fim'];
-                
-                
-					 //ADICIONA OS POLOS PARA CADA EVENTO
-					 $encontro['Polo'] = $polos;
-                
-					 array_push($encontros,$encontro);
-					 break;
+					$exame_presencial = $this->Date->format('9 saturday',$data_inicio_disciplina);
+
+           
+					$this->__adicionar_encontro($encontros, $encontro, $exame_presencial, 2 );
+					
+					break;
 				case 6:
 					//ADICIONA SEGUNDA CHAMADA
 					$seg_chamada_2 = $this->Date->format('+1 week',$encontro_3);
 					
-					if($this->__verificar_conflitos($seg_chamada_2, $encontro['Evento']['turma_id'])){
-						$this->__adiciona_conflito($seg_chamada_2, $encontro['Evento']['turma_id']);
-					}
-					
-					$encontro['Evento']['tipoevento_id'] = 3;
-					
-					$turno = $this->__verificar_turno($seg_chamada_2, $encontro['Evento']['turma_id']);
-					
-					$horario = $this->__getHorarioCerto($turno, $seg_chamada_2);
-				    
-					$encontro['Evento']['inicio'] = $horario['inicio'];
-					$encontro['Evento']['fim'] = $horario['fim'];
-					
-					//ADICIONA OS POLOS PARA CADA EVENTO
-					$encontro['Polo'] = $polos;
-					
-					array_push($encontros,$encontro);
+					$this->__adicionar_encontro($encontros, $encontro, $seg_chamada_2, 3 );
+
 					break;
 				case 7:
 					//ADICIONA EXAME FINAL
 					$exame_final = $data_fim_disciplina;
 					
-					if($this->__verificar_conflitos($exame_final, $encontro['Evento']['turma_id'])){
-						$this->__adiciona_conflito($exame_final, $encontro['Evento']['turma_id']);
-					}
+					$this->__adicionar_encontro($encontros, $encontro,$exame_final, 4 );
 					
-					$encontro['Evento']['tipoevento_id'] = 4;
-					
-					$turno = $this->__verificar_turno($exame_final, $encontro['Evento']['turma_id']);
-					
-					$horario = $this->__getHorarioCerto($turno, $exame_final);
-				    $encontro['Evento']['inicio'] = $horario['inicio'];
-					$encontro['Evento']['fim'] = $horario['fim'];
-					
-					//ADICIONA OS POLOS PARA CADA EVENTO
-					$encontro['Polo'] = $polos;
-					
-					array_push($encontros,$encontro);
 					break;
 			}
 		}
@@ -479,6 +299,24 @@ class CalendariosController extends AppController {
 		
 	}
 	 
+	function __adicionar_encontro(&$encontros, &$encontro, $dia, $tipoevento){
+		$encontro['Evento']['tipoevento_id'] = $tipoevento;
+		
+		//Verifica se o evento é um exame presencial.
+		if($tipoevento != 2){
+			if($this->__verificar_conflitos($dia, $encontro['Evento']['turma_id'])){
+				$this->__adiciona_conflito($dia, $encontro['Evento']['turma_id']);
+			}
+			
+			$turno = $this->__verificar_turno($dia, $encontro['Evento']['turma_id']);
+		}
+
+		$horario = $this->__getHorarioCerto(($tipoevento==2) ? 2 : $turno, $dia);
+		$encontro['Evento']['inicio'] = $horario['inicio'];
+		$encontro['Evento']['fim'] = $horario['fim'];
+
+		array_push($encontros, $encontro);
+	}
 	/**
 	 * Verifica se um determinado dia tem conflito
 	 * Se tiver conflito retorna TRUE
@@ -512,6 +350,7 @@ class CalendariosController extends AppController {
 		$eventos = $this->Evento->find('all', array('conditions' => $conditions));
 
 		$num_eventos = count($eventos);
+		$this->log("TURNO: ".$num_eventos,"turno");
 		
 		if($num_eventos==0 || $num_eventos==1){
 			return $num_eventos;
@@ -561,7 +400,7 @@ class CalendariosController extends AppController {
 				
 				$conflitos = $this->Conflito->find('all',array('conditions' => array('Conflito.turma_id' => $turma_id)));
 				
-				$response = "";
+				$response = ($conflitos != null)? "":"Conflitos removidos";
 				foreach($conflitos as $conflito){
 					$response .= "<li>".$conflito['Conflito']['dia']."</li>";
 				}
