@@ -31,7 +31,7 @@ class CalendariosController extends AppController {
 			$this->Evento->saveAll($this->__gerar_aulas($this->data));
 			$this->Evento->saveAll($this->__gerar_encontros($this->data));
 
-			$this->Session->setFlash(__('The evento has been saved', true));
+			//$this->Session->setFlash(__('The evento has been saved', true));
 			$this->redirect(array('action' => 'view',$this->data['Calendario']['turma_id']));
 			
 		}
@@ -66,9 +66,7 @@ class CalendariosController extends AppController {
 		$conditions = array('Evento.turma_id' => $turma_id,'Evento.disciplina_id' => $disc_id);	
 		$eventos = $this->Evento->find('all', array('conditions' => $conditions,'order' => array('Evento.inicio asc')));
 		$this->set("eventos",$eventos);
-	
-	
-		
+
 	}
 	
 	
@@ -213,6 +211,60 @@ class CalendariosController extends AppController {
 	 * 
 	 * */
 	function __gerar_aulas($dados){
+		$this->Disciplina->recursive = 2;
+		$disciplina = $this->Disciplina->findById($dados['Calendario']['disciplina_id']);
+		$polos_disciplina = $disciplina["Turma"]["0"]['Polo'];
+		$numSemanas = $disciplina['Disciplina']['numsemanas']; 
+		$data_inicio_disciplina = $dados['Calendario']['inicio'];
+		$data_inicio = $data_inicio_disciplina;
+		
+		
+		$aulas = array();
+		
+		//CRIA ARRAY DOS POLOS DA DISCIPLINA
+		$polos['Polo'] = array();
+		foreach($polos_disciplina as $polo){
+			array_push($polos['Polo'],$polo['id']);
+		}
+		
+		//ADICIONA TODOS OS EVENTOS NUM ARRAY
+		for($i = 1; $i <= $numSemanas; $i++){
+			
+			$aula;
+			$aula['Evento']['tipoevento_id'] = 5;
+			$aula['Evento']['disciplina_id'] = $dados['Calendario']['disciplina_id'];
+			$aula['Evento']['turma_id'] = $dados['Calendario']['turma_id'];
+			$aula['Evento']['carga_horaria'] = 0;
+			$aula['Evento']['diatodo'] = 0;
+			
+			
+			//É necessário o condicional pois se mandar pegar o próximo domingo, ele irá pegar o imediatamente após o dia inicial
+			//e faz-se necessário pegar o domingo da semana seguinte
+			if($i == 1){
+				
+				$aula['Evento']['inicio'] = $data_inicio;
+				
+				$data_fim = $this->Date->format('next Sunday',$this->Date->format('+1 day',$data_inicio_disciplina));
+				$aula['Evento']['fim'] = $data_fim;
+				
+			}else{
+				$data_inicio = $this->Date->format('+1 day',$data_fim);
+				$aula['Evento']['inicio'] = $data_inicio;
+				
+				$data_fim = $this->Date->format('next Sunday',$data_inicio);
+				$aula['Evento']['fim'] = $data_fim;
+				
+			}
+			
+			//ADICIONA OS POLOS PARA CADA EVENTO
+			$aula['Polo'] = $polos;
+			
+			//ADICIONA OS EVENTOS NO ARRAY
+			array_push($aulas,$aula);
+			
+		}
+		return $aulas;
+	}
 	
 	function __gerar_encontros($dados){
 		$this->Disciplina->recursive = 2;
@@ -317,6 +369,7 @@ class CalendariosController extends AppController {
 
 		array_push($encontros, $encontro);
 	}
+	
 	/**
 	 * Verifica se um determinado dia tem conflito
 	 * Se tiver conflito retorna TRUE
