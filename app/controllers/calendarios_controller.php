@@ -4,7 +4,7 @@ class CalendariosController extends AppController {
 	var $name = 'Calendarios';
 	var $uses = array('Curso','Disciplina','Turma','Polo','Tipoevento','Evento','Conflito');
 	var $helpers = array('Javascript','Date');
-	var $components = array('Date','RequestHandler');
+	var $components = array('Date','RequestHandler','Aula');
 	
 	
 	function beforeRender(){
@@ -281,161 +281,33 @@ class CalendariosController extends AppController {
 	   		array_push($polos['Polo'],$polo['id']);
 	   }
 	
-	   $encontros = array();
+	  $encontros = array();
 		
-		for($i = 0; $i < 8; $i++){ 
-			
-			$encontro['Evento']['disciplina_id'] = $dados['Calendario']['disciplina_id'];
-			$encontro['Evento']['turma_id'] = $dados['Calendario']['turma_id'];
-			$encontro['Evento']['diatodo'] = 0;
-			$encontro['Evento']['carga_horaria'] = 4;
-			$encontro['Polo'] = $polos;
-			
-			switch($i){
-				case 0:	
-					//ADICIONA PRIMEIRO ENCONTRO
-					$encontro_1 = $data_inicio_disciplina;
-					$this->__adicionar_encontro($encontros, $encontro, $encontro_1, 1 );
-				
-					break;
-				case 1:
-					//ADICIONA SEGUNDO ENCONTRO
-					$encontro_2 = $this->Date->format('fifth saturday',$data_inicio_disciplina);
-					
-					$this->__adicionar_encontro($encontros, $encontro, $encontro_2, 1 );
-					break;
-				case 2:
-				 	//ADICIONA EXAME PRESENCIAL
-					 $exame_presencial = $this->Date->format('fifth saturday',$data_inicio_disciplina);
-				    
-					 $this->__adicionar_encontro($encontros, $encontro, $exame_presencial, 2 );
-					 break;
-				case 3:
-					//ADICIONA SEGUNDA CHAMADA
-					$seg_chamada_1 = $this->Date->format('+1 week',$encontro_2);
-					
-					$this->__adicionar_encontro($encontros, $encontro, $seg_chamada_1, 3 );
-					break;
-				case 4:
-					//ADICIONA TERCEIRO ENCONTRO
-					$encontro_3 = $this->Date->format('9 saturday', $data_inicio_disciplina);
-					
-					$this->__adicionar_encontro($encontros, $encontro, $encontro_3, 1 );
-					break;
-				case 5:
-				 	//ADICIONA EXAME PRESENCIAL
-					$exame_presencial = $this->Date->format('9 saturday',$data_inicio_disciplina);
-
-           
-					$this->__adicionar_encontro($encontros, $encontro, $exame_presencial, 2 );
-					
-					break;
-				case 6:
-					//ADICIONA SEGUNDA CHAMADA
-					$seg_chamada_2 = $this->Date->format('+1 week',$encontro_3);
-					
-					$this->__adicionar_encontro($encontros, $encontro, $seg_chamada_2, 3 );
-
-					break;
-				case 7:
-					//ADICIONA EXAME FINAL
-					$exame_final = $data_fim_disciplina;
-					
-					$this->__adicionar_encontro($encontros, $encontro,$exame_final, 4 );
-					
-					break;
-			}
+		switch ($disciplina['Disciplina']['numsemanas']) {
+			case 4:
+				# code...
+				break;
+			case 6:
+				# code...
+				break;
+			case 8:
+				$this->Aula->gerar_aula_80_horas($encontros,
+																				 $polos,
+																				 $dados['Calendario']['turma_id'],
+																				 $dados['Calendario']['disciplina_id'],
+																				 $data_inicio_disciplina,
+																				 $data_fim_disciplina);
+				break;
+			case 12:
+				# code...
+				break;
 		}
+		
 		
 		return $encontros;
 		
 	}
-	 
-	function __adicionar_encontro(&$encontros, &$encontro, $dia, $tipoevento){
-		$encontro['Evento']['tipoevento_id'] = $tipoevento;
-		
-		//Verifica se o evento é um exame presencial.
-		if($tipoevento != 2){
-			if($this->__verificar_conflitos($dia, $encontro['Evento']['turma_id'])){
-				$this->__adiciona_conflito($dia, $encontro['Evento']['turma_id']);
-			}
-			
-			$turno = $this->__verificar_turno($dia, $encontro['Evento']['turma_id']);
-		}
 
-		$horario = $this->__getHorarioCerto(($tipoevento==2) ? 2 : $turno, $dia);
-		$encontro['Evento']['inicio'] = $horario['inicio'];
-		$encontro['Evento']['fim'] = $horario['fim'];
-
-		array_push($encontros, $encontro);
-	}
-	
-	/**
-	 * Verifica se um determinado dia tem conflito
-	 * Se tiver conflito retorna TRUE
-	 * 
-	 * */
-	function __verificar_conflitos($dia, $turma_id){
-		$this->Evento->recursive = -1;
-		
-		$eventos = $this->Evento->find('all', array('conditions' => array('Evento.inicio BETWEEN ? AND ?' => array($dia." 00:00:00",$dia." 23:59:59"), 
-																		  'Evento.turma_id' => $turma_id,
-																		  'Evento.tipoevento_id NOT' => 5)));
-		
-		//debug($eventos);
-		$num_eventos = count($eventos);
-		
-		if($num_eventos >=2){
-			return true;
-		}else{
-			return false;
-		}
-		
-	}
-	
-	function __verificar_turno($dia,$turma_id){
-		$this->Evento->recursive = -1;
-		
-		$conditions = array('Evento.inicio BETWEEN ? AND ?' => array($dia." 00:00:00",$dia." 23:59:59"),
-							'Evento.tipoevento_id NOT' => "5",
-							'Evento.turma_id' => $turma_id);
-		
-		$eventos = $this->Evento->find('all', array('conditions' => $conditions));
-
-		$num_eventos = count($eventos);
-		$this->log("TURNO: ".$num_eventos,"turno");
-		
-		if($num_eventos==0 || $num_eventos==1){
-			return $num_eventos;
-		}else {
-			return 2;
-		}
-
-	}
-
-	function __getHorarioCerto($turno, $dia){
-		$horario = array();
-		
-		if($turno == 0){
-			$horario["inicio"] = $dia." 08:00:00";
-			$horario["fim"] = $dia." 12:00:00";	
-		}else{
-			$horario["inicio"] = $dia." 14:00:00";
-			$horario["fim"] = $dia." 18:00:00";
-		}
-		return $horario;
-	}
-	
-	function __adiciona_conflito($dia, $turma_id){
-		$this->data['Conflito']["dia"] = $dia;
-		$this->data['Conflito']['turma_id'] = $turma_id;
-		
-		$this->Conflito->create();
-		
-		$this->Conflito->save($this->data);
-		
-	}
-	
 	function __remover_conflito($dia,$turma_id){
 		$this->Evento->recursive = -1;
 		$dia = date('Y-m-d',strtotime($dia));
