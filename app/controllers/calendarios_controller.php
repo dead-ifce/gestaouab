@@ -41,7 +41,7 @@ class CalendariosController extends AppController {
 	function view($turma_id = null){
 		
 		$this->Evento->recursive = -1;
-		$this->layout = "ajax";
+		//$this->layout = "ajax";
 		
 		$this->set('turma_id', $turma_id);
 		

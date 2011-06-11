@@ -1,5 +1,5 @@
-<?php $javascript->link(array('jquery/jquery-1.5.2.min.js','jquery/jquery-ui-1.8.13.custom.min.js'),false); ?>
-<?php echo $this->Html->css('jquery-ui-1.8.13.custom'); ?>
+<?php //$javascript->link(array('jquery/jquery-1.5.2.min.js','jquery/jquery-ui-1.8.13.custom.min.js'),false); ?>
+<?php //echo $this->Html->css('jquery-ui-1.8.13.custom'); ?>
 
 <script type="text/javascript" charset="utf-8">
 	$(document).ready(function() {
