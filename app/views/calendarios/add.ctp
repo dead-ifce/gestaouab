@@ -1,12 +1,8 @@
-<?php //$javascript->link(array('jquery/jquery-1.5.2.min.js','jquery/jquery-ui-1.8.13.custom.min.js'),false); ?>
-<?php //echo $this->Html->css('jquery-ui-1.8.13.custom'); ?>
+<?php $javascript->link(array(),false); ?>
+<?php echo $this->Html->css('jquery-ui-1.8.13.custom'); ?>
 
 <script type="text/javascript" charset="utf-8">
 	$(document).ready(function() {
-		
-	    $( "#CalendarioInicio" ).datepicker({ dateFormat: 'yy-mm-dd' });
-		$( "#CalendarioFim" ).datepicker({ dateFormat: 'yy-mm-dd' });
-	    
 		
 		$("#CalendarioCurso").bind('change', function() {
 			$.post("<?php echo Dispatcher::baseUrl();?>/calendarios/getTurmasByCurso/" + $(this).val(), function(data) {
@@ -24,16 +20,43 @@
 	});
 </script>
 
-<?php echo $this->Form->create('Calendario');?>
+<div class="block">
+
+	<div class="block_head">
+		<div class="bheadl"></div>
+		<div class="bheadr"></div>
+		
+		<h2>Adicionar calendário</h2>	
+	</div>		<!-- .block_head ends -->
+
+	<div class="block_content">
+		<?php echo $this->Form->create('Calendario');?>
+
+		<p><?php
+			echo $this->Form->input('curso',array('options' => $cursos,'empty' => 'Selecione...','class' => "styled"));
+		?></p>
+			<p><?php echo $this->Form->input('turma_id',array('class' => "styled")); ?> </p>
+			<p><?php echo $this->Form->input('disciplina_id',array('class' => "styled")); ?> </p>
+
+		<p>
+			<label>Inicio:</label> 
+			<input type="text" class="text date_picker" name="data[Calendario][inicio]" />
+			&nbsp;&nbsp;
+			<label>Fim:</label> 
+			<input type="text" class="text date_picker" name="data[Calendario][fim]" />
+		</p>
+		
+		<p>
+			<input type="submit" class="submit long" value="Adicionar" id="button"/>
+		</p>
+	</form>
+	</div>		<!-- .block_content ends -->
+
+		<div class="bendl"></div>
+		<div class="bendr"></div>
+
+</div>		<!-- .block.small.left ends -->
 
 
-	<?php
-		echo $this->Form->input('curso',array('options' => $cursos,'empty' => 'Selecione...'));
-		echo $this->Form->input('turma_id');
-		echo $this->Form->input('disciplina_id');
-		echo $this->Form->input('inicio');
-		echo $this->Form->input('fim');
-	?>
-	
 
-<?php echo $this->Form->end('Adicionar'); ?>
+

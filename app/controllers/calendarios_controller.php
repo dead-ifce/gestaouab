@@ -325,9 +325,9 @@ class CalendariosController extends AppController {
 				
 				$conflitos = $this->Conflito->find('all',array('conditions' => array('Conflito.turma_id' => $turma_id)));
 				
-				$response = ($conflitos != null)? "":"Conflitos removidos";
+				$response = ($conflitos != null)? "":"-";
 				foreach($conflitos as $conflito){
-					$response .= "<li>".$conflito['Conflito']['dia']."</li>";
+					$response .= "<li class='message_cft'>".$conflito['Conflito']['dia']."</li>";
 				}
 				return $response;
 				

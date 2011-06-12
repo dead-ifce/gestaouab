@@ -1,19 +1,74 @@
-/*div#calendar {
-	width: 60%;
-	margin:auto;
-	float:right;
-	margin-right:200px;
-}
-
-#conflitos{
-	text-align: center;
-	float:left;
-	width: 200px;
-	margin-left: 50px;
-	
-}*/
 
 #imprimir-button{
 	text-align: center;
+	width: 50%;
 	margin-bottom: 30px;
+	margin-left: auto;
+ 	margin-right: auto;
 }
+
+ul{
+    margin: 0 auto;
+    padding: 0;
+}
+
+/* The wider the #list_wrapper is, the more columns will fit in it */
+.block .block_content #list_wrapper{
+    width: 100%;
+}
+
+/* DEFINE O ESTILO DOS ITENS DOS CONFLITOS*/
+.block .block_content ul.multiple_columns li{
+	text-align: center;
+	float: left;
+	list-style: none;
+	width: 100px;
+	padding: 2px;
+	margin: 2px;
+	
+}
+
+.block .block_content ul.multiple_columns{
+	margin-bottom: 40px;
+}
+.block .block_content .message_cft {
+   list-style: none;
+   padding: 10px 15px 10px 40px;
+   margin: 10px 0;
+   font-weight: bold;
+   overflow: hidden;
+   -webkit-border-radius: 3px;
+   -moz-border-radius: 3px;
+   border-radius: 3px;
+   border: 1px solid #e9c59b;
+   background: #ffecce ;
+   color: #e3302c;
+}
+
+.block input.submit {
+	width: 85px;
+	height: 30px;
+/*	line-height: 30px;*/
+	background: url(../img/btns.gif) top center no-repeat;
+	border: 0;
+	font-family: "Titillium800", "Trebuchet MS", Arial, sans-serif;
+	font-size: 14px;
+	font-weight: normal;
+	text-transform: uppercase;
+	color: #fff;
+	text-shadow: 1px 1px 0 #0a5482;
+	cursor: pointer;
+	margin-right: 10px;
+	vertical-align: middle;
+	}
+	
+.block input.submit:hover {
+	background: url(../img/btns_.gif) top center no-repeat;
+	text-shadow: 1px 1px 0 #b55f10;
+	}
+
+.block input.submit.mid { width: 115px; background: url(../img/btnm.gif) top center no-repeat; }
+.block input.submit.mid:hover { background: url(../img/btnm_.gif) top center no-repeat; }
+
+.block input.submit.long { width: 165px; background: url(../img/btnb.gif) top center no-repeat; }
+.block input.submit.long:hover { background: url(../img/btnb_.gif) top center no-repeat; }

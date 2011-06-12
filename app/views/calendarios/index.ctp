@@ -1,5 +1,5 @@
 <?php echo $javascript->link(array('jquery/jquery-1.5.2.min.js','jquery/jquery-ui-1.8.13.custom.min.js'),false); ?>
-<?php echo $this->Html->css('jquery-ui-1.8.13.custom'); ?>
+<?php echo $this->Html->css(array('jquery-ui-1.8.13.custom','custom')); ?>
 
 <script type="text/javascript" charset="utf-8">
 	$(document).ready(function() {
@@ -12,10 +12,9 @@
 		    }, 'html');
 		});
 		
-		$("#form").submit(function(){
+		$("#button").click(function(){
 			var value = $('#turma_id :selected').val();
-			$(this).attr("action","<?php echo Dispatcher::baseUrl();?>/calendarios/view/"+value); 
-			
+			window.location = "<?php echo Dispatcher::baseUrl();?>/calendarios/view/"+value;
 		});
 		
 	});
@@ -27,20 +26,20 @@
 		<div class="bheadl"></div>
 		<div class="bheadr"></div>
 		
-		<h2>Left column</h2>	
+		<h2>Selecionar turma</h2>	
 	</div>		<!-- .block_head ends -->
 	
 	<div class="block_content">
 		
-		<form id="form" action="" method="post">
+		<form id="form" method="post">
 			<p><?php echo $this->Form->input('curso',array('options' => $cursos,'empty' => 'Selecione...','class' => "styled"));?></p>
 			<p><?php echo $this->Form->input('turma_id',array('type' => "select",'empty' => 'Selecione...','class' => "styled")); ?></p>
 		
-			<p>
-				<input type="submit" class="submit long" value="Ver calendários" id="button"/>
-			</p>
+			
 		</form>
-
+		<p>
+			<input type="submit" class="submit long" value="Ver calendários" id="button"/>
+		</p>
 
 </div>		<!-- .block_content ends -->
 <div class="bendl"></div>

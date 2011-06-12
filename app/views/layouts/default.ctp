@@ -8,11 +8,10 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	
 	<title>Adminus &#9679; Page</title>
-		<?php echo $scripts_for_layout; ?>
 		<?php echo $this->Html->css(array('style','jquery.wysiwyg','facebox', 'visualize', 'date_input')) ?>
-		
-	<!--[if lt IE 8]><style type="text/css" media="all">@import url("/adminus/css/ie.css");</style><![endif]-->
-
+		<?php echo $scripts_for_layout; ?>
+		<!--[if lt IE 8]><style type="text/css" media="all">@import url("/adminus/css/ie.css");</style><![endif]-->
+		<script type="text/javascript" src="/adminus/js/adminus/jquery.js"></script>
 </head>
 <body>
 	<div id="hld">
@@ -65,7 +64,8 @@
 	
 	
 	<!--[if IE]><script type="text/javascript" src="/adminus/js/adminus/excanvas.js"></script><![endif]-->	
-	<script type="text/javascript" src="/-adminus/js/adminus/jquery.js"></script>
+	
+	
 	<script type="text/javascript" src="/adminus/js/adminus/jquery.img.preload.js"></script>
 	<script type="text/javascript" src="/adminus/js/adminus/jquery.filestyle.mini.js"></script>
 	<script type="text/javascript" src="/adminus/js/adminus/jquery.wysiwyg.js"></script>
