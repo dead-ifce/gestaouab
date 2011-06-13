@@ -8,15 +8,99 @@ class AulaComponent extends Object {
 	
 	}
 	
-	function gerar_aula_40_horas(&$encontros, &$encontro, $polos, $turma, $disciplina){
+	function gerar_aula_40_horas(&$encontros, $polos, $turma, $disciplina, $data_inicio_disciplina, $data_fim_disciplina){
 		
+		for($i = 0; $i < 5; $i++){ 
+			$encontro['Evento']['disciplina_id'] = $disciplina;
+			$encontro['Evento']['turma_id'] = $turma;
+			$encontro['Evento']['diatodo'] = 0;
+			$encontro['Evento']['carga_horaria'] = 4;
+			$encontro['Polo'] = $polos;
+			
+			
+			switch($i){
+				case 0:	
+					//ADICIONA PRIMEIRO ENCONTRO
+					$encontro_1 = $data_inicio_disciplina;
+					$this->adicionar_encontro($encontros, $encontro, $encontro_1, 1 );
+				
+					break;
+				case 1:
+					//ADICIONA SEGUNDO ENCONTRO
+					$encontro_2 = $this->format_data('fourth saturday',$data_inicio_disciplina);
+					
+					$this->adicionar_encontro($encontros, $encontro, $encontro_2, 1 );
+					break;
+				case 2:
+				 	//ADICIONA EXAME PRESENCIAL
+					 $exame_presencial = $this->format_data('fourth saturday',$data_inicio_disciplina);
+				    
+					 $this->adicionar_encontro($encontros, $encontro, $exame_presencial, 2 );
+					 break;
+				case 3:
+					//ADICIONA SEGUNDA CHAMADA
+					$seg_chamada_1 = $this->format_data('+1 week',$encontro_2);
+					
+					$this->adicionar_encontro($encontros, $encontro, $seg_chamada_1, 3 );
+					break;
+				case 4:
+					//ADICIONA EXAME FINAL
+					$exame_final = $data_fim_disciplina;
+					
+					$this->adicionar_encontro($encontros, $encontro,$exame_final, 4 );
+					break;
+				
+			}//FIM DO SWITCH
+		}//FIM DO FOR
+	
 	}
 	
-	function gerar_aula_60_horas(&$encontros, &$encontro, $polos, $turma, $disciplina){
-		
+	function gerar_aula_60_horas(&$encontros, $polos, $turma, $disciplina, $data_inicio_disciplina, $data_fim_disciplina){
+		for($i = 0; $i < 8; $i++){ 
+			$encontro['Evento']['disciplina_id'] = $disciplina;
+			$encontro['Evento']['turma_id'] = $turma;
+			$encontro['Evento']['diatodo'] = 0;
+			$encontro['Evento']['carga_horaria'] = 4;
+			$encontro['Polo'] = $polos;
+			
+			
+			switch($i){
+				case 0:	
+					//ADICIONA PRIMEIRO ENCONTRO
+					$encontro_1 = $data_inicio_disciplina;
+					$this->adicionar_encontro($encontros, $encontro, $encontro_1, 1 );
+				
+					break;
+				case 1:
+					//ADICIONA SEGUNDO ENCONTRO
+					$encontro_2 = $this->format_data('fifth saturday',$data_inicio_disciplina);
+					
+					$this->adicionar_encontro($encontros, $encontro, $encontro_2, 1 );
+					break;
+				case 2:
+				 	//ADICIONA EXAME PRESENCIAL
+					 $exame_presencial = $this->format_data('fifth saturday',$data_inicio_disciplina);
+				    
+					 $this->adicionar_encontro($encontros, $encontro, $exame_presencial, 2 );
+					 break;
+				case 3:
+					//ADICIONA SEGUNDA CHAMADA
+					$seg_chamada_1 = $this->format_data('+1 week',$encontro_2);
+					
+					$this->adicionar_encontro($encontros, $encontro, $seg_chamada_1, 3 );
+					break;
+				case 4:
+					//ADICIONA EXAME FINAL
+					$exame_final = $data_fim_disciplina;
+					
+					$this->adicionar_encontro($encontros, $encontro,$exame_final, 4 );
+					break;
+				
+			}//FIM DO SWITCH
+		}//FIM DO FOR
 	}
 	
-	function gerar_aula_80_horas(&$encontros, $polos, $turma, $disciplina,$data_inicio_disciplina, $data_fim_disciplina){
+	function gerar_aula_80_horas(&$encontros, $polos, $turma, $disciplina, $data_inicio_disciplina, $data_fim_disciplina){
 		
 		for($i = 0; $i < 8; $i++){ 
 			
@@ -79,11 +163,76 @@ class AulaComponent extends Object {
 					$this->adicionar_encontro($encontros, $encontro,$exame_final, 4 );
 					
 					break;
-			}
-		}
-	}
+			}//FIM DO SWITCH
+		}//FIM DO FOR
+	}	//fim 80h
 
-	
+	function gerar_aula_100_horas(&$encontros, $polos, $turma, $disciplina, $data_inicio_disciplina, $data_fim_disciplina){
+		
+		for($i = 0; $i < 8; $i++){ 
+			
+			$encontro['Evento']['disciplina_id'] = $disciplina;
+			$encontro['Evento']['turma_id'] = $turma;
+			$encontro['Evento']['diatodo'] = 0;
+			$encontro['Evento']['carga_horaria'] = 4;
+			$encontro['Polo'] = $polos;
+			
+			switch($i){
+				case 0:	
+					//ADICIONA PRIMEIRO ENCONTRO
+					$encontro_1 = $data_inicio_disciplina;
+					$this->adicionar_encontro($encontros, $encontro, $encontro_1, 1 );
+				
+					break;
+				case 1:
+					//ADICIONA SEGUNDO ENCONTRO
+					$encontro_2 = $this->format_data('fifth saturday',$data_inicio_disciplina);
+					
+					$this->adicionar_encontro($encontros, $encontro, $encontro_2, 1 );
+					break;
+				case 2:
+				 	//ADICIONA EXAME PRESENCIAL
+					 $exame_presencial = $this->format_data('fifth saturday',$data_inicio_disciplina);
+				    
+					 $this->adicionar_encontro($encontros, $encontro, $exame_presencial, 2 );
+					 break;
+				case 3:
+					//ADICIONA SEGUNDA CHAMADA
+					$seg_chamada_1 = $this->format_data('+1 week',$encontro_2);
+					
+					$this->adicionar_encontro($encontros, $encontro, $seg_chamada_1, 3 );
+					break;
+				case 4:
+					//ADICIONA TERCEIRO ENCONTRO
+					$encontro_3 = $this->format_data('9 saturday', $data_inicio_disciplina);
+					
+					$this->adicionar_encontro($encontros, $encontro, $encontro_3, 1 );
+					break;
+				case 5:
+				 	//ADICIONA EXAME PRESENCIAL
+					$exame_presencial = $this->format_data('9 saturday',$data_inicio_disciplina);
+
+           
+					$this->adicionar_encontro($encontros, $encontro, $exame_presencial, 2 );
+					
+					break;
+				case 6:
+					//ADICIONA SEGUNDA CHAMADA
+					$seg_chamada_2 = $this->format_data('+1 week',$encontro_3);
+					
+					$this->adicionar_encontro($encontros, $encontro, $seg_chamada_2, 3 );
+
+					break;
+				case 7:
+					//ADICIONA EXAME FINAL
+					$exame_final = $data_fim_disciplina;
+					
+					$this->adicionar_encontro($encontros, $encontro,$exame_final, 4 );
+					
+					break;
+			}//FIM DO SWITCH
+		}//FIM DO FOR
+	}	//FIM 100H
 	
 	//Helper metodos
 	function adicionar_encontro(&$encontros, &$encontro, $dia, $tipoevento){

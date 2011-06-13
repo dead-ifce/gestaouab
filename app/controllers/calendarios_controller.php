@@ -285,10 +285,20 @@ class CalendariosController extends AppController {
 		
 		switch ($disciplina['Disciplina']['numsemanas']) {
 			case 4:
-				# code...
+				$this->Aula->gerar_aula_40_horas($encontros,
+																				 $polos,
+																				 $dados['Calendario']['turma_id'],
+																				 $dados['Calendario']['disciplina_id'],
+																				 $data_inicio_disciplina,
+																				 $data_fim_disciplina);
 				break;
 			case 6:
-				# code...
+				$this->Aula->gerar_aula_60_horas($encontros,
+																				 $polos,
+																				 $dados['Calendario']['turma_id'],
+																				 $dados['Calendario']['disciplina_id'],
+																				 $data_inicio_disciplina,
+																				 $data_fim_disciplina);
 				break;
 			case 8:
 				$this->Aula->gerar_aula_80_horas($encontros,
@@ -298,8 +308,13 @@ class CalendariosController extends AppController {
 																				 $data_inicio_disciplina,
 																				 $data_fim_disciplina);
 				break;
-			case 12:
-				# code...
+			case 10:
+				$this->Aula->gerar_aula_100_horas($encontros,
+																					 $polos,
+																					 $dados['Calendario']['turma_id'],
+																					 $dados['Calendario']['disciplina_id'],
+																					 $data_inicio_disciplina,
+																					 $data_fim_disciplina);
 				break;
 		}
 		
