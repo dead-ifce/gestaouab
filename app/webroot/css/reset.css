@@ -1,0 +1,43 @@
+.reset_fc table {
+	text-align: center;
+	margin-bottom: none;
+	}
+
+.reset_fc table tr.even td {
+	background: #fbfbfb;
+	}
+	
+.reset_fc table tr td,
+.reset_fc table tr th {
+	border-bottom: 1px solid #ddd;
+	padding: 0;
+	line-height: none;
+	text-align: center;
+	
+	}
+
+body .reset_fc {
+	line-height:110%;
+}
+
+.reset_fc .fc-header-left {
+    text-align: left;
+    width: 25%;
+}
+.reset_fc .fc-header-center {
+    text-align: center;
+}
+.reset_fc .fc-header-right {
+    text-align: right;
+    width: 25%;
+}
+.reset_fc .fc-header-title {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.reset_fc {
+	width: 90%;
+	float: none;
+	margin: 0 auto;
+}
