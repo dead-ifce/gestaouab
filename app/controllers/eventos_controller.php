@@ -2,7 +2,9 @@
 class EventosController extends AppController {
 
 	var $name = 'Eventos';
-
+	var $uses = array("Evento","Turma");
+	var $components = array("Date");
+	
 	function index() {
 		$this->Evento->recursive = 0;
 		$this->set('eventos', $this->paginate());
@@ -19,23 +21,81 @@ class EventosController extends AppController {
 		}
 		$this->set('evento', $this->Evento->read(null, $id));
 	}
-
-	function add() {
+	
+	function ajax_add($turma_id = null, $dia = null, $mes = null, $ano = null){
+		$this->autoRender = false;
+		
+		$turma = $this->Turma->findById($turma_id);
+		
+		$this->data["Evento"]["tipoevento_id"] = $_REQUEST['tipoEvento'];
+		$this->data["Evento"]["disciplina_id"] = $_REQUEST['disciplina_id'];
+		$this->data["Evento"]["Polo"] = $turma["Polo"];
+		$this->data["Evento"]["turma_id"] = $turma_id;
+		$this->data["Evento"]["carga_horaria"] = 4;
+		$this->data["Evento"]["diatodo"] = 0;
+		
+		$turno = $this->Date->turno($_REQUEST['turno']);
+		
+		$this->data["Evento"]["inicio"] = $ano."-".$mes."-".$dia." ".$turno["inicio"];
+		$this->data["Evento"]["fim"] = $ano."-".$mes."-".$dia." ".$turno["fim"];
+		
+		
+		$this->Evento->create();
+		if ($this->Evento->save($this->data)) {
+		
+		}else{
+			
+		}
+		
+		
+	}
+	
+	function add($turma_id = null, $dia = null, $mes = null, $ano = null) {
+		$this->layout = "ajax";
+		
+		$turma = $this->Turma->findById($turma_id);
+		
+		$disciplinas_raw = $turma['Disciplina'];
+    
+		//debug($disciplinas_raw);
+		foreach($disciplinas_raw as $disciplina){
+			$disciplinas[$disciplina["id"]] = $disciplina["nome"];
+		}
+		
 		if (!empty($this->data)) {
-			//debug($this->data);
+			Configure::write('debug', 0);
+			$this->autoRender = false;
+			$this->autoLayout = false;
+			
+			$this->data["Evento"]["Polo"] = $turma["Polo"];
+			$this->data["Evento"]["turma_id"] = $turma_id;
+			$this->data["Evento"]["carga_horaria"] = 4;
+			
+			$turno = $this->Date->turno($this->data["Evento"]["turno"]);
+			
+			$this->data["Evento"]["inicio"] = $ano."-".$mes."-".$dia." ".$turno["inicio"];
+			$this->data["Evento"]["fim"] = $ano."-".$mes."-".$dia." ".$turno["fim"];
+			
+			
 			$this->Evento->create();
 			if ($this->Evento->save($this->data)) {
-				$this->Session->setFlash(__('The evento has been saved', true));
-				$this->redirect(array('action' => 'index'));
+				
 			} else {
-				$this->Session->setFlash(__('The evento could not be saved. Please, try again.', true));
+				
 			}
 		}
-		$tipoeventos = $this->Evento->Tipoevento->find('list');
-		$polos = $this->Evento->Polo->find('list');
-		$disciplinas = $this->Evento->Disciplina->find('list');
-		$turmas = $this->Evento->Turma->find('list');
-		$this->set(compact('tipoeventos', 'polos', 'disciplinas', 'turmas'));
+		
+		
+		
+		
+		$tipoeventos = $this->Evento->Tipoevento->find('list', array("fields" => array(
+																																						"Tipoevento.id",
+																																						"Tipoevento.descricao")
+																																	));
+		
+		
+		
+		$this->set(compact('tipoeventos', 'disciplinas'));
 	}
 
 	function edit($id = null) {

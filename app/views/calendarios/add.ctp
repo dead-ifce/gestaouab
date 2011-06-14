@@ -45,10 +45,10 @@
 			<label>Fim:</label> 
 			<input type="text" class="text date_picker" name="data[Calendario][fim]" />
 		</p>
-		
 		<p>
 			<input type="submit" class="submit long" value="Adicionar" id="button"/>
 		</p>
+		
 	</form>
 	</div>		<!-- .block_content ends -->
 

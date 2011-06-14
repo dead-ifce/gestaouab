@@ -22,7 +22,6 @@ class CalendariosController extends AppController {
 	}
 	
 	function add(){
-		
 		$cursos = $this->Curso->find('list',array('fields' => array('Curso.id','Curso.nome')));
 		$this->set('cursos', $cursos);
 		

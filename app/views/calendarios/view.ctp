@@ -41,6 +41,7 @@
 				<p><input type="submit" class="submit long" value="Imprimir calendário" id="button"/></p>	
 		</div>
 		
+		
 	</div>		<!-- .block_content ends -->
 	
 	<div class="bendl"></div>
@@ -88,6 +89,15 @@
 	  <input type="text" focus="remove" class="title" name="dia" id="dia"/><br/>
 	 </form>
 </div>
+
+<div id="new-event-dialog" title="Novo evento">
+	<div class="block">
+		
+
+	</div>
+	
+</div>
+
 
 <script type="text/javascript" charset="utf-8">
 	$(document).ready(function() {
@@ -143,6 +153,50 @@
 					);
 				
 		    },
+				dayClick: function(date, allDay, jsEvent, view) {
+				   $( '#new-event-dialog' ).
+							dialog(
+								{
+									modal: true,
+									buttons: [
+									    {
+									        text: "Ok",
+									        click: function() { 
+															
+															var tipo_de_evento = $('#EventoTipoeventoId :selected').val();
+															var disciplina = $('#EventoDisciplinaId :selected').val();
+															var turno_raw = $('#EventoTurno :selected').val();
+
+								 							
+														
+															
+									 							$.post("<?php echo Dispatcher::baseUrl();?>/eventos/ajax_add/"+"<?php echo $turma_id; ?>"+"/"+$.fullCalendar.formatDate( date, "dd/MM/yyyy/"),
+									 					   		{
+																		tipoEvento: tipo_de_evento, 
+																		disciplina_id: disciplina,
+																		turno: turno_raw
+																	},
+															   	function(data) {
+																		$('#new-event-dialog').dialog("close");
+																		$('#calendar').fullCalendar( 'refetchEvents' );
+															   	});//FIM DO POST
+														
+						
+								 						}//FIM DO CLICK
+												
+									    },
+											{
+										       text: "Cancelar",
+										       click: function() { $(this).dialog("close"); }
+										  }
+									]
+								}
+						
+					 );
+					
+					 $( '#new-event-dialog' ).load("<?php echo Dispatcher::baseUrl();?>/eventos/add/<?php echo $turma_id ?>");
+				    
+				},
 			eventDrop: function(event,dayDelta,minuteDelta,allDay,revertFunc) {
 				if (dayDelta>=0) {
 					dayDelta = "+"+dayDelta;
