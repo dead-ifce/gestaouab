@@ -18,13 +18,15 @@ class DisciplinasController extends AppController {
 
 	function add() {
 		if (!empty($this->data)) {
+			debug($this->data);
 			$this->Disciplina->create();
-			if ($this->Disciplina->save($this->data)) {
-				$this->Session->setFlash(__('The disciplina has been saved', true));
-				$this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The disciplina could not be saved. Please, try again.', true));
-			}
+			
+			// if ($this->Disciplina->save($this->data)) {
+			// 				$this->Session->setFlash(__('The disciplina has been saved', true));
+			// 				$this->redirect(array('action' => 'index'));
+			// 			} else {
+			// 				$this->Session->setFlash(__('The disciplina could not be saved. Please, try again.', true));
+			// 			}
 		}
 		$cursos = $this->Disciplina->Curso->find('list');
 		$turmas = $this->Disciplina->Turma->find('list');

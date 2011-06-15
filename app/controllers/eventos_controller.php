@@ -24,12 +24,16 @@ class EventosController extends AppController {
 	
 	function ajax_add($turma_id = null, $dia = null, $mes = null, $ano = null){
 		$this->autoRender = false;
-		
 		$turma = $this->Turma->findById($turma_id);
 		
+		$polos = array();
+		foreach ($turma["Polo"] as $polo){
+			array_push($polos,$polo["id"]);
+		}
+
 		$this->data["Evento"]["tipoevento_id"] = $_REQUEST['tipoEvento'];
 		$this->data["Evento"]["disciplina_id"] = $_REQUEST['disciplina_id'];
-		$this->data["Evento"]["Polo"] = $turma["Polo"];
+		$this->data["Polo"]["Polo"] = $polos;
 		$this->data["Evento"]["turma_id"] = $turma_id;
 		$this->data["Evento"]["carga_horaria"] = 4;
 		$this->data["Evento"]["diatodo"] = 0;
@@ -39,14 +43,8 @@ class EventosController extends AppController {
 		$this->data["Evento"]["inicio"] = $ano."-".$mes."-".$dia." ".$turno["inicio"];
 		$this->data["Evento"]["fim"] = $ano."-".$mes."-".$dia." ".$turno["fim"];
 		
-		
 		$this->Evento->create();
-		if ($this->Evento->save($this->data)) {
-		
-		}else{
-			
-		}
-		
+		$this->Evento->save($this->data);
 		
 	}
 	
