@@ -135,5 +135,11 @@ class EventosController extends AppController {
 		$this->Session->setFlash(__('Evento was not deleted', true));
 		$this->redirect(array('action' => 'index'));
 	}
+	
+	function ajax_delete($id = null){
+		$this->autoRender = false;
+		$this->Evento->delete($id);
+	}
+	
 }
 ?>

@@ -12,6 +12,11 @@
 		margin-left:auto;
 		text-align: center;
 	}
+	
+	#edit-dialog .block {
+		background: none;
+		margin-bottom: 5px;
+	}
 </style>	
 
 		
@@ -38,7 +43,7 @@
 																										 'class' => "styled")); ?></p>
 																									
 			</form>
-				<p><input type="submit" class="submit long" value="Imprimir calendário" id="button"/></p>	
+				<p><input type="submit" class="block submit long" value="Imprimir calendário" id="button"/></p>	
 		</div>
 		
 		
@@ -79,29 +84,35 @@
 <?php endif; ?>		
 			
 			
-<div id="edit-dialog" title='Editar'>
+<div id="edit-dialog" title='Você deseja...'>
+			<div class="block" >
+				<div style="text-align: center; margin-top:20px;">
+						<p><input type="submit" class="submit long" value="Editar" id="edit-button"/></p>	
+						<p><input type="submit" class="submit long" value="Apagar" id="del-button"/></p>
+				</div>
+				
+			</div>
+</div>
+
+<div id="edit-event">
 	<label>Turma:</label><br />
 	<span id="turma"><?php echo $detalhes_turma["Curso"]["nome"]." - ".$detalhes_turma["Turma"]["nome"] ?></span><br />
 	<label>Evento:</label><br />
 	<span id="evento-title"></span>
 	<form>
 	  <label>Dia</label><br/>
-	  <input type="text" focus="remove" class="title" name="dia" id="dia"/><br/>
+	  <input type="text" focus="remove" class="input_date" name="dia" id="dia"/><br/>
 	 </form>
 </div>
 
 <div id="new-event-dialog" title="Novo evento">
-	<div class="block">
-		
 
-	</div>
-	
 </div>
 
 
 <script type="text/javascript" charset="utf-8">
 	$(document).ready(function() {
-			$("#button").button();
+			
 			
 			$("#button").click(function(){
 				var value = $('#Disciplina :selected').val();
@@ -109,7 +120,8 @@
 
 			});
 			
-			$( "#dia" ).datepicker({ dateFormat: 'yy-mm-dd' });
+			$( ".input_date" ).datepicker({ dateFormat: 'yy-mm-dd' });
+			
 			$("#edit-dialog").hide();
 	    $('#calendar').fullCalendar({
 	        // put your options and callbacks here
@@ -124,36 +136,60 @@
 				
 				$("#evento-title").html(calEvent.title);
 				
-				$( '#edit-dialog' ).
-						dialog(
-							 { 
-									modal: true,
-					 				width: 330,
-									buttons: [
-									    {
-									        text: "Ok",
-									        click: function() { 
-								 						var dia = $('#dia').val();
-								 						$.post("<?php echo Dispatcher::baseUrl();?>/calendarios/edit_evento/"+calEvent.id,
-								 					   {novaData: dia, velhaData: calEvent.start.toString()},
-														   function(data) {
-																	$('#edit-dialog').dialog("close");
-																	$('#calendar').fullCalendar( 'refetchEvents' );
-														   }); 
-								
-								 				}
-									    },
-											{
-										       text: "Cancelar",
-										       click: function() { $(this).dialog("close"); }
-										  }
-									]
-								}
+				$( '#edit-dialog' ).dialog();//FIM DO EDIT-DIALOG
+		  	
+		
+				$("#edit-button").click(function(){
 					
-					);
+					$( '#edit-event' ).
+					dialog(
+						{
+							modal: true,
+							width: 330,
+							buttons: [
+							{
+								text: "Ok",
+								click: function() {
+									var dia = $('#dia').val();
+									$.post("<?php echo Dispatcher::baseUrl();?>/calendarios/edit_evento/"+calEvent.id,
+									{novaData: dia, velhaData: calEvent.start.toString()},
+									function(data) {
+										$('#edit-event').dialog("close");
+										$('#edit-dialog').dialog("close")
+										$('#calendar').fullCalendar( 'refetchEvents' );
+									});
+
+								}
+							},
+							{
+								text: "Cancelar",
+								click: function() { $(this).dialog("close"); }
+							}
+							]
+						}
+
+					);	
 				
-		    },
-				dayClick: function(date, allDay, jsEvent, view) {
+					
+				});
+				
+				$("#del-button").click(function(){
+						
+						decisao = confirm("Você deseja realmente apagar este evento?");
+						
+						if (decisao){
+							
+							$.get("<?php echo Dispatcher::baseUrl();?>/eventos/ajax_delete/"+calEvent.id,function(data) {
+							  	$('#edit-dialog').dialog("close")
+									$('#calendar').fullCalendar( 'refetchEvents' );
+							});
+							
+						}
+
+				});
+				
+		  },//FIM DO EVENT-CLICK
+			dayClick: function(date, allDay, jsEvent, view) {
 				   $( '#new-event-dialog' ).
 							dialog(
 								{
@@ -166,11 +202,8 @@
 															var tipo_de_evento = $('#EventoTipoeventoId :selected').val();
 															var disciplina = $('#EventoDisciplinaId :selected').val();
 															var turno_raw = $('#EventoTurno :selected').val();
-
-								 							
-														
 															
-									 							$.post("<?php echo Dispatcher::baseUrl();?>/eventos/ajax_add/"+"<?php echo $turma_id; ?>"+"/"+$.fullCalendar.formatDate( date, "dd/MM/yyyy/"),
+									 						$.post("<?php echo Dispatcher::baseUrl();?>/eventos/ajax_add/"+"<?php echo $turma_id; ?>"+"/"+$.fullCalendar.formatDate( date, "dd/MM/yyyy/"),
 									 					   		{
 																		tipoEvento: tipo_de_evento, 
 																		disciplina_id: disciplina,
@@ -192,11 +225,11 @@
 									]
 								}
 						
-					 );
+					 );//FIM DO NEW EVENT DIALOG
 					
 					 $( '#new-event-dialog' ).load("<?php echo Dispatcher::baseUrl();?>/eventos/add/<?php echo $turma_id ?>");
 				    
-				},
+				},//FIM DO DAYCLICK
 			eventDrop: function(event,dayDelta,minuteDelta,allDay,revertFunc) {
 				if (dayDelta>=0) {
 					dayDelta = "+"+dayDelta;
@@ -204,9 +237,9 @@
 				if (minuteDelta>=0) {
 					minuteDelta="+"+minuteDelta;
 				}
+				
 				$.get("<?php echo Dispatcher::baseUrl();?>/calendarios/move/"+event.id+"/"+dayDelta+"/"+minuteDelta+"/"+allDay, 
 						function(data) {
-				  		//$('.result').html(data);
 							if(data){
 								if(data == "-"){
 									var aviso = $("#avisos");
@@ -227,15 +260,11 @@
 								}
 								
 							}
-				  		
-				
-				
-						}
-				);
-
-			}
+						});//FIM DO GET
+			}//FIM DO EVENT-DROP
 			
+	    });//FIM DO CALENDAR
+	
 			
-	    })
 	});
 </script>
