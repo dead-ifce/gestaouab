@@ -7,7 +7,7 @@ class TurmasController extends AppController {
 		//$this->Turma->recursive = 1;
 		$this->set('turmas', $this->paginate());
 		
-		debug($this->Turma->find('all'));
+		//debug($this->Turma->find('all'));
 	}
 
 	function view($id = null) {
@@ -28,9 +28,10 @@ class TurmasController extends AppController {
 				$this->Session->setFlash(__('The turma could not be saved. Please, try again.', true));
 			}
 		}
-		$polos = $this->Turma->Polo->find('list');
-		$disciplinas = $this->Turma->Disciplina->find('list');
-		$this->set(compact('polos', 'disciplinas'));
+		$cursos = $this->Turma->Curso->find('list', array("fields" => array("Curso.id", "Curso.nome")));
+		$polos = $this->Turma->Polo->find('list', array("fields" => array("Polo.id", "Polo.nome")));
+		$disciplinas = $this->Turma->Disciplina->find('list', array("fields" => array("Disciplina.id", "Disciplina.nome")));
+		$this->set(compact('polos', 'disciplinas',"cursos"));
 	}
 
 	function edit($id = null) {

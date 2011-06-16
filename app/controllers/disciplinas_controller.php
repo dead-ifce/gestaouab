@@ -21,16 +21,16 @@ class DisciplinasController extends AppController {
 			debug($this->data);
 			$this->Disciplina->create();
 			
-			// if ($this->Disciplina->save($this->data)) {
-			// 				$this->Session->setFlash(__('The disciplina has been saved', true));
-			// 				$this->redirect(array('action' => 'index'));
-			// 			} else {
-			// 				$this->Session->setFlash(__('The disciplina could not be saved. Please, try again.', true));
-			// 			}
+		 if ($this->Disciplina->save($this->data)) {
+		 				$this->Session->setFlash(__('The disciplina has been saved', true));
+		 				$this->redirect(array('action' => 'index'));
+		 			} else {
+		 				$this->Session->setFlash(__('The disciplina could not be saved. Please, try again.', true));
+		 			}
 		}
-		$cursos = $this->Disciplina->Curso->find('list');
-		$turmas = $this->Disciplina->Turma->find('list');
-		$this->set(compact('cursos', 'turmas'));
+		$cursos = $this->Disciplina->Curso->find('list', array("fields" => array("Curso.id", "Curso.nome")));
+		$turmas = $this->Disciplina->Turma->find('list', array("fields" => array("Turma.id", "Turma.nome")));
+		$this->set(compact('cursos'));
 	}
 
 	function edit($id = null) {
@@ -66,5 +66,19 @@ class DisciplinasController extends AppController {
 		$this->Session->setFlash(__('Disciplina was not deleted', true));
 		$this->redirect(array('action' => 'index'));
 	}
+	
+	function getTurmasByCurso($curso_id){
+		$this->layout = 'ajax';
+		$this->beforeRender();
+		$this->autoRender = false;
+		$turmas = $this->Turma->find("list",array('conditions' => array('Turma.curso_id' => $curso_id),
+												  'fields' => array('Turma.id','Turma.nome')));
+	  echo "<option value=0>Selecione...</option>";
+		  foreach($turmas as $key => $val) {
+			echo "<option value=$key>$val</option>";
+		  }						
+	}
+	
+	
 }
 ?>
