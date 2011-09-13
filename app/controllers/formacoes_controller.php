@@ -3,7 +3,9 @@ class FormacoesController extends AppController {
 
 	var $name = 'Formacoes';
 	var $helpers = array('Javascript',"Estudo");
-
+	
+	var $uses = array('Pessoa', "Atuacao", "Curso", "Disciplina", "Funcao","Formacao");
+	
 	function index() {
 		
 	}
@@ -22,10 +24,11 @@ class FormacoesController extends AppController {
 			}
 		}
 		
-		$this->set("pessoa_id", $pessoa_id);
+		$pessoa = $this->Pessoa->findById($pessoa_id);
+		$this->set("pessoa", $pessoa);
 		
 		$formacoes = $this->Formacao->findAllByPessoaId($pessoa_id);
-		debug($formacoes);
+		//debug($formacoes);
 		$this->set("formacoes", $formacoes);
 		
 	}

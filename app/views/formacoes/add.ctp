@@ -1,7 +1,14 @@
-<?php echo $javascript->link(array("/js/jquery/jquery-1.5.2.min","/js/jquery/jquery-ui-1.8.16.custom.min"),false); ?>
-<?php echo $this->Html->css(array('jquery-ui-1.8.13.custom',"bootstrap")); ?>
+<?php echo $javascript->link(array("/js/jquery/jquery-1.5.2.min",
+								   "/js/jquery/jquery-ui-1.8.16.custom.min",
+								   "/js/validation/languages/jquery.validationEngine-pt",
+								   "/js/validation/jquery.validationEngine",
+								   "/js/tablesorter/jquery.tablesorter.min"),false); ?>
+<?php echo $this->Html->css(array('jquery-ui-1.8.13.custom',"bootstrap","validationEngine.jquery")); ?>
 <script type="text/javascript" charset="utf-8">
 	$(document).ready(function() {
+		$("#FormacaoAddForm").validationEngine();
+		
+		$("#formacoesTable").tablesorter({ sortList: [[2,0]] });
 		
 		$( "#nova-formacao" ).dialog({
 					autoOpen: false,
@@ -32,18 +39,42 @@
 	<div class="block_content">
 		
 		<div class="page-header">
-			<h1>Formações de <?php echo $formacoes[0]["Pessoa"]["nome"] ?></h1>
+			<h1>Formações de <?php echo $pessoa["Pessoa"]["nome"] ?></h1>
 		</div>
-		<?php foreach($formacoes as $formacao): ?>
 		
-		Tipo:<?php echo $this->Estudo->showTipo($formacao["Formacao"]["tipo"]); ?><br />
-		Curso: <?php echo $formacao["Formacao"]["curso"] ?><br />
-		Conclusao: <?php echo $formacao["Formacao"]["conclusao"] ?><br />
-		Instituição: <?php echo $formacao["Formacao"]["instituicao"] ?><br /><br />
-		
-		<?php endforeach; ?>
-		<button type="button" id="add-btn">Adicionar formação</button>
-		<?php echo $this->Html->link("Adicionar atuações",array('action' => 'add',"controller" => "atuacoes", $pessoa_id)) ?>
+		<?php if (!empty($formacoes)): ?>	
+		<div class="row">
+			<div class="span15 columns">
+				<table id="formacoesTable" class="zebra-striped">
+					<thead>
+						<tr>
+							<th style="width: 100px" class="yellow header">Tipo</th>
+							<th class="blue header">Curso</th>
+							<th class="green header">Conclusão</th>
+							<th class="red header">Instituição</th>
+						</tr>
+					</thead>
+					<tbody>
+						<?php foreach($formacoes as $formacao): ?>
+						<tr>
+							<td><?php echo $this->Estudo->showTipo($formacao["Formacao"]["tipo"]); ?></td>
+							<td><?php echo $formacao["Formacao"]["curso"] ?></td>
+							<td><?php echo $formacao["Formacao"]["conclusao"] ?></td>
+							<td><?php echo $formacao["Formacao"]["instituicao"] ?></td>
+						</tr>
+						<?php endforeach; ?>
+					</tbody>
+				</table>	
+			</div>
+		</div>
+		<?php else: ?>
+			<div class="alert-message">
+				Não há formações cadastradas. Por favor, adicione-as.
+			</div>
+		<?php endif; ?>
+		<p><input id="add-btn" class="btn primary" type="submit" value="Adicionar Formação"></p>
+		<p><?php echo $this->Html->link("Finalizar cadastro",array('action' => 'index',"controller" => "pessoas"), array("class" => "btn success")) ?>
+		</p>
 		
 		
 	</div>		<!-- .block_content ends -->
@@ -53,15 +84,19 @@
 
 </div>		<!-- .block.small.left ends -->
 
-<div id="nova-formacao" style="display: none">
+<div title="Nova Formação" id="nova-formacao" style="display: none">
 		<?php echo $this->Form->create("Formacao",array("class" => "form-stacked"));?>
 
 		<?php echo $this->Form->input('Formacao.tipo',array("options" => array("1" => "Graduação","2" => 'Especialização','3' => 'Mestrado', '4' => 'Doutorado'))); ?>
-		<?php echo $this->Form->input('Formacao.curso', array("class" => "xlarge", "type" => "text")); ?>
-		<?php echo $this->Form->input('Formacao.conclusao', array("class" => "xlarge", "type" => "text")); ?>
-		<?php echo $this->Form->input('Formacao.instituicao', array("class" => "xlarge", "type" => "text")); ?>
-		<?php echo $this->Form->hidden('Formacao.pessoa_id', array("value" => $pessoa_id)); ?>
+		<?php echo $this->Form->input('Formacao.curso', array("class" => "xlarge validate[required]", "type" => "text")); ?>
+		<?php echo $this->Form->input('Formacao.conclusao', array("class" => "xlarge validate[required,custom[onlyNumberSp]]", "type" => "text")); ?>
+		<?php echo $this->Form->input('Formacao.instituicao', array("class" => "xlarge validate[required]", "type" => "text")); ?>
+		<?php echo $this->Form->hidden('Formacao.pessoa_id', array("value" => $pessoa["Pessoa"]["id"])); ?>
 		
-<?php echo $this->Form->end(__('Submit', true));?>
+		<p>
+			<div class="submit">
+				<input class="btn" type="submit" value="Adicionar">
+			</div>
+		</p>
 </div>
 

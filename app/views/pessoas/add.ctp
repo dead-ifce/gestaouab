@@ -64,7 +64,7 @@
 			<?php echo $this->Form->input('fax', array("class" => "xlarge validate[required]", "type" => "text")); ?>
 			<p>
 				<div class="submit">
-					<input class="btn primary" type="submit" value="Continuar">
+					<input class="btn success" type="submit" value="Continuar cadastro">
 				</div>
 			</p>
 
