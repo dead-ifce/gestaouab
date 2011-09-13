@@ -5,10 +5,10 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=7" />
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title>SisGest &#9679; Index</title>
-		<?php echo $this->Html->css(array('style','jquery.wysiwyg','facebox', 'visualize', 'date_input')) ?>
+		<?php echo $this->Html->css(array('style','jquery.wysiwyg','facebox', 'visualize')) ?>
 		<?php echo $scripts_for_layout; ?>
 		<!--[if lt IE 8]><style type="text/css" media="all">@import url("/adminus/css/ie.css");</style><![endif]-->
-		<?php echo $this->Html->script("adminus/jquery") ?>
+		<?php //echo $this->Html->script("adminus/jquery") ?>
 </head>
 <body>
 	<div id="hld">
@@ -44,7 +44,7 @@
 					</li>
 				</ul>
 				
-				<p class="user">Hello, <a href="#">John</a> | <a href="index.html">Logout</a></p>
+				<p class="user">Hello, <?php echo $this->Session->read('Auth.User.username'); ?>| <?php echo $this->Html->link("Logout", array("controller" => "users", "action" => "logout")) ?></p>
 			</div>		<!-- #header ends -->
 			
 
@@ -68,13 +68,13 @@
 	
 	
 	<?php 
-		echo $this->Html->script(array("adminus/jquery.img.preload",
-																	 "adminus/jquery.wysiwyg",
-																	 "adminus/jquery.date_input.pack",
-																	 "adminus/facebox",
-																	 "adminus/jquery.select_skin",
-																	 "adminus/jquery.tablesorter.min",
-																	 "adminus/custom")); 
+		// echo $this->Html->script(array("adminus/jquery.img.preloads",
+		// 																	 "adminus/jquery.wysiwyg",
+		// 																	 "adminus/jquery.date_input.pack2",
+		// 																	 "adminus/faceboxs",
+		// 																	 "adminus/jquery.select_skins",
+		// 																	 "adminus/jquery.tablesorter.mins",
+		// 																	 "adminus/custom")); 
 	?>
 	
 

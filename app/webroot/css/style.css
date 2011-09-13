@@ -393,7 +393,7 @@ a:hover {
 	padding: 10px 20px 0;
 	}
 
-.block .block_content h1,
+/*.block .block_content h1,
 .block .block_content h2 {
 	font-family: "Titillium999", "Trebuchet MS", Arial, sans-serif;
 	font-size: 18px;
@@ -416,7 +416,7 @@ a:hover {
 	font-weight: bold;
 	color: #666;
 	margin-bottom: 5px;
-	}
+	}*/
 	
 .block table {
 	text-align: left;
@@ -610,196 +610,7 @@ a:hover {
 	}
 
 
-/* Forms */
-
-.block form p {
-	overflow: hidden;
-	clear: both;
-	}
-
-.block form label {
-	font-family: "Lucida Grande", Verdana, sans-serif;
-	font-size: 12px;
-	font-weight: bold;
-	color: #555;
-	margin-right: 10px;
-	vertical-align: middle;
-	}
-
-.block form input.text {
-	width: 410px;
-	background: #fefefe;
-	border: 1px solid #bbb;
-	font-family: "Lucida Grande", Verdana, sans-serif;
-	font-size: 14px;
-	color: #333;
-	padding: 7px;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
-	outline: none;
-	vertical-align: middle;
-	}
-
-.block form input.text.medium { width: 600px; }
-.block form input.text.big { width: 98%; }
-
-.block form input.text.date_picker {
-	width: 100px;
-	padding-right: 36px;
-	cursor: pointer;
-	background: url(../img/cal.jpg) center right no-repeat;
-	}
-
-.block form textarea {
-	width: 98%;
-	height: 140px;
-	padding: 5px;
-	background: #fefefe;
-	border: 1px solid #bbb;
-	font-family: "Lucida Grande", Verdana, sans-serif;
-	font-size: 14px;
-	color: #333;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
-	outline: none;
-	}
-	
-.block form textarea.wysiwyg { width: 98%; padding: 0; }
-	
-.block form input.radio,
-.block form input.checkbox {
-	vertical-align: middle;
-	}
-
-
-/* Custom form select element */
-
-.block form select.styled {
-	width: 245px;
-	height: 18px;
-	margin-right: 20px;
-	cursor: pointer;
-	}
-	
-.block form .cmf-skinned-select {
-	padding: 7px;
-	display: block;
-	margin-right: 20px;
-	border: 1px solid #bbb;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
-	background: url('../img/sdd.jpg') center right no-repeat;
-	}
-
-.block form .cmf-skinned-select:hover {
-	background: url('../img/sdd_.jpg') center right no-repeat;
-	}
-
-.block form div.cmf-skinned-text {
-	padding: 5px 7px;
-	font-family: "Lucida Grande", Verdana, sans-serif;
-	font-size: 14px;
-	color: #333;
-	}
-	
-	
-/* Custom file input */
-
-.block form .fileupload {
-	position: relative;
-	}
-
-.block form .fileupload #uploadmsg {
-	display: block;
-	position: absolute;
-	top: 20px;
-	left: 350px;
-	height: 30px;
-	line-height: 30px;
-	margin-left: 5px;
-	font-size: 11px;
-	}
-
-.block form .fileupload #uploadmsg.loading {
-	background: url(../img/ajax-loader.gif) center left no-repeat;
-	width: 30px;
-	padding-left: 20px;
-	}
-	
-.block form input.file {
-	width: 250px;
-	height: 20px;
-	background: #fefefe;
-	border: 1px solid #bbb;
-	border-right: 0;
-	font-family: "Lucida Grande", Verdana, sans-serif;
-	font-size: 14px;
-	color: #333;
-	padding: 4px;
-	-webkit-border-top-left-radius: 3px;
-	-webkit-border-bottom-left-radius: 3px;
-	-moz-border-radius-topleft: 3px;
-	-moz-border-radius-bottomleft: 3px;
-	border-top-left-radius: 3px;
-	border-bottom-left-radius: 3px;
-	outline: none;
-	}
-
-.block form .note {
-	padding-left: 10px;
-	font-size: 11px;
-	font-weight: bold;
-	color: #757575;
-	vertical-align: middle;
-	}
-
-.block form .note.error { color: #e3302c; }
-			
-.block form input.submit {
-	width: 85px;
-	height: 30px;
-	line-height: 30px;
-	background: url(../img/btns.gif) top center no-repeat;
-	border: 0;
-	font-family: "Titillium800", "Trebuchet MS", Arial, sans-serif;
-	font-size: 14px;
-	font-weight: normal;
-	text-transform: uppercase;
-	color: #fff;
-	text-shadow: 1px 1px 0 #0a5482;
-	cursor: pointer;
-	margin-right: 10px;
-	vertical-align: middle;
-	}
-	
-.block form input.submit:hover {
-	background: url(../img/btns_.gif) top center no-repeat;
-	text-shadow: 1px 1px 0 #b55f10;
-	}
-
-.block form input.submit.tiny {
-	width: 105px;
-	height: 20px;
-	line-height: 20px;
-	padding-bottom: 2px;
-	vertical-align: middle;
-	font-family: "Lucida Grande", Arial, Helvetica, sans-serif;
-	font-size: 10px;
-	font-weight: bold;
-	text-transform: none;
-	background: url(../img/tiny.gif) top center no-repeat;
-	}
-	
-.block form input.submit.tiny:hover { background: url(../img/tiny_.gif) top center no-repeat; }
-	
-.block form input.submit.mid { width: 115px; background: url(../img/btnm.gif) top center no-repeat; }
-.block form input.submit.mid:hover { background: url(../img/btnm_.gif) top center no-repeat; }
-
-.block form input.submit.long { width: 165px; background: url(../img/btnb.gif) top center no-repeat; }
-.block form input.submit.long:hover { background: url(../img/btnb_.gif) top center no-repeat; }
+/*asasahsajhs*/
 
 
 /* Small blocks */
