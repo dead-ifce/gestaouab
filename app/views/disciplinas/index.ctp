@@ -1,3 +1,15 @@
+<?php echo $javascript->link(array("/js/jquery/jquery-1.5.2.min",
+								   "/js/jquery/jquery-ui-1.8.16.custom.min",
+								   "/js/validation/languages/jquery.validationEngine-pt",
+								   "/js/validation/jquery.validationEngine",
+								   "/js/tablesorter/jquery.tablesorter.min"),false); ?>
+<?php echo $this->Html->css(array('jquery-ui-1.8.13.custom',"bootstrap","validationEngine.jquery")); ?>
+<script type="text/javascript" charset="utf-8">
+	$(document).ready(function() {
+    	$("#disciplinasTable").tablesorter({ sortList: [[0,1]] });
+		
+	});
+</script>
 <div class="block">
 
 	<div class="block_head">
@@ -10,54 +22,33 @@
 	
 	
 	<div class="block_content">
-		
-<div class="disciplinas index">
-	<table cellpadding="0" cellspacing="0">
+		<div class="row">
+			<div class="span15 columns">
+	<table id="disciplinasTable" class="zebra-striped">
+	<thead>	
 	<tr>
-			<th><?php echo $this->Paginator->sort('id');?></th>
-			<th><?php echo $this->Paginator->sort('nome');?></th>
-			<th><?php echo $this->Paginator->sort('carga');?></th>
-			<th><?php echo $this->Paginator->sort('semestre');?></th>
-			<th><?php echo $this->Paginator->sort('numsemanas');?></th>
-			<th class="actions"><?php __('Actions');?></th>
+			<th>Nome</th>
+			<th>Carga</th>
+			<th>Semestre</th>
+			<th>Ações</th>
 	</tr>
-	<?php
-	$i = 0;
-	foreach ($disciplinas as $disciplina):
-		$class = null;
-		if ($i++ % 2 == 0) {
-			$class = ' class="altrow"';
-		}
-	?>
-	<tr<?php echo $class;?>>
-		<td><?php echo $disciplina['Disciplina']['id']; ?>&nbsp;</td>
+	<thead>
+	<tbody>	
+	<?php foreach ($disciplinas as $disciplina): ?>
+	<tr>
 		<td><?php echo $disciplina['Disciplina']['nome']; ?>&nbsp;</td>
-		<td><?php echo $disciplina['Disciplina']['carga']; ?>&nbsp;</td>
+		<td><?php echo $disciplina['Disciplina']['carga']; ?>h</td>
 		<td><?php echo $disciplina['Disciplina']['semestre']; ?>&nbsp;</td>
-		<td><?php echo $disciplina['Disciplina']['numsemanas']; ?>&nbsp;</td>
-		<td class="actions">
-			<?php echo $this->Html->link(__('View', true), array('action' => 'view', $disciplina['Disciplina']['id'])); ?>
+		<td >
 			<?php echo $this->Html->link(__('Edit', true), array('action' => 'edit', $disciplina['Disciplina']['id'])); ?>
 			<?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $disciplina['Disciplina']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $disciplina['Disciplina']['id'])); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>
+	</tbody>
 	</table>
-	<p>
-	<?php
-	echo $this->Paginator->counter(array(
-	'format' => __('Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%', true)
-	));
-	?>	</p>
-
-	<div class="paging">
-		<?php echo $this->Paginator->prev('<< ' . __('previous', true), array(), null, array('class'=>'disabled'));?>
-	 | 	<?php echo $this->Paginator->numbers();?>
- |
-		<?php echo $this->Paginator->next(__('next', true) . ' >>', array(), null, array('class' => 'disabled'));?>
 	</div>
-</div>
-
+	</div>
 
 	</div>		<!-- .block_content ends -->
 	

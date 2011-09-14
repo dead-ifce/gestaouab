@@ -1,0 +1,50 @@
+/*----------------------------------------------------------------------*/
+/* Tables
+/*----------------------------------------------------------------------*/
+
+table{
+	width:100%;
+	border-collapse:collapse;
+	margin-bottom:18px;
+}
+table td, table th{
+	border:1px solid;
+	padding:6px 3px;
+	text-align:center;
+}
+table th{
+	font-weight:700;
+}
+div.chart .legend table{
+	border:0;
+	width:auto;
+}
+div.chart{
+	max-width:100%;
+	margin-bottom:18px;
+}
+div.chart .legend table td{
+	vertical-align:middle;
+	text-align:center;
+}
+div.chart .legend table td.legendColorBox{
+	opacity:0.6;
+	filter:Alpha(opacity=60);
+}
+
+table.documentation{
+}
+
+table.documentation th, table.documentation td{
+	text-align:left;
+}
+
+
+/*----------------------------------------------------------------------*/
+/* Datatables
+/*----------------------------------------------------------------------*/
+
+.dataTables_length div{
+	float:none !important;
+	margin:0;
+}

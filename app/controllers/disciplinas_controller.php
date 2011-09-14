@@ -2,7 +2,7 @@
 class DisciplinasController extends AppController {
 
 	var $name = 'Disciplinas';
-
+	var $helpers = array("Html","Javascript");
 	function index() {
 		$this->Disciplina->recursive = 0;
 		$this->set('disciplinas', $this->paginate());
@@ -18,7 +18,6 @@ class DisciplinasController extends AppController {
 
 	function add() {
 		if (!empty($this->data)) {
-			debug($this->data);
 			$this->Disciplina->create();
 			
 		 if ($this->Disciplina->save($this->data)) {
@@ -30,7 +29,7 @@ class DisciplinasController extends AppController {
 		}
 		$cursos = $this->Disciplina->Curso->find('list', array("fields" => array("Curso.id", "Curso.nome")));
 		$turmas = $this->Disciplina->Turma->find('list', array("fields" => array("Turma.id", "Turma.nome")));
-		$this->set(compact('cursos'));
+		$this->set(compact('cursos','turmas'));
 	}
 
 	function edit($id = null) {
@@ -49,8 +48,8 @@ class DisciplinasController extends AppController {
 		if (empty($this->data)) {
 			$this->data = $this->Disciplina->read(null, $id);
 		}
-		$cursos = $this->Disciplina->Curso->find('list');
-		$turmas = $this->Disciplina->Turma->find('list');
+		$cursos = $this->Disciplina->Curso->find('list',array("fields" => array("Curso.id","Curso.nome")));
+		$turmas = $this->Disciplina->Turma->find('list',array("fields" => array("Turma.id","Turma.nome")));
 		$this->set(compact('cursos', 'turmas'));
 	}
 

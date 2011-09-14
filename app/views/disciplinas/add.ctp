@@ -1,73 +1,50 @@
-<style type="text/css" media="screen">
-	.scroll_checkboxes {
-	    height: 100px;
-	    padding: 5px;
-	    overflow: auto;
-	    border: 1px solid #ccc
-	}
-	.input{
-		padding-bottom: 15px;
-	}
-</style>
+<?php echo $javascript->link(array("/js/jquery/jquery-1.5.2.min","/js/jquery/jquery-ui-1.8.16.custom.min"),false); ?>
+<?php echo $this->Html->css(array('jquery-ui-1.8.13.custom',"bootstrap")); ?>
 
-<script type="text/javascript" charset="utf-8">
-	$(document).ready(function() {
-		$("#CursoCurso").bind('change', function() {
-			$.post("<?php echo Dispatcher::baseUrl();?>/calendarios/getTurmasByCurso/" + $(this).val(), function(data) {
-		        $("#TurmaTurma").empty().append(data);
-		    }, 'html');
-		});
+<style type="text/css" media="screen">
+	.xlarge { 
+		height: 100px;
+	}
 	
-	});
-</script>
+</style>
 <div class="block">
 
 	<div class="block_head">
 		<div class="bheadl"></div>
 		<div class="bheadr"></div>
 		
-		<h2>Disciplinas</h2>
+		<h2>Disciplinas</h2>	
 	</div>		<!-- .block_head ends -->
-	
-	
-	
+
 	<div class="block_content">
+		<div class="row">
+	    	<div class="span8 columns">
+				<div class="disciplinas form">
+					<?php echo $this->Form->create('Disciplina', array("class" => "form-stacked"));?>
+						<?php
+							echo $this->Form->input('nome');
+							echo $this->Form->input('carga');
+							echo $this->Form->input('semestre',array("type" => "select", "options" => array('1' => '1', '2' => '2')));
+							echo $this->Form->input('numsemanas',array("label" => "Numero de semanas"));
+							echo $this->Form->input('Curso', array("class" => "xlarge"));
+							echo $this->Form->input('Turma', array("class" => "xlarge"));
+						?>
+					<p><?php echo $this->Form->end(__('Adicionar', true));?></p>
+				
+				</div>
+			</div>
+		</div>
+		
+	</div>		<!-- .block_content ends -->
 
-<div class="disciplinas form">
-<?php echo $this->Form->create('Disciplina');?>
+		<div class="bendl"></div>
+		<div class="bendr"></div>
 
-	<?php
-		echo $this->Form->input('nome', array("class" => "text small"));
-		echo $this->Form->input('carga', array("class" => "text small"));
-		echo $this->Form->input('semestre', array("class" => "text small"));
-		echo $this->Form->input('numsemanas', array("class" => "text small"));
-	?>
-	
- <?php echo $this->Form->input('Curso', array("type" => "select",
-																						 	"options" => $cursos,
-																						  "empty" => 'Selecione...',
-																						  "class" => "styled")); ?>
- 
- <?php echo $this->Form->input('Turma', array("type" => "select",
-																							"empty" => 'Selecione...',
-																							"class" => "styled")); ?>
+</div>		<!-- .block.small.left ends -->
 
-<?php echo $this->Form->end(__('Submit', true));?>
-</div>
-<div class="actions">
-	<h3><?php __('Actions'); ?></h3>
-	<ul>
 
-		<li><?php echo $this->Html->link(__('List Disciplinas', true), array('action' => 'index'));?></li>
-		<li><?php echo $this->Html->link(__('List Cursos', true), array('controller' => 'cursos', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Curso', true), array('controller' => 'cursos', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Turmas', true), array('controller' => 'turmas', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Turma', true), array('controller' => 'turmas', 'action' => 'add')); ?> </li>
-	</ul>
-</div>
 
-</div>		<!-- .block_content ends -->
 
-<div class="bendl"></div>
-<div class="bendr"></div>
-</div>		<!-- .block ends -->
+
+
+

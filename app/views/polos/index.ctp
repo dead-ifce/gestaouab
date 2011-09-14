@@ -1,51 +1,61 @@
-<div class="polos index">
-	<h2><?php __('Polos');?></h2>
-	<table cellpadding="0" cellspacing="0">
-	<tr>
-			<th><?php echo $this->Paginator->sort('id');?></th>
-			<th><?php echo $this->Paginator->sort('nome');?></th>
-			<th class="actions"><?php __('Actions');?></th>
-	</tr>
-	<?php
-	$i = 0;
-	foreach ($polos as $polo):
-		$class = null;
-		if ($i++ % 2 == 0) {
-			$class = ' class="altrow"';
-		}
-	?>
-	<tr<?php echo $class;?>>
-		<td><?php echo $polo['Polo']['id']; ?>&nbsp;</td>
-		<td><?php echo $polo['Polo']['nome']; ?>&nbsp;</td>
-		<td class="actions">
-			<?php echo $this->Html->link(__('View', true), array('action' => 'view', $polo['Polo']['id'])); ?>
-			<?php echo $this->Html->link(__('Edit', true), array('action' => 'edit', $polo['Polo']['id'])); ?>
-			<?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $polo['Polo']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $polo['Polo']['id'])); ?>
-		</td>
-	</tr>
-<?php endforeach; ?>
-	</table>
-	<p>
-	<?php
-	echo $this->Paginator->counter(array(
-	'format' => __('Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%', true)
-	));
-	?>	</p>
+<?php echo $javascript->link(array("/js/jquery/jquery-1.5.2.min",
+								   "/js/jquery/jquery-ui-1.8.16.custom.min",
+								   "/js/validation/languages/jquery.validationEngine-pt",
+								   "/js/validation/jquery.validationEngine",
+								   "/js/tablesorter/jquery.tablesorter.min"),false); ?>
+<?php echo $this->Html->css(array('jquery-ui-1.8.13.custom',"bootstrap","validationEngine.jquery")); ?>
 
-	<div class="paging">
-		<?php echo $this->Paginator->prev('<< ' . __('previous', true), array(), null, array('class'=>'disabled'));?>
-	 | 	<?php echo $this->Paginator->numbers();?>
- |
-		<?php echo $this->Paginator->next(__('next', true) . ' >>', array(), null, array('class' => 'disabled'));?>
-	</div>
-</div>
-<div class="actions">
-	<h3><?php __('Actions'); ?></h3>
-	<ul>
-		<li><?php echo $this->Html->link(__('New Polo', true), array('action' => 'add')); ?></li>
-		<li><?php echo $this->Html->link(__('List Turmas', true), array('controller' => 'turmas', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Turma', true), array('controller' => 'turmas', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Cursos', true), array('controller' => 'cursos', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Curso', true), array('controller' => 'cursos', 'action' => 'add')); ?> </li>
-	</ul>
-</div>
+<script type="text/javascript" charset="utf-8">
+	$(document).ready(function() {
+    	$("#turmasTable").tablesorter({ sortList: [[0,1]] });
+		
+	});
+</script>
+
+<div class="block">
+
+	<div class="block_head">
+		<div class="bheadl"></div>
+		<div class="bheadr"></div>
+		
+		<h2>Turmas</h2>
+	</div>		<!-- .block_head ends -->
+	<div class="block_content">
+		<div class="row">
+			<div class="span8 columns">
+			
+				<table id="polosTable" class="zebra-striped">
+				<tr>
+					<th><?php echo $this->Paginator->sort('nome');?></th>
+					<th class="actions"><?php __('Actions');?></th>
+				</tr>
+				<?php
+				foreach ($polos as $polo):
+
+				?>
+				<tr>
+					<td><?php echo $polo['Polo']['nome']; ?>&nbsp;</td>
+					<td class="actions">
+						<?php echo $this->Html->link(__('Editar', true), array('action' => 'edit', $polo['Polo']['id'])); ?>
+						<?php echo $this->Html->link(__('Apagar', true), array('action' => 'delete', $polo['Polo']['id']), null, sprintf(__('Você tem certeza que deseja apagar este pólo?', true), $polo['Polo']['id'])); ?>
+					</td>
+				</tr>
+			<?php endforeach; ?>
+				</table>
+			
+			</div>
+		</div>
+		
+	</div>		<!-- .block_content ends -->
+	
+	<div class="bendl"></div>
+	<div class="bendr"></div>
+</div>		<!-- .block ends -->
+
+
+
+	
+	
+	
+	
+	

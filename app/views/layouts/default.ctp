@@ -17,10 +17,17 @@
 				<div class="hdrl"></div>
 				<div class="hdrr"></div>
 				
-				<h1><a href="#">sisgest</a></h1>
+				<h1><a href="<?php echo Dispatcher::baseUrl();?>">sisgest</a></h1>
 				
 				<ul id="nav">
-					<li class="active"><a href="#">Dashboard</a></li>
+					<li class="active"><a href="<?php echo Dispatcher::baseUrl();?>">Dashboard</a></li>
+					<li><a href="#">Cursos</a>
+						<ul>
+							<li><a href="<?php echo Dispatcher::baseUrl();?>/cursos/index/">Mostrar</a></li>
+							<li><a href="<?php echo Dispatcher::baseUrl();?>/cursos/add/">Adicionar</a></li>
+							</li>
+						</ul>
+					</li>
 					<li><a href="#">Turmas</a>
 						<ul>
 							<li><a href="<?php echo Dispatcher::baseUrl();?>/turmas/index/">Mostrar</a></li>
@@ -35,6 +42,13 @@
 							</li>
 						</ul>
 					</li>
+					<li><a href="#">Pólos</a>
+						<ul>
+							<li><a href="<?php echo Dispatcher::baseUrl();?>/polos/index/">Mostrar</a></li>
+							<li><a href="<?php echo Dispatcher::baseUrl();?>/polos/add/">Adicionar</a></li>
+							</li>
+						</ul>
+					</li>
 					<li><a href="#">Calendários</a>
 						<ul>
 							<li><a href="<?php echo Dispatcher::baseUrl();?>/calendarios/index/">Mostrar</a></li>
@@ -42,9 +56,20 @@
 							</li>
 						</ul>
 					</li>
+					<li><a href="#">Pessoas</a>
+						<ul>
+							<li><a href="<?php echo Dispatcher::baseUrl();?>/pessoas/index/">Mostrar</a></li>
+							<li><a href="<?php echo Dispatcher::baseUrl();?>/pessoas/add/">Adicionar</a></li>
+							</li>
+						</ul>
+					</li>
 				</ul>
 				
-				<p class="user">Hello, <?php echo $this->Session->read('Auth.User.username'); ?>| <?php echo $this->Html->link("Logout", array("controller" => "users", "action" => "logout")) ?></p>
+				<?php if($this->Session->read('Auth.User')): ?>
+					<p class="user">Oi, <?php echo $this->Session->read('Auth.User.username'); ?>| 
+					<?php echo $this->Html->link("Logout", array("controller" => "users", "action" => "logout")) ?>
+					</p>
+				<?php endif; ?>
 			</div>		<!-- #header ends -->
 			
 

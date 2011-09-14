@@ -2,7 +2,8 @@
 class TurmasController extends AppController {
 
 	var $name = 'Turmas';
-
+	var $helpers = array("Html","Javascript");
+	
 	function index() {
 		//$this->Turma->recursive = 1;
 		$this->set('turmas', $this->paginate());
@@ -50,9 +51,10 @@ class TurmasController extends AppController {
 		if (empty($this->data)) {
 			$this->data = $this->Turma->read(null, $id);
 		}
-		$polos = $this->Turma->Polo->find('list');
-		$disciplinas = $this->Turma->Disciplina->find('list');
-		$this->set(compact('polos', 'disciplinas'));
+		$cursos = $this->Turma->Curso->find('list',array("fields" => array("Curso.id","Curso.nome")));
+		$polos = $this->Turma->Polo->find('list',array("fields" => array("Polo.id","Polo.nome")));
+		$disciplinas = $this->Turma->Disciplina->find('list',array("fields" => array("Disciplina.id","Disciplina.nome")));
+		$this->set(compact('polos', 'disciplinas','cursos'));
 	}
 
 	function delete($id = null) {

@@ -2,7 +2,7 @@
 class PolosController extends AppController {
 
 	var $name = 'Polos';
-
+	var $helpers = array('Javascript');
 	function index() {
 		$this->Polo->recursive = 0;
 		$this->set('polos', $this->paginate());
@@ -26,7 +26,7 @@ class PolosController extends AppController {
 				$this->Session->setFlash(__('The polo could not be saved. Please, try again.', true));
 			}
 		}
-		$cursos = $this->Polo->Curso->find('list');
+		$cursos = $this->Polo->Curso->find('list', array("fields" => array("Curso.id","Curso.nome")));
 		$this->set(compact('cursos'));
 	}
 
@@ -46,7 +46,7 @@ class PolosController extends AppController {
 		if (empty($this->data)) {
 			$this->data = $this->Polo->read(null, $id);
 		}
-		$cursos = $this->Polo->Curso->find('list');
+		$cursos = $this->Polo->Curso->find('list', array("fields" => array("Curso.id","Curso.nome")));
 		$this->set(compact('cursos'));
 	}
 

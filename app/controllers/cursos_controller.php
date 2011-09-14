@@ -2,6 +2,7 @@
 class CursosController extends AppController {
 
 	var $name = 'Cursos';
+	var $helpers = array("Javascript");
 
 	function index() {
 		$this->Curso->recursive = 0;
@@ -19,15 +20,7 @@ class CursosController extends AppController {
 	function add() {
 		if (!empty($this->data)) {
 			$this->Curso->create();
-			
-			$dados = $this->data;
-
-			$this->data = array();
-			for($i = 0; $i < 3; $i++){
-				array_push($this->data,$dados);
-			}
-			
-			if ($this->Curso->saveAll($this->data)) {
+			if ($this->Curso->save($this->data)) {
 				$this->Session->setFlash(__('The curso has been saved', true));
 				$this->redirect(array('action' => 'index'));
 			} else {
@@ -54,7 +47,7 @@ class CursosController extends AppController {
 		if (empty($this->data)) {
 			$this->data = $this->Curso->read(null, $id);
 		}
-		$disciplinas = $this->Curso->Disciplina->find('list');
+		$disciplinas = $this->Curso->Disciplina->find('list',array("fields" => array("Disciplina.id","Disciplina.nome")));
 		$this->set(compact('disciplinas'));
 	}
 

@@ -1,13 +1,11 @@
+
+<?php echo $javascript->link(array("/js/jquery/jquery-1.5.2.min","/js/jquery/jquery-ui-1.8.16.custom.min"),false); ?>
+<?php echo $this->Html->css(array('jquery-ui-1.8.13.custom',"bootstrap")); ?>
 <style type="text/css" media="screen">
-	.scroll_checkboxes {
-	    height: 100px;
-	    padding: 5px;
-	    overflow: auto;
-	    border: 1px solid #ccc
+	.xlarge { 
+		height: 100px;
 	}
-	.input{
-		padding-bottom: 15px;
-	}
+	
 </style>
 <div class="block">
 
@@ -21,21 +19,18 @@
 	
 	
 	<div class="block_content">
-
-<div class="turmas form">
-	<?php echo $this->Form->create('Turma');?>
-
-	<?php echo $this->Form->input('nome', array("type" => "text","class" => "text small"));	?>
-	<?php echo $this->Form->input('curso_id', array("class" => "styled"));   ?>	
-	<label>Disciplina</label>
-	<div class="scroll_checkboxes">
-		<?php echo $this->Form->input('Disciplina',array('multiple'=>'checkbox', "label" => false)); ?>
+	<div class="row">
+	    <div class="span15 columns">
+			<div class="turmas form">
+				<?php echo $this->Form->create('Turma', array("class" => "form-stacked"));?>
+				<?php echo $this->Form->input('nome', array("type" => "text","class" => "text small"));	?>
+				<?php echo $this->Form->input('curso_id', array("class" => "styled"));   ?>	
+				<?php echo $this->Form->input('Disciplina', array("class" => "xlarge")); ?>
+				<?php echo $this->Form->input('Polo', array("class" => "xlarge"));       ?>
+				<p><?php echo $this->Form->end(__('Adicionar', true));?></p>
+			</div>
+		</div>
 	</div>
-	<p><?php echo $this->Form->input('Polo');       ?></p>	
-
-<?php echo $this->Form->end(__('Submit', true));?>
-</div>
-
 
 </div>		<!-- .block_content ends -->
 

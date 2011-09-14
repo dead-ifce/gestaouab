@@ -7,7 +7,11 @@ class PessoasController extends AppController {
 	
 	
 	function index() {
-		//debug($this->Pessoa->find("all"));
+		$this->Pessoa->recursive = 2;
+		$pessoas = $this->Pessoa->find("all");
+		$this->set("pessoas",$pessoas);	
+		
+		//debug($pessoas);
 	}
 	
 	
