@@ -10,6 +10,7 @@ class UsersController extends AppController {
 	}	
 	
 	function login() {
+		$this->Auth->loginRedirect = array('controller' => 'pessoas', 'action' => 'index');
 	}
      
 	function logout() {

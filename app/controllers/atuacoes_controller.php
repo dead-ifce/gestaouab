@@ -5,9 +5,12 @@ class AtuacoesController extends AppController {
 	var $helpers = array('Javascript');
 	var $uses = array('Pessoa', "Atuacao", "Curso", "Disciplina", "Funcao");
 	
+	function beforeFilter() {
+    	parent::beforeFilter();
+    	$this->Auth->allow('add');
+	}
 	
 	function index() {
-		debug($this->Pessoa->find("all"));
 	}
 	
 	

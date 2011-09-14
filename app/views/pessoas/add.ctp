@@ -6,7 +6,8 @@
 <?php echo $this->Html->css(array('jquery-ui-1.8.13.custom',"bootstrap","validationEngine.jquery")); ?>
 <script>
 	$(document).ready(function(){
-    	$("#PessoaAddForm").validationEngine();
+
+		$("#PessoaAddForm").validationEngine();
 		$("#PessoaNascimento").mask("99/99/9999")
 		$("#PessoaCpf").mask("999.999.999-99");
 		$("#PessoaCel").mask("(99) 9999-9999")
@@ -16,6 +17,7 @@
 
    	});
 </script>
+
 <div class="block">
 
 	<div class="block_head">

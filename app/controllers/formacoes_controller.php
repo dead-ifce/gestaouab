@@ -6,6 +6,12 @@ class FormacoesController extends AppController {
 	
 	var $uses = array('Pessoa', "Atuacao", "Curso", "Disciplina", "Funcao","Formacao");
 	
+	
+	function beforeFilter() {
+    	parent::beforeFilter();
+    	$this->Auth->allow('add');
+	}
+	
 	function index() {
 		
 	}

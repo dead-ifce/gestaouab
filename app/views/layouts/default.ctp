@@ -8,7 +8,20 @@
 		<?php echo $this->Html->css(array('style','jquery.wysiwyg','facebox', 'visualize')) ?>
 		<?php echo $scripts_for_layout; ?>
 		<!--[if lt IE 8]><style type="text/css" media="all">@import url("/adminus/css/ie.css");</style><![endif]-->
-		<?php //echo $this->Html->script("adminus/jquery") ?>
+		
+		<script>
+			$(document).ready(function(){
+				<!--
+				<?php
+					if(!$this->Session->read('Auth.User')){
+						echo "\$(\"#nav\").hide();";
+					}
+				?>
+				//-->
+		   	});
+		</script>
+		
+		
 </head>
 <body>
 	<div id="hld">

@@ -6,14 +6,17 @@ class PessoasController extends AppController {
 	var $uses = array('Pessoa', "Atuacao", "Curso", "Disciplina", "Funcao");
 	
 	
+	function beforeFilter() {
+    	parent::beforeFilter();
+    	$this->Auth->allow('add');
+	}
+	
 	function index() {
 		$this->Pessoa->recursive = 2;
 		$pessoas = $this->Pessoa->find("all");
 		$this->set("pessoas",$pessoas);	
 		
-		//debug($pessoas);
 	}
-	
 	
 	function add(){
 	
