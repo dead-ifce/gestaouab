@@ -2,11 +2,11 @@
 								   "/js/jquery/jquery-ui-1.8.16.custom.min",
 								   "/js/validation/languages/jquery.validationEngine-pt",
 								   "/js/validation/jquery.validationEngine",
-								   "/js/mask/jquery.maskedinput-1.3.min"),false); ?>
+								   "/js/mask/jquery.maskedinput-1.3.min",
+								   "/js/validation/jquery.cpf.js"),false); ?>
 <?php echo $this->Html->css(array('jquery-ui-1.8.13.custom',"bootstrap","validationEngine.jquery")); ?>
 <script>
 	$(document).ready(function(){
-
 		$("#PessoaAddForm").validationEngine();
 		$("#PessoaNascimento").mask("99/99/9999")
 		$("#PessoaCpf").mask("999.999.999-99");
@@ -14,8 +14,8 @@
 		$("#PessoaTel").mask("(99) 9999-9999")
 		$("#PessoaFax").mask("(99) 9999-9999")
 		
-
    	});
+
 </script>
 
 <div class="block">
@@ -47,7 +47,7 @@
 																		   'Viúvo(a)' => 'Viúvo(a)')));
 			?>
 			<?php echo $this->Form->input('sexo', array("class" => "xlarge", "type" => "select", "options" => array('Masculino' => 'Masculino', 'Feminino' => 'Feminino')));?>
-			<?php echo $this->Form->input('cpf', array("class" => "xlarge validate[required]", "type" => "text", "label" => "CPF"));?>
+			<?php echo $this->Form->input('cpf', array("class" => "xlarge validate[required, funcCall[validaCPF]]", "type" => "text", "label" => "CPF"));?>
 			<?php echo $this->Form->input('rg', array("class" => "xlarge validate[required,custom[onlyNumberSp]]", "type" => "text", "label" => "RG")); ?>
 			<?php echo $this->Form->input('rg_orgao', array("class" => "xlarge validate[required]", "type" => "text", "label" => "Orgão emissor")); ?>
 			<?php echo $this->Form->input('nacionalidade', array("class" => "xlarge validate[required]", "type" => "text")); ?>

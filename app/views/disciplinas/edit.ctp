@@ -24,9 +24,9 @@
 						<?php
 							echo $this->Form->input('id');
 							echo $this->Form->input('nome');
-							echo $this->Form->input('carga');
-							echo $this->Form->input('semestre');
-							echo $this->Form->input('numsemanas',array("label" => "Numero de semanas"));
+							echo $this->Form->input('carga',array("type" => "select", "options" => array('40' => '40h', '60' => '60h',"80" => "80h","100" => "100h","120" => "120h")));
+							echo $this->Form->input('semestre',array("type" => "select", "options" => array('1' => '1', '2' => '2')));
+							echo $this->Form->input('numsemanas',array("label" => "Numero de semanas","type" => "select", "options" => array('4' => '4', '6' => '6', '8' => '8', '10' => '10', '12' => '12')));
 							echo $this->Form->input('Curso', array("class" => "xlarge"));
 							echo $this->Form->input('Turma', array("class" => "xlarge"));
 						?>

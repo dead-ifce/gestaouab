@@ -40,8 +40,8 @@
 		<td><?php echo $disciplina['Disciplina']['carga']; ?>h</td>
 		<td><?php echo $disciplina['Disciplina']['semestre']; ?>&nbsp;</td>
 		<td >
-			<?php echo $this->Html->link(__('Edit', true), array('action' => 'edit', $disciplina['Disciplina']['id'])); ?>
-			<?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $disciplina['Disciplina']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $disciplina['Disciplina']['id'])); ?>
+			<?php echo $this->Html->link(__('Editar', true), array('action' => 'edit', $disciplina['Disciplina']['id'])); ?>
+			<?php echo $this->Html->link(__('Apagar', true), array('action' => 'delete', $disciplina['Disciplina']['id']), null, sprintf(__('Você gostaria de apagar esta disciplina?', true), $disciplina['Disciplina']['id'])); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>

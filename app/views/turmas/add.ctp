@@ -1,6 +1,17 @@
+<?php echo $javascript->link(array("/js/jquery/jquery-1.5.2.min",
+								   "/js/jquery/jquery-ui-1.8.16.custom.min",
+								   "/js/validation/languages/jquery.validationEngine-pt",
+								   "/js/validation/jquery.validationEngine"),false); ?>
+<?php echo $this->Html->css(array('jquery-ui-1.8.13.custom',"bootstrap","validationEngine.jquery")); ?>
 
-<?php echo $javascript->link(array("/js/jquery/jquery-1.5.2.min","/js/jquery/jquery-ui-1.8.16.custom.min"),false); ?>
-<?php echo $this->Html->css(array('jquery-ui-1.8.13.custom',"bootstrap")); ?>
+<script type="text/javascript" charset="utf-8">
+	$(document).ready(function(){
+
+		$("#TurmaAddForm").validationEngine();
+
+   	});
+</script>
+
 <style type="text/css" media="screen">
 	.xlarge { 
 		height: 100px;
@@ -23,7 +34,7 @@
 	    <div class="span15 columns">
 			<div class="turmas form">
 				<?php echo $this->Form->create('Turma', array("class" => "form-stacked"));?>
-				<?php echo $this->Form->input('nome', array("type" => "text","class" => "text small"));	?>
+				<?php echo $this->Form->input('nome', array("type" => "text","class" => "text small validate[required]"));	?>
 				<?php echo $this->Form->input('curso_id', array("class" => "styled"));   ?>	
 				<?php echo $this->Form->input('Disciplina', array("class" => "xlarge")); ?>
 				<?php echo $this->Form->input('Polo', array("class" => "xlarge"));       ?>

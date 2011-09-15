@@ -8,7 +8,14 @@ class AppController extends Controller {
          ),
         'Session'
     );
-
+	
+	function beforeFilter(){
+		$this->Auth->fields = array(
+			'username' => 'email',
+		 	'password' => 'password'
+	 	);
+	}
+	
     function isAuthorized() {
          return true;
      }

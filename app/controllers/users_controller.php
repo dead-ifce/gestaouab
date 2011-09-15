@@ -6,7 +6,7 @@ class UsersController extends AppController {
 	
 	function beforeFilter() {
     	parent::beforeFilter();
-    	$this->Auth->allow('add');
+		$this->Auth->allow("add");
 	}	
 	
 	function login() {
@@ -34,12 +34,16 @@ class UsersController extends AppController {
 
 	function add() {
 		if (!empty($this->data)) {
-			$this->User->create();
-			if ($this->User->save($this->data)) {
-				$this->Session->setFlash(__('The user has been saved', true));
-				$this->redirect(array('action' => 'login'));
-			} else {
-				$this->Session->setFlash(__('The user could not be saved. Please, try again.', true));
+			if($this->data["User"]["password"] == $this->Auth->password($this->data["User"]["password_confirm"])){
+				$this->User->create();
+				if ($this->User->save($this->data)) {
+					$this->Session->setFlash(__('O Usuário foi salvo corretamente', true),"default",array("class" => "alert-message success flash"));
+					$this->redirect(array('action' => 'index'));
+				} else {
+					$this->Session->setFlash(__('O usuário não pode ser salvo. Por favor, tente novamente.', true),"default",array("class" => "alert-message error flash"));
+				}
+			}else {
+				$this->Session->setFlash(__('O usuário não pode ser salvo pois as senhas estão diferentes', true),"default",array("class" => "alert-message error flash"));
 			}
 		}
 	}
@@ -50,11 +54,16 @@ class UsersController extends AppController {
 			$this->redirect(array('action' => 'index'));
 		}
 		if (!empty($this->data)) {
-			if ($this->User->save($this->data)) {
-				$this->Session->setFlash(__('The user has been saved', true));
-				$this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The user could not be saved. Please, try again.', true));
+			if($this->data["User"]["password"] == $this->Auth->password($this->data["User"]["password_confirm"])){
+			
+				if ($this->User->save($this->data)) {
+					$this->Session->setFlash(__('O Usuário foi salvo corretamente', true),"default",array("class" => "alert-message success flash"));
+					$this->redirect(array('action' => 'index'));
+				} else {
+					$this->Session->setFlash(__('O usuário não pode ser salvo. Por favor, tente novamente', true),"default",array("class" => "alert-message error flash"));
+				}
+			}else {
+				$this->Session->setFlash(__('O usuário não pode ser salvo pois as senhas estão diferentes', true),"default",array("class" => "alert-message error flash"));
 			}
 		}
 		if (empty($this->data)) {
@@ -64,14 +73,14 @@ class UsersController extends AppController {
 
 	function delete($id = null) {
 		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for user', true));
+			$this->Session->setFlash(__('Invalid id for user', true),"default",array("class" => "alert-message error flash"));
 			$this->redirect(array('action'=>'index'));
 		}
 		if ($this->User->delete($id)) {
-			$this->Session->setFlash(__('User deleted', true));
+			$this->Session->setFlash(__('User deleted', true),"default",array("class" => "alert-message error success"));
 			$this->redirect(array('action'=>'index'));
 		}
-		$this->Session->setFlash(__('User was not deleted', true));
+		$this->Session->setFlash(__('User was not deleted', true),"default",array("class" => "alert-message error flash"));
 		$this->redirect(array('action' => 'index'));
 	}
 }

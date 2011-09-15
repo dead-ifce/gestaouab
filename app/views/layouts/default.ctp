@@ -18,6 +18,12 @@
 					}
 				?>
 				//-->
+				
+				$(".alert-message").click(function(){
+					$(this).hide("slow");
+				});
+				
+				
 		   	});
 		</script>
 		
@@ -62,6 +68,13 @@
 							</li>
 						</ul>
 					</li>
+					<li><a href="#">Pessoas</a>
+						<ul>
+							<li><a href="<?php echo Dispatcher::baseUrl();?>">Mostrar</a></li>
+							<li><a href="<?php echo Dispatcher::baseUrl();?>/pessoas/add/">Adicionar</a></li>
+							</li>
+						</ul>
+					</li>
 					<li><a href="#">Calendários</a>
 						<ul>
 							<li><a href="<?php echo Dispatcher::baseUrl();?>/calendarios/index/">Mostrar</a></li>
@@ -69,21 +82,23 @@
 							</li>
 						</ul>
 					</li>
-					<li><a href="#">Pessoas</a>
+					<li><a href="#">Usuários</a>
 						<ul>
-							<li><a href="<?php echo Dispatcher::baseUrl();?>/pessoas/index/">Mostrar</a></li>
-							<li><a href="<?php echo Dispatcher::baseUrl();?>/pessoas/add/">Adicionar</a></li>
+							<li><a href="<?php echo Dispatcher::baseUrl();?>/users/index/">Mostrar</a></li>
+							<li><a href="<?php echo Dispatcher::baseUrl();?>/users/add/">Adicionar</a></li>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				
 				<?php if($this->Session->read('Auth.User')): ?>
-					<p class="user">Oi, <?php echo $this->Session->read('Auth.User.username'); ?>| 
+					<p class="user">Oi, <?php $nome = explode(" ",$this->Session->read('Auth.User.nome')); echo $nome[0]." ".$nome[count($nome)-1] ?>| 
 					<?php echo $this->Html->link("Logout", array("controller" => "users", "action" => "logout")) ?>
 					</p>
 				<?php endif; ?>
 			</div>		<!-- #header ends -->
+			
+			<?php echo $this->Session->flash(); ?>
 			
 
 			<?php echo $content_for_layout; ?>

@@ -65,7 +65,7 @@
 							</td>
 							<td>
 								<?php echo $this->Html->link(__('Ver', true), array('action' => 'view', $pessoa['Pessoa']['id'])); ?>
-								<?php echo $this->Html->link(__('Apagar', true), array('action' => 'delete', $pessoa['Pessoa']['id']), null, sprintf(__('Você tem certeza que deseja apagar essa turma?', true), $pessoa['Pessoa']['id'])); ?>
+								<?php echo $this->Html->link(__('Apagar', true), array('action' => 'delete', $pessoa['Pessoa']['id']), null, sprintf(__('Você tem certeza que deseja apagar essa pessoa?', true), $pessoa['Pessoa']['id'])); ?>
 							</td>
 						</tr>	  	 
 					<?php endforeach; ?>

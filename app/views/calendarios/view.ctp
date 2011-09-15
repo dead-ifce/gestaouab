@@ -94,7 +94,7 @@
 			</div>
 </div>
 
-<div id="edit-event">
+<div style="display: none" id="edit-event">
 	<label>Turma:</label><br />
 	<span id="turma"><?php echo $detalhes_turma["Curso"]["nome"]." - ".$detalhes_turma["Turma"]["nome"] ?></span><br />
 	<label>Evento:</label><br />

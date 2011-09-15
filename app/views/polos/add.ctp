@@ -1,6 +1,16 @@
-<?php echo $javascript->link(array("/js/jquery/jquery-1.5.2.min","/js/jquery/jquery-ui-1.8.16.custom.min"),false); ?>
-<?php echo $this->Html->css(array('jquery-ui-1.8.13.custom',"bootstrap")); ?>
+<?php echo $javascript->link(array("/js/jquery/jquery-1.5.2.min",
+								   "/js/jquery/jquery-ui-1.8.16.custom.min",
+								   "/js/validation/languages/jquery.validationEngine-pt",
+								   "/js/validation/jquery.validationEngine"),false); ?>
+<?php echo $this->Html->css(array('jquery-ui-1.8.13.custom',"bootstrap","validationEngine.jquery")); ?>
 
+<script type="text/javascript" charset="utf-8">
+	$(document).ready(function(){
+
+		$("#PoloAddForm").validationEngine();
+
+   	});
+</script>
 <style type="text/css" media="screen">
 	.xlarge { 
 		height: 100px;
@@ -22,7 +32,7 @@
 				<div class="turmas form">
 					<?php echo $this->Form->create('Polo', array("class" => "form-stacked"));?>
 						<?php
-							echo $this->Form->input('nome');
+							echo $this->Form->input('nome', array("class" => "validate[required]"));
 							echo $this->Form->input('Curso', array("class" => "xlarge"));
 						?>
 					<p><?php echo $this->Form->end(__('Adicionar', true));?></p>

@@ -74,6 +74,18 @@ class PessoasController extends AppController {
 		// 		$this->set(compact('polos', 'disciplinas','cursos'));
 	}
 	
+	function delete($id = null) {
+		if (!$id) {
+			$this->Session->setFlash(__('Invalid id for turma', true));
+			$this->redirect(array('action'=>'index'));
+		}
+		if ($this->Pessoa->delete($id)) {
+			$this->Session->setFlash(__('Turma deleted', true));
+			$this->redirect(array('action'=>'index'));
+		}
+		$this->Session->setFlash(__('Turma was not deleted', true));
+		$this->redirect(array('action' => 'index'));
+	}
 }	
 	
 ?>

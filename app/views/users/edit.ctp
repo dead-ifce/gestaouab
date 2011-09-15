@@ -1,22 +1,36 @@
-<div class="usuarios form">
-<?php echo $this->Form->create('Usuario');?>
-	<fieldset>
- 		<legend><?php __('Edit Usuario'); ?></legend>
-	<?php
-		echo $this->Form->input('id');
-		echo $this->Form->input('nome');
-		echo $this->Form->input('sobrenome');
-	?>
-	</fieldset>
-<?php echo $this->Form->end(__('Submit', true));?>
-</div>
-<div class="actions">
-	<h3><?php __('Actions'); ?></h3>
-	<ul>
 
-		<li><?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $this->Form->value('Usuario.id')), null, sprintf(__('Are you sure you want to delete # %s?', true), $this->Form->value('Usuario.id'))); ?></li>
-		<li><?php echo $this->Html->link(__('List Usuarios', true), array('action' => 'index'));?></li>
-		<li><?php echo $this->Html->link(__('List Viagens', true), array('controller' => 'viagens', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Viagem', true), array('controller' => 'viagens', 'action' => 'add')); ?> </li>
-	</ul>
-</div>
+<?php echo $javascript->link(array("/js/jquery/jquery-1.5.2.min","/js/jquery/jquery-ui-1.8.16.custom.min"),false); ?>
+<?php echo $this->Html->css(array('jquery-ui-1.8.13.custom',"bootstrap")); ?>
+
+<div class="block small">
+
+	<div class="block_head">
+		<div class="bheadl"></div>
+		<div class="bheadr"></div>
+		
+		<h2 style="text-align: center;float: none">Adicionar Usuário</h2>	
+	</div>		<!-- .block_head ends -->
+
+	<div class="block_content">
+		
+		<?php
+		     echo $this->Form->create(array('class' => "form-stacked"));
+			 echo $this->Form->input("id");
+			 echo $this->Form->input('nome', array("type" => "text"));
+		     echo $this->Form->input('email', array("type" => "text","label" => "Email"));
+		     echo $this->Form->input('password', array("label" => "Senha"));
+			 echo $this->Form->input('password_confirm', array("type"=> "password", "label" => "Confirmar senha"));
+		?>
+		<p>
+			<div class="submit">
+				<input class="btn success" type="submit" value="Editar">
+			</div>
+		</p>
+		
+	</div>		<!-- .block_content ends -->
+
+		<div class="bendl"></div>
+		<div class="bendr"></div>
+
+</div>		<!-- .block.small.left ends -->
+
