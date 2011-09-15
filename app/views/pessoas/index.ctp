@@ -44,6 +44,7 @@
 						<th>Cel</th>
 						<th>Atuações</th>
 						<th>Formacao</th>
+						<th>Ações</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -61,6 +62,10 @@
 								<?php foreach ($pessoa["Formacao"] as $formacao): ?>
 									<?php echo $formacao["curso"]." - ".$formacao["instituicao"]."/".$formacao["conclusao"] ?><br />
 								<?php endforeach; ?>
+							</td>
+							<td>
+								<?php echo $this->Html->link(__('Ver', true), array('action' => 'view', $pessoa['Pessoa']['id'])); ?>
+								<?php echo $this->Html->link(__('Apagar', true), array('action' => 'delete', $pessoa['Pessoa']['id']), null, sprintf(__('Você tem certeza que deseja apagar essa turma?', true), $pessoa['Pessoa']['id'])); ?>
 							</td>
 						</tr>	  	 
 					<?php endforeach; ?>

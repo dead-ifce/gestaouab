@@ -65,7 +65,7 @@
 					<li><a href="#">Calendários</a>
 						<ul>
 							<li><a href="<?php echo Dispatcher::baseUrl();?>/calendarios/index/">Mostrar</a></li>
-							<li><a href="<?php echo Dispatcher::baseUrl();?>/disciplinas/add/">Adicionar</a></li>
+							<li><a href="<?php echo Dispatcher::baseUrl();?>/calendarios/add/">Adicionar</a></li>
 							</li>
 						</ul>
 					</li>

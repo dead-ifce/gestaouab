@@ -2,7 +2,7 @@
 class PessoasController extends AppController {
 
 	var $name = 'Pessoas';
-	var $helpers = array('Javascript');
+	var $helpers = array('Javascript',"Estudo");
 	var $uses = array('Pessoa', "Atuacao", "Curso", "Disciplina", "Funcao");
 	
 	
@@ -16,6 +16,13 @@ class PessoasController extends AppController {
 		$pessoas = $this->Pessoa->find("all");
 		$this->set("pessoas",$pessoas);	
 		
+	}
+	
+	function view($id = null){
+		$this->Pessoa->recursive = 2;
+		$pessoa = $this->Pessoa->findById($id);
+		$this->set("pessoa",$pessoa);
+		//debug($pessoa);
 	}
 	
 	function add(){
@@ -41,6 +48,32 @@ class PessoasController extends AppController {
 		$this->set("funcoes", $funcoes);
 		
 	}
+	
+	function edit($id = null){
+		if (!$id && empty($this->data)) {
+			$this->Session->setFlash(__('Pessoa Inválida', true));
+			$this->redirect(array('controller' => 'pessoas','action' => 'index'));
+		}
+		if (!empty($this->data)) {
+			$this->data["Pessoa"]["nascimento"] = date('Y-m-d', strtotime($this->data["Pessoa"]["nascimento"]));
+			if ($this->Pessoa->save($this->data)) {
+				$this->Session->setFlash(__('The turma has been saved', true));
+				$this->redirect(array('action' => 'view',$id));
+			} else {
+				$this->Session->setFlash(__('The turma could not be saved. Please, try again.', true));
+			}
+		}
+		
+		if (empty($this->data)) {
+			$this->data = $this->Pessoa->read(null, $id);
+		}
+		
+		// $cursos = $this->Turma->Curso->find('list',array("fields" => array("Curso.id","Curso.nome")));
+		// 		$polos = $this->Turma->Polo->find('list',array("fields" => array("Polo.id","Polo.nome")));
+		// 		$disciplinas = $this->Turma->Disciplina->find('list',array("fields" => array("Disciplina.id","Disciplina.nome")));
+		// 		$this->set(compact('polos', 'disciplinas','cursos'));
+	}
+	
 }	
 	
 ?>
