@@ -23,10 +23,10 @@ class FormacoesController extends AppController {
 		}
 		if (!empty($this->data)) {
 			if ($this->Formacao->save($this->data)) {
-				$this->Session->setFlash(__('The turma has been saved', true));
+				$this->Session->setFlash(__('TFormação salva corretamente', true),"default",array("class" => "alert-message success"));
 				$this->redirect(array('controller' => 'pessoas', 'action' => 'view', $this->data["Formacao"]["pessoa_id"]));
 			} else {
-				$this->Session->setFlash(__('The turma could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('Formação não pode ser salva. Por favor, tente novamente', true),"default",array("class" => "alert-message error"));
 			}
 		}
 		
@@ -40,10 +40,10 @@ class FormacoesController extends AppController {
 		if (!empty($this->data)) {
 			$this->Formacao->create();
 			if ($this->Formacao->save($this->data)) {
-				$this->Session->setFlash(__('The feriado has been saved', true));
+				$this->Session->setFlash(__('Formação salva corretamente', true),"default",array("class" => "alert-message success"));
 				$this->redirect(array('action' => 'add', $this->data["Formacao"]["pessoa_id"]));
 			} else {
-				$this->Session->setFlash(__('The feriado could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('Formação não pode ser salva. Por favor, tente novamente', true),"default",array("class" => "alert-message error"));
 			}
 		}
 		
@@ -62,10 +62,10 @@ class FormacoesController extends AppController {
 		if (!empty($this->data)) {
 			$this->Formacao->create();
 			if ($this->Formacao->save($this->data)) {
-				$this->Session->setFlash(__('The feriado has been saved', true));
+				$this->Session->setFlash(__('Formação salva corretamente', true),"default",array("class" => "alert-message success"));
 				$this->redirect(array('controller'=> 'pessoas','action' => 'view', $this->data["Formacao"]["pessoa_id"]));
 			} else {
-				$this->Session->setFlash(__('The feriado could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('Formação não pode ser salva. Por favor, tente novamente', true),"default",array("class" => "alert-message error"));
 			}
 		}
 		
@@ -79,11 +79,11 @@ class FormacoesController extends AppController {
 			$this->redirect(array('controller' => 'pessoas','action'=>'view', $pessoa_id));
 		}
 		if ($this->Formacao->delete($id)) {
-			$this->Session->setFlash(__('Turma deleted', true));
+			$this->Session->setFlash(__('Formação apagada', true),"default",array("class" => "alert-message success"));
 			$this->redirect(array('controller' => 'pessoas','action'=>'view', $pessoa_id));
 		}
-		$this->Session->setFlash(__('Turma was not deleted', true));
-		$this->redirect(array('controller' => 'pessoas','action'=>'view', $pessoa_id));
+		$this->Session->setFlash(__('Formação não foi apagada', true));
+		$this->redirect(array('controller' => 'pessoas','action'=>'view', $pessoa_id),"default",array("class" => "alert-message error"));
 	}
 	
 }	

@@ -31,10 +31,10 @@ class PessoasController extends AppController {
 			$this->data["Pessoa"]["nascimento"] = date('Y-m-d', strtotime($this->data["Pessoa"]["nascimento"]));
 			$this->Pessoa->create();
 			if ($this->Pessoa->save($this->data)) {
-				$this->Session->setFlash(__('The feriado has been saved', true));
+				//$this->Session->setFlash(__('The feriado has been saved', true),"default",array("class" => "alert-message success"));
 				$this->redirect(array('controller' => 'atuacoes','action' => 'add', $this->Pessoa->getLastInsertID()));
 			} else {
-				$this->Session->setFlash(__('The feriado could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('A pessoa não pode ser salva corretamente. Por favor, tente novamente.', true),"default",array("class" => "alert-message error"));
 			}
 		}
 		
@@ -57,10 +57,10 @@ class PessoasController extends AppController {
 		if (!empty($this->data)) {
 			$this->data["Pessoa"]["nascimento"] = date('Y-m-d', strtotime($this->data["Pessoa"]["nascimento"]));
 			if ($this->Pessoa->save($this->data)) {
-				$this->Session->setFlash(__('The turma has been saved', true));
+				$this->Session->setFlash(__('The turma has been saved', true),"default",array("class" => "alert-message success"));
 				$this->redirect(array('action' => 'view',$id));
 			} else {
-				$this->Session->setFlash(__('The turma could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('The turma could not be saved. Please, try again.', true),"default",array("class" => "alert-message error"));
 			}
 		}
 		
@@ -68,10 +68,7 @@ class PessoasController extends AppController {
 			$this->data = $this->Pessoa->read(null, $id);
 		}
 		
-		// $cursos = $this->Turma->Curso->find('list',array("fields" => array("Curso.id","Curso.nome")));
-		// 		$polos = $this->Turma->Polo->find('list',array("fields" => array("Polo.id","Polo.nome")));
-		// 		$disciplinas = $this->Turma->Disciplina->find('list',array("fields" => array("Disciplina.id","Disciplina.nome")));
-		// 		$this->set(compact('polos', 'disciplinas','cursos'));
+		
 	}
 	
 	function delete($id = null) {
@@ -80,10 +77,10 @@ class PessoasController extends AppController {
 			$this->redirect(array('action'=>'index'));
 		}
 		if ($this->Pessoa->delete($id)) {
-			$this->Session->setFlash(__('Turma deleted', true));
+			$this->Session->setFlash(__('Turma deleted', true),"default",array("class" => "alert-message success"));
 			$this->redirect(array('action'=>'index'));
 		}
-		$this->Session->setFlash(__('Turma was not deleted', true));
+		$this->Session->setFlash(__('Turma was not deleted', true),"default",array("class" => "alert-message error"));
 		$this->redirect(array('action' => 'index'));
 	}
 }	

@@ -21,10 +21,10 @@ class CursosController extends AppController {
 		if (!empty($this->data)) {
 			$this->Curso->create();
 			if ($this->Curso->save($this->data)) {
-				$this->Session->setFlash(__('The curso has been saved', true));
+				$this->Session->setFlash(__('The curso has been saved', true),"default",array("class" => "alert-message success"));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The curso could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('The curso could not be saved. Please, try again.', true),"default",array("class" => "alert-message error"));
 			}
 		}
 		$disciplinas = $this->Curso->Disciplina->find('list');
@@ -38,10 +38,10 @@ class CursosController extends AppController {
 		}
 		if (!empty($this->data)) {
 			if ($this->Curso->save($this->data)) {
-				$this->Session->setFlash(__('The curso has been saved', true));
+				$this->Session->setFlash(__('The curso has been saved', true),"default",array("class" => "alert-message success"));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The curso could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('The curso could not be saved. Please, try again.', true),"default",array("class" => "alert-message error"));
 			}
 		}
 		if (empty($this->data)) {
@@ -57,10 +57,10 @@ class CursosController extends AppController {
 			$this->redirect(array('action'=>'index'));
 		}
 		if ($this->Curso->delete($id)) {
-			$this->Session->setFlash(__('Curso deleted', true));
+			$this->Session->setFlash(__('Curso deleted', true),"default",array("class" => "alert-message success"));
 			$this->redirect(array('action'=>'index'));
 		}
-		$this->Session->setFlash(__('Curso was not deleted', true));
+		$this->Session->setFlash(__('Curso was not deleted', true),"default",array("class" => "alert-message error"));
 		$this->redirect(array('action' => 'index'));
 	}
 }

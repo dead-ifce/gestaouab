@@ -8,7 +8,17 @@
 	$(document).ready(function(){
 
 		$("#TurmaAddForm").validationEngine();
-
+		
+		$.post("<?php echo Dispatcher::baseUrl();?>/atuacoes/getDisciplinasByCurso/" + $("#TurmaCursoId").val(), function(data) {
+	        $("#DisciplinaDisciplina").empty().append(data);
+	    }, 'html');
+		
+		$("#TurmaCursoId").bind('change', function() {
+			$.post("<?php echo Dispatcher::baseUrl();?>/atuacoes/getDisciplinasByCurso/" + $(this).val(), function(data) {
+		        $("#DisciplinaDisciplina").empty().append(data);
+		    }, 'html');
+		});
+		
    	});
 </script>
 

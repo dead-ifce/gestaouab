@@ -7,6 +7,22 @@
 	}
 	
 </style>
+
+<script type="text/javascript" charset="utf-8">
+	$(document).ready(function(){
+
+		$.post("<?php echo Dispatcher::baseUrl();?>/atuacoes/getDisciplinasByCurso/" + $("#TurmaCursoId").val(), function(data) {
+	        $("#DisciplinaDisciplina").empty().append(data);
+	    }, 'html');
+		
+		$("#TurmaCursoId").bind('change', function() {
+			$.post("<?php echo Dispatcher::baseUrl();?>/atuacoes/getDisciplinasByCurso/" + $(this).val(), function(data) {
+		        $("#DisciplinaDisciplina").empty().append(data);
+		    }, 'html');
+		});
+		
+   	});
+</script>
 <div class="block">
 
 	<div class="block_head">

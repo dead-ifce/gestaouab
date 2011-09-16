@@ -3,6 +3,8 @@ class DisciplinasController extends AppController {
 
 	var $name = 'Disciplinas';
 	var $helpers = array("Html","Javascript");
+	var $uses = array("Disciplina","Turma" );
+	
 	function index() {
 		$this->Disciplina->recursive = 0;
 		$this->set('disciplinas', $this->paginate());
@@ -21,10 +23,10 @@ class DisciplinasController extends AppController {
 			$this->Disciplina->create();
 			
 		 if ($this->Disciplina->save($this->data)) {
-		 				$this->Session->setFlash(__('The disciplina has been saved', true));
+		 				$this->Session->setFlash(__('The disciplina has been saved', true),"default",array("class" => "alert-message success"));
 		 				$this->redirect(array('action' => 'index'));
 		 			} else {
-		 				$this->Session->setFlash(__('The disciplina could not be saved. Please, try again.', true));
+		 				$this->Session->setFlash(__('The disciplina could not be saved. Please, try again.', true),"default",array("class" => "alert-message error"));
 		 			}
 		}
 		$cursos = $this->Disciplina->Curso->find('list', array("fields" => array("Curso.id", "Curso.nome")));
@@ -39,10 +41,10 @@ class DisciplinasController extends AppController {
 		}
 		if (!empty($this->data)) {
 			if ($this->Disciplina->save($this->data)) {
-				$this->Session->setFlash(__('The disciplina has been saved', true));
+				$this->Session->setFlash(__('The disciplina has been saved', true),"default",array("class" => "alert-message success"));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The disciplina could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('The disciplina could not be saved. Please, try again.', true),"default",array("class" => "alert-message error"));
 			}
 		}
 		if (empty($this->data)) {
@@ -59,10 +61,10 @@ class DisciplinasController extends AppController {
 			$this->redirect(array('action'=>'index'));
 		}
 		if ($this->Disciplina->delete($id)) {
-			$this->Session->setFlash(__('Disciplina deleted', true));
+			$this->Session->setFlash(__('Disciplina deleted', true),"default",array("class" => "alert-message success"));
 			$this->redirect(array('action'=>'index'));
 		}
-		$this->Session->setFlash(__('Disciplina was not deleted', true));
+		$this->Session->setFlash(__('Disciplina was not deleted', true),"default",array("class" => "alert-message error"));
 		$this->redirect(array('action' => 'index'));
 	}
 	
@@ -72,7 +74,6 @@ class DisciplinasController extends AppController {
 		$this->autoRender = false;
 		$turmas = $this->Turma->find("list",array('conditions' => array('Turma.curso_id' => $curso_id),
 												  'fields' => array('Turma.id','Turma.nome')));
-	  echo "<option value=0>Selecione...</option>";
 		  foreach($turmas as $key => $val) {
 			echo "<option value=$key>$val</option>";
 		  }						

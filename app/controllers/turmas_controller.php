@@ -23,15 +23,15 @@ class TurmasController extends AppController {
 		if (!empty($this->data)) {
 			$this->Turma->create();
 			if ($this->Turma->save($this->data)) {
-				$this->Session->setFlash(__('The turma has been saved', true));
+				$this->Session->setFlash(__('The turma has been saved', true),"default",array("class" => "alert-message success"));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The turma could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('The turma could not be saved. Please, try again.', true),"default",array("class" => "alert-message error"));
 			}
 		}
 		$cursos = $this->Turma->Curso->find('list', array("fields" => array("Curso.id", "Curso.nome")));
 		$polos = $this->Turma->Polo->find('list', array("fields" => array("Polo.id", "Polo.nome")));
-		$disciplinas = $this->Turma->Disciplina->find('list', array("fields" => array("Disciplina.id", "Disciplina.nome")));
+		$disciplinas = array();
 		$this->set(compact('polos', 'disciplinas',"cursos"));
 	}
 
@@ -42,10 +42,10 @@ class TurmasController extends AppController {
 		}
 		if (!empty($this->data)) {
 			if ($this->Turma->save($this->data)) {
-				$this->Session->setFlash(__('The turma has been saved', true));
+				$this->Session->setFlash(__('The turma has been saved', true),"default",array("class" => "alert-message success"));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The turma could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('The turma could not be saved. Please, try again.', true),"default",array("class" => "alert-message error"));
 			}
 		}
 		if (empty($this->data)) {
@@ -69,5 +69,22 @@ class TurmasController extends AppController {
 		$this->Session->setFlash(__('Turma was not deleted', true));
 		$this->redirect(array('action' => 'index'));
 	}
+	
+	function getDisciplinasByCurso($curso_id = null) {
+		$this->layout = 'ajax';
+		$this->beforeRender();
+		$this->autoRender = false;
+		$curso = $this->Curso->findById($curso_id);
+		$disciplinas = $curso['Disciplina'];
+
+		echo "<option value=0>Selecione...</option>";
+		foreach($disciplinas as $disciplina){
+			$id = $disciplina['id'];
+			$nome = $disciplina['nome'];
+			echo "<option value=$id>$nome</option>";
+		}
+	}
+	
+	
 }
 ?>

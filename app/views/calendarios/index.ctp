@@ -1,5 +1,5 @@
 <?php echo $javascript->link(array('jquery/jquery-1.5.2.min.js','jquery/jquery-ui-1.8.13.custom.min.js'),false); ?>
-<?php echo $this->Html->css(array('jquery-ui-1.8.13.custom','custom')); ?>
+<?php echo $this->Html->css(array('jquery-ui-1.8.13.custom','bootstrap','custom')); ?>
 
 <script type="text/javascript" charset="utf-8">
 	$(document).ready(function() {
@@ -31,14 +31,14 @@
 	
 	<div class="block_content">
 		
-		<form id="form" method="post">
-			<p><?php echo $this->Form->input('curso',array('options' => $cursos,'empty' => 'Selecione...','class' => "styled"));?></p>
+		<form id="form" method="post" class="form-stacked">
+			<?php echo $this->Form->input('curso',array('options' => $cursos,'empty' => 'Selecione...','class' => "styled"));?>
 			<p><?php echo $this->Form->input('turma_id',array('type' => "select",'empty' => 'Selecione...','class' => "styled")); ?></p>
-		
+			
 			
 		</form>
-		<p>
-			<input type="submit" class="submit long" value="Ver calendários" id="button"/>
+		<p style="margin-left: 20px">
+			<input type="submit" class="btn primary" value="Ver calendários" id="button"/>
 		</p>
 
 </div>		<!-- .block_content ends -->

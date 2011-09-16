@@ -2,7 +2,7 @@
 <?php 
 			echo $javascript->link(array('jquery/jquery-1.5.2.min','jquery/jquery-ui-1.8.13.custom.min',
 																	 'fullcalendar/fullcalendar')); 
-			echo $html->css(array('jquery-ui-1.8.13.custom','fullcalendar',"reset",'custom'
+			echo $html->css(array("bootstrap",'jquery-ui-1.8.13.custom','fullcalendar',"reset",'custom'
 												));	
 ?>
 	
@@ -37,13 +37,13 @@
 		<div id="calendar"  class="reset_fc"></div>
 	
 		<div id="imprimir-button">
-			<form method="post">
+			<form method="post" class="form-stacked">
 					<p><?php echo $form->input('Disciplina',array('options' => $disciplinas,
 																										 'empty' => 'Selecione...',
 																										 'class' => "styled")); ?></p>
 																									
 			</form>
-				<p><input type="submit" class="block submit long" value="Imprimir calendário" id="button"/></p>	
+				<input style="margin-left: 40px" type="submit" class="btn primary" value="Imprimir calendário" id="button"/>	
 		</div>
 		
 		

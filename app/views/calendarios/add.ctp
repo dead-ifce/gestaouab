@@ -26,12 +26,8 @@
 <style type="text/css" media="screen">
 	.block form input.text.datepicker{
 		width: 100px;
-		margin-left: 20px;
 	}
 	
-	.clearfix{
-		padding-bottom:10px;
-	}
 </style>
 
 <div class="block">
@@ -44,36 +40,27 @@
 	</div>		<!-- .block_head ends -->
 
 	<div class="block_content">
-		<?php echo $this->Form->create('Calendario');?>
+		<?php echo $this->Form->create('Calendario', array("class" => "form-stacked"));?>
 		
-		<div class="clearfix">
 			<label for="CalendarioCurso">Curso:</label> 
 			<?php echo $this->Form->input('curso',array('options' => $cursos,'empty' => 'Selecione...','class' => "normalSelect", "label" => false));
 			?>
-		</div>
 		
-		<div class="clearfix">
 			<label>Turma:</label> 
 			<?php echo $this->Form->input('turma_id',array('class' => "styled","label" => false)); ?>
-		</div>
 		
-		<div class="clearfix">
 			<label>Disciplina:</label> 
 			<?php echo $this->Form->input('disciplina_id',array('class' => "styled","label" => false)); ?>
-		</div>
 		
-		<div class="clearfix">
 			<label>Inicio:</label> 
 			<input type="text" class="text datepicker" name="data[Calendario][inicio]" />
-		</div>
 
-		<div class="clearfix">
 			<label>Fim:</label> 
 			<input type="text" class="text datepicker" name="data[Calendario][fim]" />
-		</div>
 
-
-		<input type="submit" style="margin-left: 150px" class="submit long" value="Adicionar" id="button"/>
+			<p style="margin-top: 20px">
+				<input type="submit" style="" class="btn primary" value="Adicionar" id="button"/>
+			</p>
 
 		
 	</form>

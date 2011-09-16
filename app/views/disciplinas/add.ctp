@@ -8,6 +8,16 @@
 	$(document).ready(function(){
 
 		$("#DisciplinaAddForm").validationEngine();
+		
+		$.post("<?php echo Dispatcher::baseUrl();?>/disciplinas/getTurmasByCurso/" + $("#CursoCurso").val(), function(data) {
+	        $("#TurmaTurma").empty().append(data);
+	    }, 'html');
+		
+		$("#CursoCurso").bind('change', function() {
+			$.post("<?php echo Dispatcher::baseUrl();?>/disciplinas/getTurmasByCurso/" + $(this).val(), function(data) {
+		        $("#TurmaTurma").empty().append(data);
+		    }, 'html');
+		});
 
    	});
 </script>

@@ -1,6 +1,23 @@
 <?php echo $javascript->link(array("/js/jquery/jquery-1.5.2.min","/js/jquery/jquery-ui-1.8.16.custom.min"),false); ?>
 <?php echo $this->Html->css(array('jquery-ui-1.8.13.custom',"bootstrap")); ?>
 
+<script type="text/javascript" charset="utf-8">
+	$(document).ready(function(){
+
+		
+		$.post("<?php echo Dispatcher::baseUrl();?>/disciplinas/getTurmasByCurso/" + $("#CursoCurso").val(), function(data) {
+	        $("#TurmaTurma").empty().append(data);
+	    }, 'html');
+		
+		$("#CursoCurso").bind('change', function() {
+			$.post("<?php echo Dispatcher::baseUrl();?>/disciplinas/getTurmasByCurso/" + $(this).val(), function(data) {
+		        $("#TurmaTurma").empty().append(data);
+		    }, 'html');
+		});
+
+   	});
+</script>
+
 <style type="text/css" media="screen">
 	.xlarge { 
 		height: 100px;

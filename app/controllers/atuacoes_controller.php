@@ -4,6 +4,7 @@ class AtuacoesController extends AppController {
 	var $name = 'Atuacoes';
 	var $helpers = array('Javascript');
 	var $uses = array('Pessoa', "Atuacao", "Curso", "Disciplina", "Funcao");
+	//var $components = array("Ajax");
 	
 	function beforeFilter() {
     	parent::beforeFilter();
@@ -14,15 +15,16 @@ class AtuacoesController extends AppController {
 	}
 	
 	
+	
 	function add($pessoa_id = null){
 		
 		if (!empty($this->data)) {
 			$this->Atuacao->create();
 			if ($this->Atuacao->save($this->data)) {
-				$this->Session->setFlash(__('The feriado has been saved', true));
+				$this->Session->setFlash(__('A atuação foi salva', true));
 				$this->redirect(array('action' => 'add', $this->data["Atuacao"]["pessoa_id"]));
 			} else {
-				$this->Session->setFlash(__('The feriado could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('A atuação não foi salva. Por favor, tente novamente.', true));
 			}
 		}
 		
@@ -49,10 +51,10 @@ class AtuacoesController extends AppController {
 		if (!empty($this->data)) {
 			$this->Atuacao->create();
 			if ($this->Atuacao->save($this->data)) {
-				$this->Session->setFlash(__('The feriado has been saved', true));
+				$this->Session->setFlash(__('A atuação foi salva', true));
 				$this->redirect(array('controller'=> 'pessoas','action' => 'view', $this->data["Atuacao"]["pessoa_id"]));
 			} else {
-				$this->Session->setFlash(__('The feriado could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('A atuação não foi salva. Por favor, tente novamente.', true));
 			}
 		}
 		
@@ -79,10 +81,10 @@ class AtuacoesController extends AppController {
 		}
 		if (!empty($this->data)) {
 			if ($this->Atuacao->save($this->data)) {
-				$this->Session->setFlash(__('The turma has been saved', true));
+				$this->Session->setFlash(__('A atuação não foi salva. Por favor, tente novamente.', true));
 				$this->redirect(array('controller' => 'pessoas', 'action' => 'view', $this->data["Atuacao"]["pessoa_id"]));
 			} else {
-				$this->Session->setFlash(__('The turma could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('A atuação não foi salva. Por favor, tente novamente.', true));
 			}
 		}
 		
@@ -111,12 +113,29 @@ class AtuacoesController extends AppController {
 			$this->redirect(array('controller' => 'pessoas','action'=>'view', $pessoa_id));
 		}
 		if ($this->Atuacao->delete($id)) {
-			$this->Session->setFlash(__('Turma deleted', true));
+			$this->Session->setFlash(__('Atuação apagada', true));
 			$this->redirect(array('controller' => 'pessoas','action'=>'view', $pessoa_id));
 		}
-		$this->Session->setFlash(__('Turma was not deleted', true));
+		$this->Session->setFlash(__('Atuação não foi apagada', true));
 		$this->redirect(array('controller' => 'pessoas','action'=>'view', $pessoa_id));
 	}
+	
+	function getDisciplinasByCurso($curso_id = null) {
+		$this->layout = 'ajax';
+		$this->beforeRender();
+		$this->autoRender = false;
+		$curso = $this->Curso->findById($curso_id);
+		$disciplinas = $curso['Disciplina'];
+
+		foreach($disciplinas as $disciplina){
+			$id = $disciplina['id'];
+			$nome = $disciplina['nome'];
+			echo "<option value=$id>$nome</option>";
+		}
+	}
+	
+	
+	
 }	
 	
 ?>

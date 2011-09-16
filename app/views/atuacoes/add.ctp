@@ -25,6 +25,16 @@
 			return false;
 		});
 		
+		$.post("<?php echo Dispatcher::baseUrl();?>/atuacoes/getDisciplinasByCurso/" + $("#AtuacaoCursoId").val(), function(data) {
+	        $("#AtuacaoDisciplinaId").empty().append(data);
+	    }, 'html');
+	
+		$("#AtuacaoCursoId").bind('change', function() {
+			$.post("<?php echo Dispatcher::baseUrl();?>/atuacoes/getDisciplinasByCurso/" + $(this).val(), function(data) {
+		        $("#AtuacaoDisciplinaId").empty().append(data);
+		    }, 'html');
+		});
+		
 		
 	});
 </script>
@@ -92,8 +102,8 @@
 
 <div title="Nova Atuação" id="nova-atuacao" style="display: none">
 	<?php echo $this->Form->create('Atuacao', array("class" => "form-stacked"));?>
-	<?php echo $this->Form->input('Atuacao.curso_id',array("options" => $cursos)); ?>
-	<?php echo $this->Form->input('Atuacao.disciplina_id',array("options" => $disciplinas)); ?>
+	<?php echo $this->Form->input('Atuacao.curso_id',array("options" => $cursos,'empty' => 'Selecione...')); ?>
+	<?php echo $this->Form->input('Atuacao.disciplina_id',array("options" => $disciplinas,'empty' => 'Selecione...')); ?>
 	<?php echo $this->Form->input('Atuacao.ano', array("type" => "text","class" => "validate[required,custom[onlyNumberSp]]")); ?>
 	<?php echo $this->Form->input('Atuacao.semestre', array("type" => "select", "options" => array('1' => '1', '2' => '2'))); ?>
 	<?php echo $this->Form->input('Atuacao.funcao_id',array("options" => $funcoes)); ?>

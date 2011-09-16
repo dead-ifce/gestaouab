@@ -20,10 +20,10 @@ class PolosController extends AppController {
 		if (!empty($this->data)) {
 			$this->Polo->create();
 			if ($this->Polo->save($this->data)) {
-				$this->Session->setFlash(__('The polo has been saved', true));
+				$this->Session->setFlash(__('The polo has been saved', true),"default",array("class" => "alert-message success"));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The polo could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('The polo could not be saved. Please, try again.', true),"default",array("class" => "alert-message error"));
 			}
 		}
 		$cursos = $this->Polo->Curso->find('list', array("fields" => array("Curso.id","Curso.nome")));
@@ -37,10 +37,10 @@ class PolosController extends AppController {
 		}
 		if (!empty($this->data)) {
 			if ($this->Polo->save($this->data)) {
-				$this->Session->setFlash(__('The polo has been saved', true));
+				$this->Session->setFlash(__('The polo has been saved', true),"default",array("class" => "alert-message success"));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The polo could not be saved. Please, try again.', true));
+				$this->Session->setFlash(__('The polo could not be saved. Please, try again.', true),"default",array("class" => "alert-message error"));
 			}
 		}
 		if (empty($this->data)) {
@@ -56,10 +56,10 @@ class PolosController extends AppController {
 			$this->redirect(array('action'=>'index'));
 		}
 		if ($this->Polo->delete($id)) {
-			$this->Session->setFlash(__('Polo deleted', true));
+			$this->Session->setFlash(__('Polo deleted', true),"default",array("class" => "alert-message success"));
 			$this->redirect(array('action'=>'index'));
 		}
-		$this->Session->setFlash(__('Polo was not deleted', true));
+		$this->Session->setFlash(__('Polo was not deleted', true),"default",array("class" => "alert-message error"));
 		$this->redirect(array('action' => 'index'));
 	}
 }
