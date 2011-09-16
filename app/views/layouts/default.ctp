@@ -106,8 +106,8 @@
 			
 			<div id="footer">
 			
-				<p class="left"><a href="#">YourWebsite.com</a></p>
-				<p class="right">powered by <a href="#">Adminus</a> v1.4</p>
+				<p class="left"><a href="#">http://www.ifce.edu.br/</a></p>
+				<p class="right">powered by <a href="http://dead.ifce.edu.br/~portal/">DEaD/IFCE</a></p>
 				
 			</div>
 		
