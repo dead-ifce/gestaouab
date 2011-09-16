@@ -118,18 +118,6 @@
 	
 	
 	<!--[if IE]><script type="text/javascript" src="<?php echo Dispatcher::baseUrl();?>/js/adminus/excanvas.js"></script><![endif]-->	
-	
-	
-	<?php 
-		// echo $this->Html->script(array("adminus/jquery.img.preloads",
-		// 																	 "adminus/jquery.wysiwyg",
-		// 																	 "adminus/jquery.date_input.pack2",
-		// 																	 "adminus/faceboxs",
-		// 																	 "adminus/jquery.select_skins",
-		// 																	 "adminus/jquery.tablesorter.mins",
-		// 																	 "adminus/custom")); 
-	?>
-	
 
 	
 </body>
