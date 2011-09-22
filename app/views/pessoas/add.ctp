@@ -104,8 +104,8 @@
 			<?php echo $this->Form->input('estado', array("class" => "small validate[required]", "type" => "text", "label" => "Estado")); ?>
 			<?php echo $this->Form->input('email', array("class" => "xlarge validate[required,custom[email]]", "type" => "text")); ?>
 			<?php echo $this->Form->input('cel', array("class" => "medium validate[required]", "type" => "text"));?>
-			<?php echo $this->Form->input('tel', array("class" => "medium validate[required]", "type" => "text"));?>
-			<?php echo $this->Form->input('fax', array("class" => "medium validate[required]", "type" => "text")); ?>
+			<?php echo $this->Form->input('tel', array("class" => "medium", "type" => "text"));?>
+			<?php echo $this->Form->input('fax', array("class" => "medium", "type" => "text")); ?>
 			<p>
 				<div class="submit">
 					<input class="btn success" type="submit" value="Continuar cadastro">
