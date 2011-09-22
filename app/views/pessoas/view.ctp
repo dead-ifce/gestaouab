@@ -97,7 +97,7 @@
 				
 				<dl>
 					<dt>Nome</dt><dd><?php echo $pessoa["Pessoa"]["nome"] ?></dd>
-					<dt>Nascimento</dt><dd><?php echo $pessoa["Pessoa"]["nascimento"] ?></dd>
+					<dt>Nascimento</dt><dd><?php echo date("d/m/Y", strtotime($pessoa["Pessoa"]["nascimento"])); ?></dd>
 					<dt>Estado Civil</dt><dd><?php echo $pessoa["Pessoa"]["estadocivil"] ?></dd>
 					<dt>Sexo</dt><dd><?php echo $pessoa["Pessoa"]["sexo"] ?></dd>
 					<dt>CPF</dt><dd><?php echo $pessoa["Pessoa"]["cpf"] ?></dd>
@@ -163,12 +163,14 @@
 				<p><input id="formacao-add-btn" class="btn primary" type="submit" value="Adicionar Formação"></p>
 	    	</div>
 	    </div>
-	
-		<?php if (!empty($pessoa["Atuacao"])): ?>	
+		
 		<div class="row">
 			<div style="margin-left: 20px" class="page-header">
 				<h1>Atuação</h1>
 			</div>
+	    <div class="span16 columns">
+		<?php if (!empty($pessoa["Atuacao"])): ?>	
+		<div class="row">
 			<div class="span15 columns">
 				<table id="atuacoesTable" class="zebra-striped">
 					<thead>
@@ -206,7 +208,8 @@
 	   		</div>
 	   	<?php endif; ?>
 		<p><input id="atuacao-add-btn" class="btn primary" type="submit" value="Adicionar Atuação"></p>
-		
+	</div>
+	</div>	
 		
 	</div>		<!-- .block_content ends -->
 	

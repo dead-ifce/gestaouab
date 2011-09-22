@@ -28,7 +28,8 @@ class PessoasController extends AppController {
 	function add(){
 	
 		if (!empty($this->data)) {
-			$this->data["Pessoa"]["nascimento"] = date('Y-m-d', strtotime($this->data["Pessoa"]["nascimento"]));
+			$this->data["Pessoa"]["endereco"] = $this->data["Pessoa"]["rua"].", ".$this->data["Pessoa"]["numero"]." ".$this->data["Pessoa"]["complemento"]." - ".$this->data["Pessoa"]["bairro"].", ".$this->data["Pessoa"]["cidade"]." - ".$this->data["Pessoa"]["estado"].", ".$this->data["Pessoa"]["cep"];
+			
 			$this->Pessoa->create();
 			if ($this->Pessoa->save($this->data)) {
 				//$this->Session->setFlash(__('The feriado has been saved', true),"default",array("class" => "alert-message success"));
@@ -55,7 +56,7 @@ class PessoasController extends AppController {
 			$this->redirect(array('controller' => 'pessoas','action' => 'index'));
 		}
 		if (!empty($this->data)) {
-			$this->data["Pessoa"]["nascimento"] = date('Y-m-d', strtotime($this->data["Pessoa"]["nascimento"]));
+			//$this->data["Pessoa"]["nascimento"] = date('Y-m-d', strtotime($this->data["Pessoa"]["nascimento"]));
 			if ($this->Pessoa->save($this->data)) {
 				$this->Session->setFlash(__('The turma has been saved', true),"default",array("class" => "alert-message success"));
 				$this->redirect(array('action' => 'view',$id));

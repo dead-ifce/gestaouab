@@ -28,6 +28,8 @@ class DateHelper extends AppHelper {
 			return "<b>Exame Final:</b> ".date('d-m-Y', strtotime($inicio)). " (".
 										date('H:i', strtotime($inicio))." - ".date('H:i', strtotime($fim)). ")";
 		}
+	
+		
 }
 
 ?>

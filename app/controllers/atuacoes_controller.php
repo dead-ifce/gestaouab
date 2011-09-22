@@ -21,10 +21,10 @@ class AtuacoesController extends AppController {
 		if (!empty($this->data)) {
 			$this->Atuacao->create();
 			if ($this->Atuacao->save($this->data)) {
-				$this->Session->setFlash(__('A atuação foi salva', true));
+				$this->Session->setFlash(__('A atuação foi salva', true),"default",array("class" => "alert-message success"));
 				$this->redirect(array('action' => 'add', $this->data["Atuacao"]["pessoa_id"]));
 			} else {
-				$this->Session->setFlash(__('A atuação não foi salva. Por favor, tente novamente.', true));
+				$this->Session->setFlash(__('A atuação não foi salva. Por favor, tente novamente.', true),"default",array("class" => "alert-message error"));
 			}
 		}
 		
@@ -51,10 +51,10 @@ class AtuacoesController extends AppController {
 		if (!empty($this->data)) {
 			$this->Atuacao->create();
 			if ($this->Atuacao->save($this->data)) {
-				$this->Session->setFlash(__('A atuação foi salva', true));
+				$this->Session->setFlash(__('A atuação foi salva', true),"default",array("class" => "alert-message success"));
 				$this->redirect(array('controller'=> 'pessoas','action' => 'view', $this->data["Atuacao"]["pessoa_id"]));
 			} else {
-				$this->Session->setFlash(__('A atuação não foi salva. Por favor, tente novamente.', true));
+				$this->Session->setFlash(__('A atuação não foi salva. Por favor, tente novamente.', true),"default",array("class" => "alert-message error"));
 			}
 		}
 		
@@ -81,10 +81,10 @@ class AtuacoesController extends AppController {
 		}
 		if (!empty($this->data)) {
 			if ($this->Atuacao->save($this->data)) {
-				$this->Session->setFlash(__('A atuação não foi salva. Por favor, tente novamente.', true));
+				$this->Session->setFlash(__('A atuação foi salva corretamente.', true),"default",array("class" => "alert-message success"));
 				$this->redirect(array('controller' => 'pessoas', 'action' => 'view', $this->data["Atuacao"]["pessoa_id"]));
 			} else {
-				$this->Session->setFlash(__('A atuação não foi salva. Por favor, tente novamente.', true));
+				$this->Session->setFlash(__('A atuação não foi salva. Por favor, tente novamente.', true),"default",array("class" => "alert-message error"));
 			}
 		}
 		
@@ -113,10 +113,10 @@ class AtuacoesController extends AppController {
 			$this->redirect(array('controller' => 'pessoas','action'=>'view', $pessoa_id));
 		}
 		if ($this->Atuacao->delete($id)) {
-			$this->Session->setFlash(__('Atuação apagada', true));
+			$this->Session->setFlash(__('Atuação apagada', true),"default",array("class" => "alert-message success"));
 			$this->redirect(array('controller' => 'pessoas','action'=>'view', $pessoa_id));
 		}
-		$this->Session->setFlash(__('Atuação não foi apagada', true));
+		$this->Session->setFlash(__('Atuação não foi apagada', true),"default",array("class" => "alert-message error"));
 		$this->redirect(array('controller' => 'pessoas','action'=>'view', $pessoa_id));
 	}
 	

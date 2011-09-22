@@ -13,11 +13,42 @@
 		$("#PessoaCel").mask("(99) 9999-9999")
 		$("#PessoaTel").mask("(99) 9999-9999")
 		$("#PessoaFax").mask("(99) 9999-9999")
+		$("#PessoaCep").mask("99999-999")
+		$("#busca_cep").click(function(){
+			
+			$(this).hide();
+			$(".loading").show();
+			$.getScript("http://cep.republicavirtual.com.br/web_cep.php?formato=javascript&cep="+$("#PessoaCep").val(), function(){
+		   		if (resultadoCEP["tipo_logradouro"] != '') {
+				
+				   	if (resultadoCEP["resultado"]) {
+					
+					   $("#PessoaRua").val(unescape(resultadoCEP["tipo_logradouro"]) + " " + unescape(resultadoCEP["logradouro"]));
+					   $("#PessoaBairro").val(unescape(resultadoCEP["bairro"]));
+					   $("#PessoaCidade").val(unescape(resultadoCEP["cidade"]));
+					   $("#PessoaEstado").val(unescape(resultadoCEP["uf"]));
+					   $("#PessoaNumero").focus();
+					   
+					
+					 }
+				}
+				$(".loading").hide();
+		
+		   });
+			
+		});
 		
    	});
 
 </script>
 
+
+<style type="text/css" media="screen">
+	.loading{
+		display:none;
+	}
+	
+</style>
 <div class="block">
 
 	<div class="block_head">
@@ -59,11 +90,22 @@
 	    	<div class="page-header">
 				<h1>Contato</h1>
 			</div>
-			<?php echo $this->Form->input('endereco', array("class" => "xlarge validate[required]", "type" => "text", "label" => "Endereço")); ?>
+			<div style="width: 200px" class="input text">
+			<label for="PessoaCep">CEP</label>
+				<input id="PessoaCep" class="small" type="text" name="data[Pessoa][cep]">
+				<input id="busca_cep" type="button" value="Buscar"><?php echo $html->image("loading-cep.gif",array("class" => "loading")) ?>
+			</div>
+			
+			<?php echo $this->Form->input('rua', array("class" => "xlarge validate[required]", "type" => "text", "label" => "Rua")); ?>
+			<?php echo $this->Form->input('numero', array("class" => "small validate[required]", "type" => "text", "label" => "Número")); ?>
+			<?php echo $this->Form->input('complemento', array("class" => "medium validate[required]", "type" => "text", "label" => "Complemento")); ?>
+			<?php echo $this->Form->input('bairro', array("class" => "medium validate[required]", "type" => "text", "label" => "Bairro")); ?>
+			<?php echo $this->Form->input('cidade', array("class" => "medium validate[required]", "type" => "text", "label" => "Cidade")); ?>
+			<?php echo $this->Form->input('estado', array("class" => "small validate[required]", "type" => "text", "label" => "Estado")); ?>
 			<?php echo $this->Form->input('email', array("class" => "xlarge validate[required,custom[email]]", "type" => "text")); ?>
-			<?php echo $this->Form->input('cel', array("class" => "xlarge validate[required]", "type" => "text"));?>
-			<?php echo $this->Form->input('tel', array("class" => "xlarge validate[required]", "type" => "text"));?>
-			<?php echo $this->Form->input('fax', array("class" => "xlarge validate[required]", "type" => "text")); ?>
+			<?php echo $this->Form->input('cel', array("class" => "medium validate[required]", "type" => "text"));?>
+			<?php echo $this->Form->input('tel', array("class" => "medium validate[required]", "type" => "text"));?>
+			<?php echo $this->Form->input('fax', array("class" => "medium validate[required]", "type" => "text")); ?>
 			<p>
 				<div class="submit">
 					<input class="btn success" type="submit" value="Continuar cadastro">
