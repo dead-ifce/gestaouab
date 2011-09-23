@@ -98,7 +98,7 @@
 			
 			<?php echo $this->Form->input('rua', array("class" => "xlarge validate[required]", "type" => "text", "label" => "Rua")); ?>
 			<?php echo $this->Form->input('numero', array("class" => "small validate[required]", "type" => "text", "label" => "Número")); ?>
-			<?php echo $this->Form->input('complemento', array("class" => "medium validate[required]", "type" => "text", "label" => "Complemento")); ?>
+			<?php echo $this->Form->input('complemento', array("class" => "medium", "type" => "text", "label" => "Complemento")); ?>
 			<?php echo $this->Form->input('bairro', array("class" => "medium validate[required]", "type" => "text", "label" => "Bairro")); ?>
 			<?php echo $this->Form->input('cidade', array("class" => "medium validate[required]", "type" => "text", "label" => "Cidade")); ?>
 			<?php echo $this->Form->input('estado', array("class" => "small validate[required]", "type" => "text", "label" => "Estado")); ?>
