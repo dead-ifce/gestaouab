@@ -39,7 +39,6 @@
 				<h1><a href="<?php echo Dispatcher::baseUrl();?>">sisgest</a></h1>
 				
 				<ul id="nav">
-					<li class="active"><a href="<?php echo Dispatcher::baseUrl();?>">Dashboard</a></li>
 					<li><a href="#">Cursos</a>
 						<ul>
 							<li><a href="<?php echo Dispatcher::baseUrl();?>/cursos/index/">Mostrar</a></li>
@@ -86,6 +85,13 @@
 						<ul>
 							<li><a href="<?php echo Dispatcher::baseUrl();?>/users/index/">Mostrar</a></li>
 							<li><a href="<?php echo Dispatcher::baseUrl();?>/users/add/">Adicionar</a></li>
+							</li>
+						</ul>
+					</li>
+					<li><a href="#">Editais</a>
+						<ul>
+							<li><a href="<?php echo Dispatcher::baseUrl();?>/editais/index/">Mostrar</a></li>
+							<li><a href="<?php echo Dispatcher::baseUrl();?>/editais/add/">Adicionar</a></li>
 							</li>
 						</ul>
 					</li>

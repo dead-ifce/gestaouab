@@ -2,6 +2,9 @@
 class Edital extends AppModel {
 	var $name = 'Edital';
 	var $useDbConfig = 'schema_uab';
+	
+	var $belongsTo = array("Curso","Disciplina");
+	
 	var $validate = array(
 		'numero' => array(
 			'numeric' => array(
@@ -24,5 +27,7 @@ class Edital extends AppModel {
 			),
 		),
 	);
+	
+	
 }
 ?>

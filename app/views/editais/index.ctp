@@ -1,55 +1,60 @@
-<div class="editais index">
-	<h2><?php __('Editais');?></h2>
-	<table cellpadding="0" cellspacing="0">
-	<tr>
-			<th><?php echo $this->Paginator->sort('id');?></th>
-			<th><?php echo $this->Paginator->sort('numero');?></th>
-			<th><?php echo $this->Paginator->sort('ano');?></th>
-			<th><?php echo $this->Paginator->sort('inicio');?></th>
-			<th><?php echo $this->Paginator->sort('fim');?></th>
-			<th><?php echo $this->Paginator->sort('descricao');?></th>
-			<th class="actions"><?php __('Actions');?></th>
-	</tr>
-	<?php
-	$i = 0;
-	foreach ($editais as $edital):
-		$class = null;
-		if ($i++ % 2 == 0) {
-			$class = ' class="altrow"';
-		}
-	?>
-	<tr<?php echo $class;?>>
-		<td><?php echo $edital['Edital']['id']; ?>&nbsp;</td>
-		<td><?php echo $edital['Edital']['numero']; ?>&nbsp;</td>
-		<td><?php echo $edital['Edital']['ano']; ?>&nbsp;</td>
-		<td><?php echo $edital['Edital']['inicio']; ?>&nbsp;</td>
-		<td><?php echo $edital['Edital']['fim']; ?>&nbsp;</td>
-		<td><?php echo $edital['Edital']['descricao']; ?>&nbsp;</td>
-		<td class="actions">
-			<?php echo $this->Html->link(__('View', true), array('action' => 'view', $edital['Edital']['id'])); ?>
-			<?php echo $this->Html->link(__('Edit', true), array('action' => 'edit', $edital['Edital']['id'])); ?>
-			<?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $edital['Edital']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $edital['Edital']['id'])); ?>
-		</td>
-	</tr>
-<?php endforeach; ?>
-	</table>
-	<p>
-	<?php
-	echo $this->Paginator->counter(array(
-	'format' => __('Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%', true)
-	));
-	?>	</p>
+<?php echo $javascript->link(array("/js/jquery/jquery-1.5.2.min",
+								   "/js/jquery/jquery-ui-1.8.16.custom.min",
+								   "/js/validation/languages/jquery.validationEngine-pt",
+								   "/js/validation/jquery.validationEngine",
+								   "/js/tablesorter/jquery.tablesorter.min"),false); ?>
+<?php echo $this->Html->css(array('jquery-ui-1.8.13.custom',"bootstrap","validationEngine.jquery")); ?>
 
-	<div class="paging">
-		<?php echo $this->Paginator->prev('<< ' . __('previous', true), array(), null, array('class'=>'disabled'));?>
-	 | 	<?php echo $this->Paginator->numbers();?>
- |
-		<?php echo $this->Paginator->next(__('next', true) . ' >>', array(), null, array('class' => 'disabled'));?>
-	</div>
-</div>
-<div class="actions">
-	<h3><?php __('Actions'); ?></h3>
-	<ul>
-		<li><?php echo $this->Html->link(__('New Edital', true), array('action' => 'add')); ?></li>
-	</ul>
-</div>
+<div class="block">
+
+	<div class="block_head">
+		<div class="bheadl"></div>
+		<div class="bheadr"></div>
+		
+		<h2>Cursos</h2>
+	</div>		<!-- .block_head ends -->
+	<div class="block_content">
+		<div class="row">
+			<div class="span15 columns">
+			
+				<table id="cursosTable" class="zebra-striped">
+					<tr>
+							<th>Número</th>
+							<th>Ano</th>
+							<th>Curso</th>
+							<th>Disciplina</th>
+							<th>Inicio</th>
+							<th>Fim</th>
+							<th class="actions">Ações</th>
+					</tr>
+				<?php
+				foreach ($editais as $edital):
+				?>
+				<tr>
+					<td><?php echo $edital['Edital']['numero']; ?></td>
+					<td><?php echo $edital['Edital']['ano']; ?></td>
+					<td><?php echo $edital['Curso']['nome']; ?></td>
+					<td><?php echo $edital['Disciplina']['nome']; ?></td>
+					<td><?php echo date('d/m/Y', strtotime($edital['Edital']['inicio'])); ?></td>
+					<td><?php echo date('d/m/Y', strtotime($edital['Edital']['fim'])); ?></td>
+					
+					<td class="actions">
+						<?php echo $this->Html->link(__('Ver', true), array('action' => 'view', $edital['Edital']['id'])); ?>
+						<?php echo $this->Html->link(__('Editar', true), array('action' => 'edit', $edital['Edital']['id'])); ?>
+						<?php echo $this->Html->link(__('Apagar', true), array('action' => 'delete', $edital['Edital']['id']), null, sprintf(__('Você tem certeza que deseja apagar este edital?', true), $edital['Edital']['id'])); ?>
+					</td>
+				</tr>
+			<?php endforeach; ?>
+				</table>
+			</div>
+		</div>
+		
+	</div>		<!-- .block_content ends -->
+	
+	<div class="bendl"></div>
+	<div class="bendr"></div>
+</div>		<!-- .block ends -->
+
+
+
+	
