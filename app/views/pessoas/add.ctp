@@ -65,6 +65,7 @@
 			<div class="page-header">
 				<h1>Pessoais</h1>
 			</div>
+			<?php echo $this->Form->input('status', array("type" => 'hidden', "value" => '2')) //Define inicialmente que a pessoa está pendente de documentos ?>
 			<?php echo $this->Form->input('nome', array("class" => "xlarge validate[required]")); ?>
 			<?php echo $this->Form->input('nascimento', array("class" => "xlarge validate[required]", "type" => "text")); ?>
 			
