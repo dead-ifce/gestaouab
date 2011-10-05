@@ -56,7 +56,6 @@ class PessoasController extends AppController {
 			$this->redirect(array('controller' => 'pessoas','action' => 'index'));
 		}
 		if (!empty($this->data)) {
-			//$this->data["Pessoa"]["nascimento"] = date('Y-m-d', strtotime($this->data["Pessoa"]["nascimento"]));
 			if ($this->Pessoa->save($this->data)) {
 				$this->Session->setFlash(__('The turma has been saved', true),"default",array("class" => "alert-message success"));
 				$this->redirect(array('action' => 'view',$id));
@@ -67,6 +66,7 @@ class PessoasController extends AppController {
 		
 		if (empty($this->data)) {
 			$this->data = $this->Pessoa->read(null, $id);
+			$this->data["Pessoa"]['nascimento'] = date('d/m/Y', strtotime($this->data["Pessoa"]["nascimento"]));
 		}
 		
 		
