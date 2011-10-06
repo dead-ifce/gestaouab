@@ -11,7 +11,7 @@
 		<div class="bheadl"></div>
 		<div class="bheadr"></div>
 		
-		<h2>Adicionar vagas</h2>
+		<h2>Editais</h2>
 	</div>		<!-- .block_head ends -->
 	<div class="block_content">
 		<div class="row">
@@ -38,6 +38,7 @@
 						<?php echo $this->Html->link(__('Ver', true), array('action' => 'view', $edital['Edital']['id'])); ?>
 						<?php echo $this->Html->link(__('Editar', true), array('action' => 'edit', $edital['Edital']['id'])); ?>
 						<?php echo $this->Html->link(__('Apagar', true), array('action' => 'delete', $edital['Edital']['id']), null, sprintf(__('Você tem certeza que deseja apagar este edital?', true), $edital['Edital']['id'])); ?>
+						<?php echo $this->Html->link(__('Vagas', true), array('action' => 'add', 'controller' => 'vagas', $edital['Edital']['id'])); ?>
 					</td>
 				</tr>
 			<?php endforeach; ?>

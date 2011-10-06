@@ -32,8 +32,13 @@ class PessoasController extends AppController {
 			
 			$this->Pessoa->create();
 			if ($this->Pessoa->save($this->data)) {
-				//$this->Session->setFlash(__('The feriado has been saved', true),"default",array("class" => "alert-message success"));
-				$this->redirect(array('controller' => 'atuacoes','action' => 'add', $this->Pessoa->getLastInsertID()));
+				//$this->Session->setFlash(__('The feriado has been saved', true),"default",array("class" => "alert-message success"));		
+				
+				if ($this->Session->read('Auth.User')){
+					$this->redirect(array('controller' => 'atuacoes','action' => 'add', $this->Pessoa->getLastInsertID()));
+				}else{
+					$this->redirect(array('controller' => 'formacoes','action' => 'add', $this->Pessoa->getLastInsertID()));
+				}
 			} else {
 				$this->Session->setFlash(__('A pessoa não pode ser salva corretamente. Por favor, tente novamente.', true),"default",array("class" => "alert-message error"));
 			}

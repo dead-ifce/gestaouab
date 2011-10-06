@@ -44,7 +44,7 @@
 						<th>Email</th>
 						<th>Cel</th>
 						<th>Atuações</th>
-						<th>Formacao</th>
+						<th style="width: 350px">Formacao</th>
 						<th>Ações</th>
 					</tr>
 				</thead>
