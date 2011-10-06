@@ -3,12 +3,12 @@ class PessoasController extends AppController {
 
 	var $name = 'Pessoas';
 	var $helpers = array('Javascript',"Estudo");
-	var $uses = array('Pessoa', "Atuacao", "Curso", "Disciplina", "Funcao");
+	var $uses = array('Pessoa', "Atuacao", "Curso", "Disciplina", "Funcao", 'Vaga');
 	
 	
 	function beforeFilter() {
     	parent::beforeFilter();
-    	$this->Auth->allow('add');
+    	$this->Auth->allow('add','vaga');
 	}
 	
 	function index() {
@@ -26,7 +26,6 @@ class PessoasController extends AppController {
 	}
 	
 	function add(){
-	
 		if (!empty($this->data)) {
 			$this->data["Pessoa"]["endereco"] = $this->data["Pessoa"]["rua"].", ".$this->data["Pessoa"]["numero"]." ".$this->data["Pessoa"]["complemento"]." - ".$this->data["Pessoa"]["bairro"].", ".$this->data["Pessoa"]["cidade"]." - ".$this->data["Pessoa"]["estado"].", ".$this->data["Pessoa"]["cep"];
 			
@@ -52,6 +51,7 @@ class PessoasController extends AppController {
         
 		$funcoes = $this->Funcao->find("list",array("fields" => array("Funcao.id","Funcao.funcao")));
 		$this->set("funcoes", $funcoes);
+		
 		
 	}
 	
@@ -89,6 +89,55 @@ class PessoasController extends AppController {
 		$this->Session->setFlash(__('Turma was not deleted', true),"default",array("class" => "alert-message error"));
 		$this->redirect(array('action' => 'index'));
 	}
+	
+	
+	function vaga($edital_id = null){
+		
+		$editais = $this->Vaga->find('all', array('fields' => array('DISTINCT Edital.id','Edital.numero','Edital.ano')));
+
+		foreach($editais as $edital){
+			$nome = $edital['Edital']['numero']."/".$edital['Edital']['ano'];
+			$list_editais[$edital['Edital']['id']] = $nome;
+		}
+		
+		$this->set(compact('list_editais'));
+	}
+	
+	
+	
+	//AJAX
+	function getPolos($edital_id){
+		$polos = $this->Vaga->find('all', array('conditions' => array("edital_id" => $edital_id),'fields' => array('DISTINCT Polo.id','Polo.nome'))); 
+		
+		foreach($polos as $polo){
+			$id = $polo['Polo']['id'];
+			$nome = $polo['Polo']['nome'];
+			echo "<option value=$id>$nome</option>";
+		}
+		
+	}
+	function getCursos($edital_id, $polo_id){
+		
+		$cursos = $this->Vaga->find('all', array('conditions' => array("edital_id" => $edital_id, "polo_id" => $polo_id),'fields' => array('DISTINCT Curso.id','Curso.nome'))); 
+		
+		foreach($cursos as $curso){
+			$id = $curso['Curso']['id'];
+			$nome = $curso['Curso']['nome'];
+			echo "<option value=$id>$nome</option>";
+		}
+	}
+	
+	function getDisciplinas($edital_id, $polo_id, $curso_id){
+		
+		$disciplinas = $this->Vaga->find('all', array('conditions' => array("edital_id" => $edital_id, "polo_id" => $polo_id,'curso_id' => $curso_id),'fields' => array('DISTINCT Disciplina.id','Disciplina.nome')));
+		
+		foreach($disciplinas as $disciplina){
+			$id = $disciplina['Disciplina']['id'];
+			$nome = $disciplina['Disciplina']['nome'];
+			echo "<option value=$id>$nome</option>";
+		}
+	}
+	
 }	
 	
 ?>
