@@ -1,5 +1,3 @@
-
-
 <?php echo $javascript->link(array("/js/jquery/jquery-1.5.2.min",
 								   "/js/jquery/jquery-ui-1.8.16.custom.min",
 								   "/js/validation/languages/jquery.validationEngine-pt",
@@ -10,17 +8,6 @@
 	$(document).ready(function(){
         $( ".datepicker" ).datepicker();
 		$("#EditalAddForm").validationEngine();
-		
-		
-		$.post("<?php echo Dispatcher::baseUrl();?>/editais/getDisciplinasByCurso/" + $("#EditalCurso").val(), function(data) {
-	        $("#EditalDisciplina").empty().append(data);
-	    }, 'html');
-		
-		$("#EditalCurso").bind('change', function() {
-			$.post("<?php echo Dispatcher::baseUrl();?>/editais/getDisciplinasByCurso/" + $(this).val(), function(data) {
-		        $("#EditalDisciplina").empty().append(data);
-		    }, 'html');
-		});
 		
    	});
 </script>
@@ -49,8 +36,6 @@
 							echo $this->Form->input('numero',array("class" => "validate[required]"));
 							echo $this->Form->input('ano',array("class" => "validate[required]"));
 							echo $this->Form->input('descricao', array('rows'=> 3,"class" => "validate[required]"));
-							echo $this->Form->input('Curso');
-							echo $this->Form->input('Disciplina', array('type' => 'select'));
 							echo $this->Form->input('inicio',array('type' => 'text', "class" => "validate[required] datepicker"));
 							echo $this->Form->input('fim',array('type' => 'text', "class" => "validate[required] datepicker"));
 						?>

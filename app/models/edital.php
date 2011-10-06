@@ -3,7 +3,8 @@ class Edital extends AppModel {
 	var $name = 'Edital';
 	var $useDbConfig = 'schema_uab';
 	
-	var $belongsTo = array("Curso","Disciplina");
+	
+	// var $hasMany = array('Vaga');
 	
 	var $validate = array(
 		'numero' => array(

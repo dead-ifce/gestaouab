@@ -3,7 +3,9 @@ class Disciplina extends AppModel {
 	var $name = 'Disciplina';
 	var $useDbConfig = 'schema_uab';
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
-
+	
+	// var $hasMany = array('Vaga');
+	
 	var $hasAndBelongsToMany = array(
 		'Curso' => array(
 			'className' => 'Curso',

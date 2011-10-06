@@ -36,10 +36,6 @@
 				<?php echo $edital['Edital']['ano'] ?><br />
 				<b>Descrição</b>:
 				<?php echo $edital['Edital']['descricao'] ?><br />
-				<b>Curso</b>:
-				<?php echo $edital['Curso']['nome'] ?><br />
-				<b>Disciplina</b>:
-				<?php echo $edital['Disciplina']['nome'] ?><br />
 				<b>Inicio</b>:
 				<?php echo date('d/m/Y', strtotime($edital['Edital']['inicio']))  ?><br />
 				<b>Fim</b>:

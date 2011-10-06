@@ -46,8 +46,6 @@
 							echo $this->Form->input('numero',array("class" => "validate[required]"));
 							echo $this->Form->input('ano',array("class" => "validate[required]"));
 							echo $this->Form->input('descricao', array('rows'=> 3,"class" => "validate[required]"));
-							echo $this->Form->input('curso_id',array('options' => $cursos));
-							echo $this->Form->input('disciplina_id', array('type' => 'select'));
 							echo $this->Form->input('inicio',array('type' => 'text', "class" => "validate[required] datepicker"));
 							echo $this->Form->input('fim',array('type' => 'text', "class" => "validate[required] datepicker"));
 						?>

@@ -29,8 +29,6 @@ class EditaisController extends AppController {
 			}
 		}
 		
-		$cursos = $this->Edital->Curso->find('list', array("fields" => array("Curso.id", "Curso.nome")));
-		$this->set(compact('cursos'));
 	}
 
 	function edit($id = null) {

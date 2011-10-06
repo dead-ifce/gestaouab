@@ -11,7 +11,7 @@
 		<div class="bheadl"></div>
 		<div class="bheadr"></div>
 		
-		<h2>Cursos</h2>
+		<h2>Adicionar vagas</h2>
 	</div>		<!-- .block_head ends -->
 	<div class="block_content">
 		<div class="row">
@@ -21,8 +21,6 @@
 					<tr>
 							<th>Número</th>
 							<th>Ano</th>
-							<th>Curso</th>
-							<th>Disciplina</th>
 							<th>Inicio</th>
 							<th>Fim</th>
 							<th class="actions">Ações</th>
@@ -33,8 +31,6 @@
 				<tr>
 					<td><?php echo $edital['Edital']['numero']; ?></td>
 					<td><?php echo $edital['Edital']['ano']; ?></td>
-					<td><?php echo $edital['Curso']['nome']; ?></td>
-					<td><?php echo $edital['Disciplina']['nome']; ?></td>
 					<td><?php echo date('d/m/Y', strtotime($edital['Edital']['inicio'])); ?></td>
 					<td><?php echo date('d/m/Y', strtotime($edital['Edital']['fim'])); ?></td>
 					
