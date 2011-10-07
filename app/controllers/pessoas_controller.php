@@ -3,7 +3,7 @@ class PessoasController extends AppController {
 
 	var $name = 'Pessoas';
 	var $helpers = array('Javascript',"Estudo");
-	var $uses = array('Pessoa', "Atuacao", "Curso", "Disciplina", "Funcao", 'Vaga');
+	var $uses = array('Pessoa', "Atuacao", "Curso", "Disciplina", "Funcao", 'Vaga','Inscricao');
 	
 	
 	function beforeFilter() {
@@ -92,6 +92,24 @@ class PessoasController extends AppController {
 	
 	
 	function vaga($edital_id = null){
+		if (!empty($this->data)) {
+			
+			$last_pessoa = $this->Pessoa->find('first', array("order" => "id DESC", 'fields' => array('id'), 'recursive' => 0));
+			$this->data['Inscricao']['pessoa_id'] = $last_pessoa['Pessoa']['id'];
+			
+			$vaga = $this->Vaga->find('first', array('conditions' => array('edital_id' => $this->data['Inscricao']['edital_id'],
+			 															   'polo_id' => $this->data['Inscricao']['polo_id'],
+																		   'curso_id' => $this->data['Inscricao']['curso_id'],
+																		   'disciplina_id' => $this->data['Inscricao']['disciplina_id'])));
+			$this->data['Inscricao']['vaga_id'] = $vaga['Vaga']['id'];
+			if($this->Inscricao->save($this->data)) {
+				$this->Session->setFlash(__('Inscricao salva', true),"default",array("class" => "alert-message success"));
+				$this->redirect(array('action' => 'index', 'controller' => 'finalizado'));
+			} else {
+				$this->Session->setFlash(__('The turma could not be saved. Please, try again.', true),"default",array("class" => "alert-message error"));
+			}
+			
+		}
 		
 		$editais = $this->Vaga->find('all', array('fields' => array('DISTINCT Edital.id','Edital.numero','Edital.ano')));
 

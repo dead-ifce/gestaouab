@@ -101,7 +101,7 @@ $(document).ready(function() {
 				<h3>Por favor, selecione abaixo o campus, curso e disciplina que deseja se candidatar</h3>
 	    	</div>
 			
-			<?php echo $this->Form->create('Inscricao', array("class" => "form-stacked")); ?>
+			<?php echo $this->Form->create('Inscricao', array("class" => "form-stacked", 'url' => array('controller' => 'pessoas', 'action' => 'vaga'))); ?>
 			<?php echo $this->Form->input('edital_id',array('options' => $list_editais)); ?>
 			<?php echo $this->Form->input('polo_id',array("type" => 'select')); ?>
 			<?php echo $this->Form->input('curso_id',array("type" => 'select')); ?>

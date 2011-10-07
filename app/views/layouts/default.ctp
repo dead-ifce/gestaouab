@@ -71,6 +71,7 @@
 						<ul>
 							<li><a href="<?php echo Dispatcher::baseUrl();?>">Mostrar</a></li>
 							<li><a href="<?php echo Dispatcher::baseUrl();?>/pessoas/add/">Adicionar</a></li>
+							<li><a href="<?php echo Dispatcher::baseUrl();?>/inscricoes/index/">Inscrições</a></li>
 							</li>
 						</ul>
 					</li>
@@ -112,8 +113,8 @@
 			
 			<div id="footer">
 			
-				<p class="left"><a href="#">http://www.ifce.edu.br/</a></p>
-				<p class="right">powered by <a href="http://dead.ifce.edu.br/~portal/">DEaD/IFCE</a></p>
+				<p class="left">developed by <a href="http://www.ifce.edu.br/">DEaD/IFCE</a></p>
+				<p class="right">powered by CentOS6</p>
 				
 			</div>
 		
