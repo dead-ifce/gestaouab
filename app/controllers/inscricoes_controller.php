@@ -5,6 +5,11 @@ class InscricoesController extends AppController {
 	
 	var $helpers = array('Javascript');
 	
+	function beforeFilter() {
+    	parent::beforeFilter();
+    	$this->Auth->allow('finalizada');
+	}
+	
 	function finalizada(){}
 	
 	function index() {

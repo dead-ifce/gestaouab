@@ -74,7 +74,7 @@
 		<?php endif; ?>
 		<?php if($this->Session->read('Auth.User')): ?>
 			<p><input id="add-btn" class="btn primary" type="submit" value="Adicionar Formação"></p>
-			<p><?php echo $this->Html->link("Finalizar cadastro",array('action' => 'index',"controller" => "pessoas"), array("class" => "btn success")) ?>
+			<p><?php echo $this->Html->link("Finalizar cadastro",array('action' => 'vaga',"controller" => "pessoas"), array("class" => "btn success")) ?>
 			</p>
 		<?php else: ?>
 			<p><input id="add-btn" class="btn primary" type="submit" value="Adicionar Formação"></p>

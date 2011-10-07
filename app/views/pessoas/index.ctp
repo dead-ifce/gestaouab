@@ -11,7 +11,13 @@
 				        }
 		    });
 		
-
+		// $("#pessoas_table tbody .status").click(function(){
+		// 			$("#pessoas_table tbody .status").hide();
+		// 			$("#pessoas_table tbody .statusOptions").show();
+		// 		});
+		
+	
+		
    	});
 </script>
 <style>
@@ -19,9 +25,24 @@
 #pessoas_table{
 	width: 100%;
 	border-collapse:collapse;
+	hi
 	
 }
-
+#edit-status{
+	text-align:center;
+}
+.status{
+	cursor: pointer;
+}
+.statusOptions{
+	margin-top:20px;
+}
+label{
+	margin-right: 5px;
+}
+label:after{
+	content: ":";
+}
 </style>
 
 <div class="block">
@@ -45,6 +66,7 @@
 						<th>Cel</th>
 						<th>Atuações</th>
 						<th style="width: 350px">Formacao</th>
+						<th>Status</th>
 						<th>Ações</th>
 					</tr>
 				</thead>
@@ -63,6 +85,15 @@
 								<?php foreach ($pessoa["Formacao"] as $formacao): ?>
 									<?php echo $formacao["curso"]." - ".$formacao["instituicao"]."/".$formacao["conclusao"] ?><br />
 								<?php endforeach; ?>
+							</td>
+							<td>
+								<div class="status">
+									<?php echo $this->Html->link(__($this->Util->showStatus($pessoa['Pessoa']['status']), true), array('action' => 'status', $pessoa['Pessoa']['id'])); ?>
+								</div>
+								<?php 
+									
+									
+								?>
 							</td>
 							<td>
 								<?php echo $this->Html->link(__('Ver', true), array('action' => 'view', $pessoa['Pessoa']['id'])); ?>

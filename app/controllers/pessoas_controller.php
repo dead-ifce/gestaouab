@@ -2,13 +2,13 @@
 class PessoasController extends AppController {
 
 	var $name = 'Pessoas';
-	var $helpers = array('Javascript',"Estudo");
+	var $helpers = array('Javascript',"Estudo", "Util");
 	var $uses = array('Pessoa', "Atuacao", "Curso", "Disciplina", "Funcao", 'Vaga','Inscricao');
 	
 	
 	function beforeFilter() {
     	parent::beforeFilter();
-    	$this->Auth->allow('add','vaga');
+    	$this->Auth->allow('add','vaga','getPolos','getCursos','getDisciplinas');
 	}
 	
 	function index() {
@@ -104,7 +104,7 @@ class PessoasController extends AppController {
 			$this->data['Inscricao']['vaga_id'] = $vaga['Vaga']['id'];
 			if($this->Inscricao->save($this->data)) {
 				$this->Session->setFlash(__('Inscricao salva', true),"default",array("class" => "alert-message success"));
-				$this->redirect(array('action' => 'index', 'controller' => 'finalizado'));
+				$this->redirect(array('action' => 'finalizada', 'controller' => 'inscricoes'));
 			} else {
 				$this->Session->setFlash(__('The turma could not be saved. Please, try again.', true),"default",array("class" => "alert-message error"));
 			}
@@ -156,6 +156,25 @@ class PessoasController extends AppController {
 		}
 	}
 	
+	function status($pessoa_id = null){
+		
+		if(!empty($this->data)){
+			$this->Pessoa->read(null, $this->data["Pessoa"]['id']);
+			$this->Pessoa->set(array(
+				'status' => $this->data['Pessoa']['status']
+			));
+			
+			if($this->Pessoa->save()){
+				$this->redirect(array('action'=>'index'));
+			}
+		}
+		
+		$this->Pessoa->recursive = 0;
+		$pessoa = $this->Pessoa->read(array("id"), $pessoa_id);
+		$this->set("pessoa",$pessoa);
+		
+		
+	}
 }	
 	
 ?>

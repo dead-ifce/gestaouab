@@ -90,7 +90,7 @@ $(document).ready(function() {
 		<div class="bheadl"></div>
 		<div class="bheadr"></div>
 		
-		<h2>Inscrições</h2>	
+		<h2>Vaga</h2>	
 	</div>		<!-- .block_head ends -->
 
 	<div class="block_content">
@@ -110,7 +110,7 @@ $(document).ready(function() {
 			
 			<p>
 				<div class="submit">
-					<input class="btn success" type="submit" value="Continuar">
+					<input class="btn success" type="submit" value="Finalizar">
 				</div>
 			</p>
 	   
