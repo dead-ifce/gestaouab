@@ -2,7 +2,7 @@
 class InscricoesController extends AppController {
 
 	var $name = 'Inscricoes';
-	
+	var $uses = array('Inscricao','Pessoa');
 	var $helpers = array('Javascript');
 	
 	function beforeFilter() {
@@ -10,7 +10,14 @@ class InscricoesController extends AppController {
     	$this->Auth->allow('finalizada');
 	}
 	
-	function finalizada(){}
+	function sendEmail($id){
+		
+		
+	}
+	
+	function finalizada(){
+		
+	}
 	
 	function index() {
 		$this->Inscricao->recursive = 2;

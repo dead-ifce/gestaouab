@@ -26,14 +26,14 @@
 		<div class="row">
 			
 				<div id="info">
-					<h3>Prezado candidato, sua inscrição on-line foi finalizada. Por favor, leve os documentos necessários nos locais indicados abaixo para que possa completar sua inscrição</h3>
+					<h3>Prezado candidato, sua inscrição on-line foi finalizada. Por favor, leve os documentos necessários nos locais indicados abaixo para que possa efetivar sua inscrição</h3>
 				</div>
 				<div class="infos_locais">
-					<p><b> Para o Campus Fortaleza:</b></p>
-					<p>Cada candidato poderá entregar sua documentação de 10 a 14 de outubro de 2011, na sala de Projetos de Capacitação da Diretoria de Educação a Distancia –DEAD - no Instituto Federal de Educação, Ciência Tecnologia do Ceará, Campus Fortaleza, (Av. 13 de Maio, Benfica – Fortaleza - CE), das 9h às 12h e das 14h às 17h.
+					<p><b>Candidatos inscritos no Campus Fortaleza:</b></p>
+					<p>Cada candidato deverá entregar sua documentação de 10 a 14 de outubro de 2011, na sala de Projetos de Capacitação da Diretoria de Educação a Distancia –DEAD - no Instituto Federal de Educação, Ciência Tecnologia do Ceará, Campus Fortaleza, (Av. 13 de Maio, Benfica – Fortaleza - CE), das 9h às 12h e das 14h às 17h.
 					</p>
-					<p><b>Para o Campus Juazeiro do Norte:</b></p>
-					<p>Cada candidato poderá entregar sua documentação de 10 a 14 de outubro de 2011, na sala do NTEAD no Instituto Federal de Educação, Ciência Tecnologia do Ceará, Campus de Juazeiro do Norte, (Av. Plácido Aderaldo Castelo, 1646 – Planalto, Juazeiro do Norte- CE), das 9h às 12h e das 14h às 17h.</p>
+					<p><b>Candidatos inscritos no Campus Juazeiro do Norte:</b></p>
+					<p>Cada candidato deverá entregar sua documentação de 10 a 14 de outubro de 2011, na sala do NTEAD no Instituto Federal de Educação, Ciência Tecnologia do Ceará, Campus de Juazeiro do Norte, (Av. Plácido Aderaldo Castelo, 1646 – Planalto, Juazeiro do Norte- CE), das 9h às 12h e das 14h às 17h.</p>
 				</div>
 		</div>
 		

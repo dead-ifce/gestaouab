@@ -3,7 +3,7 @@ class PessoasController extends AppController {
 
 	var $name = 'Pessoas';
 	var $helpers = array('Javascript',"Estudo", "Util");
-	var $uses = array('Pessoa', "Atuacao", "Curso", "Disciplina", "Funcao", 'Vaga','Inscricao');
+	var $uses = array('Pessoa', "Atuacao", "Curso", "Disciplina", "Funcao", 'Vaga','Inscricao','Edital');
 	
 	
 	function beforeFilter() {
@@ -103,6 +103,7 @@ class PessoasController extends AppController {
 																		   'disciplina_id' => $this->data['Inscricao']['disciplina_id'])));
 			$this->data['Inscricao']['vaga_id'] = $vaga['Vaga']['id'];
 			if($this->Inscricao->save($this->data)) {
+				$this->Session->write('pessoa_id',$this->data['Inscricao']['pessoa_id']);
 				$this->Session->setFlash(__('Inscricao salva', true),"default",array("class" => "alert-message success"));
 				$this->redirect(array('action' => 'finalizada', 'controller' => 'inscricoes'));
 			} else {
@@ -111,8 +112,8 @@ class PessoasController extends AppController {
 			
 		}
 		
-		$editais = $this->Vaga->find('all', array('fields' => array('DISTINCT Edital.id','Edital.numero','Edital.ano')));
-
+		$editais = $this->Edital->find('all', array('fields' => array('DISTINCT Edital.id','Edital.numero','Edital.ano')));
+		
 		foreach($editais as $edital){
 			$nome = $edital['Edital']['numero']."/".$edital['Edital']['ano'];
 			$list_editais[$edital['Edital']['id']] = $nome;
