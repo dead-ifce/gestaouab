@@ -80,7 +80,13 @@ $(document).ready(function() {
 
 #InscricaoVagaForm{
 	width: 200px;
-	margin: 0 auto;
+	margin-left: auto;
+	margin-right: auto;
+}
+#alert{
+	width: 800px;
+	margin-left: auto;
+	margin-right: auto;
 }
 </style>
 
@@ -97,13 +103,18 @@ $(document).ready(function() {
 		
 		<div class="row">
 	    	
+			<div id="alert" class="alert-message block-message error">
+				<h2>Prezado candidato, atenção!!!</h2>
+				Você poderá se inscrever em apenas uma (01) disciplina. A seleção será feita por disciplina, levando-se em conta os critérios descritos edital. 
+			</div>
+			
 			<div id="info">
 				<h3>Por favor, selecione abaixo o campus, curso e disciplina que deseja se candidatar</h3>
 	    	</div>
 			
 			<?php echo $this->Form->create('Inscricao', array("class" => "form-stacked", 'url' => array('controller' => 'pessoas', 'action' => 'vaga'))); ?>
 			<?php echo $this->Form->input('edital_id',array('options' => $list_editais)); ?>
-			<?php echo $this->Form->input('polo_id',array("type" => 'select')); ?>
+			<?php echo $this->Form->input('polo_id',array("type" => 'select','label' => "Campus")); ?>
 			<?php echo $this->Form->input('curso_id',array("type" => 'select')); ?>
 			<?php echo $this->Form->input('disciplina_id',array("type" => 'select')); ?>
 			

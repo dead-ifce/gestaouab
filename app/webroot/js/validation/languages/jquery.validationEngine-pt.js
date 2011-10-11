@@ -98,10 +98,9 @@
                 },
 				// --- CUSTOM RULES -- Those are specific to the demos, they can be removed or changed to your likings
                 "ajaxUserCall": {
-                    "url": "ajaxValidateFieldUser",
+                    "url": "pessoas/validaCPF",
 					// you may want to pass extra data on the ajax call
-                    "extraData": "name=eric",
-                    "alertText": "* Nome de utilizador não disponível",
+                    "alertText": "* Este CPF já foi utilizado.",
                     "alertTextLoad": "* A validar, por favor aguarde"
                 },
                 "ajaxNameCall": {

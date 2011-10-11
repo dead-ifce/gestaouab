@@ -8,7 +8,7 @@ class PessoasController extends AppController {
 	
 	function beforeFilter() {
     	parent::beforeFilter();
-    	$this->Auth->allow('add','vaga','getPolos','getCursos','getDisciplinas');
+    	$this->Auth->allow('add','vaga','getPolos','getCursos','getDisciplinas','validaCPF');
 	}
 	
 	function index() {
@@ -173,9 +173,23 @@ class PessoasController extends AppController {
 		$this->Pessoa->recursive = 0;
 		$pessoa = $this->Pessoa->read(array("id"), $pessoa_id);
 		$this->set("pessoa",$pessoa);
+	}
+	
+	function validaCPF(){
+		Configure::write('debug', 0); 
+		$this->autoRender = false;
 		
+		$cpf = $this->params['url']['fieldValue'];
+		$field = $this->params['url']['fieldId'];
+		
+		if($this->Pessoa->findByCpf($cpf)){
+			echo "[ \"$field\" ,false]";
+		}else {
+			echo "[ \"$field\" ,true]";
+		}
 		
 	}
+	
 }	
 	
 ?>
