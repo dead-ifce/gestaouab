@@ -3,12 +3,12 @@ class PessoasController extends AppController {
 
 	var $name = 'Pessoas';
 	var $helpers = array('Javascript',"Estudo", "Util");
-	var $uses = array('Pessoa', "Atuacao", "Curso", "Disciplina", "Funcao", 'Vaga','Inscricao','Edital');
+	var $uses = array('Pessoa','Formacao', "Atuacao", "Curso", "Disciplina", "Funcao", 'Vaga','Inscricao','Edital');
 	
 	
 	function beforeFilter() {
     	parent::beforeFilter();
-    	$this->Auth->allow('add','vaga','getPolos','getCursos','getDisciplinas','validaCPF');
+    	$this->Auth->allow('add','vaga','getPolos','getCursos','getDisciplinas','validaCPF','salvarDadosPessoa');
 	}
 	
 	function index() {
@@ -25,22 +25,29 @@ class PessoasController extends AppController {
 		//debug($pessoa);
 	}
 	
+	
 	function add(){
 		if (!empty($this->data)) {
+			
+			if($this->Pessoa->findByCpf($this->data['Pessoa']['cpf'])){
+				$this->Session->setFlash(__('Prezado candidato, você já está cadastrado no sistema. Portanto, não pode realizar um novo cadastro.', true),"default",array("class" => "alert-message error"));
+				$this->redirect('/cadastro');
+			}
+			
 			$this->data["Pessoa"]["endereco"] = $this->data["Pessoa"]["rua"].", ".$this->data["Pessoa"]["numero"]." ".$this->data["Pessoa"]["complemento"]." - ".$this->data["Pessoa"]["bairro"].", ".$this->data["Pessoa"]["cidade"]." - ".$this->data["Pessoa"]["estado"].", ".$this->data["Pessoa"]["cep"];
 			
-			$this->Pessoa->create();
-			if ($this->Pessoa->save($this->data)) {
-				//$this->Session->setFlash(__('The feriado has been saved', true),"default",array("class" => "alert-message success"));		
-				
-				if ($this->Session->read('Auth.User')){
-					$this->redirect(array('controller' => 'atuacoes','action' => 'add', $this->Pessoa->getLastInsertID()));
-				}else{
-					$this->redirect(array('controller' => 'formacoes','action' => 'add', $this->Pessoa->getLastInsertID()));
-				}
-			} else {
-				$this->Session->setFlash(__('A pessoa não pode ser salva corretamente. Por favor, tente novamente.', true),"default",array("class" => "alert-message error"));
+			if ($this->Session->check('Pessoa')) {
+				$this->Session->destroy();
 			}
+			
+			$this->Session->write('Pessoa', $this->data['Pessoa']);
+			
+			if ($this->Session->read('Auth.User')){
+				$this->redirect(array('controller' => 'atuacoes','action' => 'add', $this->Pessoa->getLastInsertID()));
+			}else{
+				$this->redirect(array('controller' => 'formacoes','action' => 'add', $this->Pessoa->getLastInsertID()));
+			}
+			
 		}
 		
 		$cursos = $this->Curso->find("list",array("fields" => array("Curso.id","Curso.nome")));
@@ -93,7 +100,7 @@ class PessoasController extends AppController {
 	
 	function vaga($edital_id = null){
 		if (!empty($this->data)) {
-			
+			$this->salvarDadosPessoa();
 			$last_pessoa = $this->Pessoa->find('first', array("order" => "id DESC", 'fields' => array('id'), 'recursive' => 0));
 			$this->data['Inscricao']['pessoa_id'] = $last_pessoa['Pessoa']['id'];
 			
@@ -122,7 +129,25 @@ class PessoasController extends AppController {
 		$this->set(compact('list_editais'));
 	}
 	
-	
+	function salvarDadosPessoa(){
+		$pessoa['Pessoa'] = $this->Session->read('Pessoa');
+		
+		$formacoes['Formacao'] = $this->Session->read('Formacao');
+		
+		$this->Pessoa->create();
+		
+		if($this->Pessoa->save($pessoa)){
+			$pessoa_id = $this->Pessoa->find('first',array('order'=>array('Pessoa.id DESC'), 'fields' => array('Pessoa.id')));
+			foreach($formacoes['Formacao'] as $key => $formacao){
+				$formacoes['Formacao'][$key]['pessoa_id'] = $pessoa_id['Pessoa']['id'];
+			}
+			$this->Formacao->create();
+			if($this->Formacao->saveAll($formacoes['Formacao'])){
+				$this->log('Salvou tudo corretamente', LOG_DEBUG);
+			}
+			
+		}
+	}
 	
 	//AJAX
 	function getPolos($edital_id){

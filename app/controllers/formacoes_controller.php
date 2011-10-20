@@ -37,16 +37,22 @@ class FormacoesController extends AppController {
 	
 	function add($pessoa_id = null){
 		
+
 		if (!empty($this->data)) {
-			$this->Formacao->create();
-			if ($this->Formacao->save($this->data)) {
-				$this->Session->setFlash(__('Formação salva corretamente', true),"default",array("class" => "alert-message success"));
-				$this->redirect(array('action' => 'add', $this->data["Formacao"]["pessoa_id"]));
-			} else {
-				$this->Session->setFlash(__('Formação não pode ser salva. Por favor, tente novamente', true),"default",array("class" => "alert-message error"));
+			
+			if($this->Session->check('Formacao')){
+				$formacoes = $this->Session->read('Formacao');
+				$this->Session->delete('Formacao');
+				$formacoes[] = $this->data['Formacao'];
+				$this->Session->write('Formacao', $formacoes);
+			}else{
+				$formacoes[] = $this->data['Formacao'];
+				$this->Session->write('Formacao', $formacoes);
 			}
+		
 		}
 		
+		//debug($this->Session->read());
 		$pessoa = $this->Pessoa->findById($pessoa_id);
 		$this->set("pessoa", $pessoa);
 		

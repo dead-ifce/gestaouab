@@ -105,7 +105,7 @@ $(document).ready(function() {
 	    	
 			<div id="alert" class="alert-message block-message error">
 				<h2>Prezado candidato, atenção!!!</h2>
-				Você poderá se inscrever em apenas uma (01) disciplina. A seleção será feita por disciplina, levando-se em conta os critérios descritos edital. 
+				Você poderá se inscrever em apenas uma (01) disciplina. A seleção será feita por disciplina, levando-se em conta os critérios descritos no edital. 
 			</div>
 			
 			<div id="info">

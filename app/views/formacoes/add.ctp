@@ -39,10 +39,10 @@
 	<div class="block_content">
 		
 		<div class="page-header">
-			<h1>Formações de <?php echo $pessoa["Pessoa"]["nome"] ?></h1>
+			<h1>Formações de <?php echo $this->Session->read('Pessoa.nome') ?></h1>
 		</div>
 		
-		<?php if (!empty($formacoes)): ?>	
+		<?php if ($this->Session->check('Formacao')): ?>	
 		<div class="row">
 			<div class="span15 columns">
 				<table id="formacoesTable" class="zebra-striped">
@@ -55,12 +55,12 @@
 						</tr>
 					</thead>
 					<tbody>
-						<?php foreach($formacoes as $formacao): ?>
+						<?php foreach($this->Session->read('Formacao') as $formacao): ?>
 						<tr>
-							<td><?php echo $this->Estudo->showTipo($formacao["Formacao"]["tipo"]); ?></td>
-							<td><?php echo $formacao["Formacao"]["curso"] ?></td>
-							<td><?php echo $formacao["Formacao"]["conclusao"] ?></td>
-							<td><?php echo $formacao["Formacao"]["instituicao"] ?></td>
+							<td><?php echo $this->Estudo->showTipo($formacao["tipo"]); ?></td>
+							<td><?php echo $formacao["curso"] ?></td>
+							<td><?php echo $formacao["conclusao"] ?></td>
+							<td><?php echo $formacao["instituicao"] ?></td>
 						</tr>
 						<?php endforeach; ?>
 					</tbody>
@@ -72,15 +72,15 @@
 				Não há formações cadastradas. Por favor, adicione-as.
 			</div>
 		<?php endif; ?>
-		<?php if($this->Session->read('Auth.User')): ?>
+		<?php if(!$this->Session->check('Formacao') && !$this->Session->read('Auth.User')): ?>
+				
 			<p><input id="add-btn" class="btn primary" type="submit" value="Adicionar Formação"></p>
-			<p><?php echo $this->Html->link("Finalizar cadastro",array('action' => 'vaga',"controller" => "pessoas"), array("class" => "btn success")) ?>
-			</p>
 		<?php else: ?>
-			<p><input id="add-btn" class="btn primary" type="submit" value="Adicionar Formação"></p>
-			<p><?php echo $this->Html->link("Continuar",array('action' => 'vaga',"controller" => "pessoas"), array("class" => "btn success")) ?>
-			</p>
+				<p><input id="add-btn" class="btn primary" type="submit" value="Adicionar Formação"></p>
+				<p><?php echo $this->Html->link("Continuar",array('action' => 'vaga',"controller" => "pessoas"), array("class" => "btn success")) ?>
+				</p>
 		<?php endif; ?>
+		
 		
 	</div>		<!-- .block_content ends -->
 
