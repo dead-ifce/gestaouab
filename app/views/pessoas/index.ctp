@@ -47,7 +47,6 @@
 label{
 	margin-right: 5px;
 }
-
 </style>
 
 <div class="block">
