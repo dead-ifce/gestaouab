@@ -47,9 +47,7 @@
 label{
 	margin-right: 5px;
 }
-label:after{
-	content: ":";
-}
+
 </style>
 
 <div class="block">
