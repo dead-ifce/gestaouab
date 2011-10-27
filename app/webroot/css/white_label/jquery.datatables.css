@@ -56,6 +56,7 @@
 
 .dataTables_length {
 	width: 40%;
+	display: inline;
 	
 }
 
@@ -63,6 +64,7 @@
 	width: 50%;
 	float: right;
 	text-align: right;
+
 }
 .dataTables_filter input{
 	width:auto;

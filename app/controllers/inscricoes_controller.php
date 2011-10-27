@@ -20,10 +20,70 @@ class InscricoesController extends AppController {
 	}
 	
 	function index() {
-		$this->Inscricao->recursive = 2;
-		$this->set('inscricoes', $this->paginate());
+		
+		// debug($inscricoes);
+		// 	$this->set('inscricoes', $inscricoes);
 	}
-
+	
+	function show_inscricoes(){
+		App::import('Helper', 'Html');
+		$html = new HtmlHelper();
+		
+		$this->header('Content-Type: application/json'); 
+		Configure::write('debug', 0); 
+		$this->autoRender = false;
+		
+		$this->Inscricao->recursive = 2;
+		$inscricoes = $this->Inscricao->find("all", array(
+				'contain' => array(
+					'Pessoa' => array(
+						'fields' => array('nome','cpf','email')
+					 ),
+					'Vaga' => array(
+					 	'Polo' => array(
+					 		'fields' => array('nome')
+					 	),
+						'Curso' => array(
+							'fields' => array('nome')
+						),
+						'Disciplina' => array(
+							'fields' => array('nome')
+						),
+					
+					 )
+				),
+				'limit' =>  $_GET['iDisplayLength'],
+				'offset' => $_GET['iDisplayStart']
+			)
+		);
+		
+		$iTotalRecords = $this->Inscricao->find('count');
+		$output = array(
+				"sEcho" => intval($_GET['sEcho']),
+				"iTotalRecords" => $iTotalRecords,
+				"iTotalDisplayRecords" => $iTotalRecords,
+				"aaData" => array()
+		);
+		
+		$row = array();
+		foreach($inscricoes as $inscricao){
+			$row[] = "<span class=\"del\">".$html->link( "<img src=\"/sisgest/img/del_btn.png\"/>" , array('action' => 'delete', $inscricao['Inscricao']['id']), array('escape' => false), "Tem certeza que deseja APAGAR está inscrição?")."</span>".$inscricao['Pessoa']['nome'];
+			$row[] = $inscricao['Pessoa']['cpf'];
+			$row[] = $inscricao['Pessoa']['email'];
+			$row[] = $inscricao['Vaga']['Polo']['nome']."/"
+					.$inscricao['Vaga']['Curso']['nome']."/"
+					.$inscricao['Vaga']['Disciplina']['nome'];
+			$row[] = $inscricao['Inscricao']['created'];
+			$output['aaData'][] = $row;
+			$row = array();
+		}
+		
+		// debug($output);
+		// 	debug($inscricoes);
+		echo json_encode( $output );
+		
+	}
+	
 	function view($id = null) {
 		if (!$id) {
 			$this->Session->setFlash(__('Invalid inscricao', true));
