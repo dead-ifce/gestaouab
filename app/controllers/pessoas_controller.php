@@ -2,7 +2,7 @@
 class PessoasController extends AppController {
 
 	var $name = 'Pessoas';
-	var $helpers = array('Javascript',"Estudo", "Util");
+	var $helpers = array('Javascript',"Estudo", "Util",'Html','Form');
 	var $uses = array('Pessoa','Formacao', "Atuacao", "Curso", "Disciplina", "Funcao", 'Vaga','Inscricao','Edital');
 	
 	
@@ -12,6 +12,14 @@ class PessoasController extends AppController {
 	}
 	
 	function index() {
+		$this->Pessoa->recursive = 2;
+		$pessoas = $this->Pessoa->find("all");
+		$this->set("pessoas",$pessoas);	
+		
+	}
+    
+    //Lista de pessoas com dados pessoais
+    function dado() {
 		$this->Pessoa->recursive = 2;
 		$pessoas = $this->Pessoa->find("all");
 		$this->set("pessoas",$pessoas);	
@@ -213,6 +221,16 @@ class PessoasController extends AppController {
 			echo "[ \"$field\" ,true]";
 		}
 		
+	}
+
+
+	function export_xls() {
+		$this->Pessoa->recursive = 2;
+		$data = $this->Pessoa->find('all');
+		
+		$this->set('pessoas',$data);
+		$this->render('export_xls','export_xls');
+
 	}
 	
 }	

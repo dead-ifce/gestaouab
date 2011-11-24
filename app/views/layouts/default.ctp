@@ -41,7 +41,8 @@
 				<ul id="nav">
 					<li><a href="#">Cursos</a>
 						<ul>
-							<li><a href="<?php echo Dispatcher::baseUrl();?>/cursos/index/">Mostrar</a></li>
+							<li><a href="<?php echo Dispatcher::baseUrl();?>/cursos/index/">Mostrar</a>			
+							</li>
 							<li><a href="<?php echo Dispatcher::baseUrl();?>/cursos/add/">Adicionar</a></li>
 							</li>
 						</ul>
@@ -69,9 +70,16 @@
 					</li>
 					<li><a href="#">Pessoas</a>
 						<ul>
+						    <li><a href="<?php echo Dispatcher::baseUrl();?>/pessoas/dado">Informações Pessoais</a></li>
 							<li><a href="<?php echo Dispatcher::baseUrl();?>">Mostrar</a></li>
 							<li><a href="<?php echo Dispatcher::baseUrl();?>/pessoas/add/">Adicionar</a></li>
 							<li><a href="<?php echo Dispatcher::baseUrl();?>/inscricoes/index/">Inscrições</a></li>
+							<li>
+								<!--<a href="<?php echo Dispatcher::baseUrl();?>">Relatório</a> --><a>Relatório</a>
+								<ul>
+									<li> <a href="<?php echo Dispatcher::baseUrl();?>/pessoas/export_xls/">Pessoas</a> </li>
+								</ul>
+							</li>
 							</li>
 						</ul>
 					</li>
@@ -93,6 +101,7 @@
 						<ul>
 							<li><a href="<?php echo Dispatcher::baseUrl();?>/editais/index/">Mostrar</a></li>
 							<li><a href="<?php echo Dispatcher::baseUrl();?>/editais/add/">Adicionar</a></li>
+							<li><a href="<?php echo Dispatcher::baseUrl();?>/inscricoes/inscritos/">Inscritos</a></li>
 							</li>
 						</ul>
 					</li>

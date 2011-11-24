@@ -7,8 +7,8 @@
 <?php echo $this->Html->css(array('jquery-ui-1.8.13.custom',"style_white","/css/white_label/jquery.datatables")); ?>
 <script>
 	$(document).ready(function(){
-    	oTable = $('#pessoas_table').dataTable({
-		        "sPaginationType": "full_numbers",
+    	oTable = $('#dados_table').dataTable({
+		        "sPaginationType": "full_numbers",		        
 				"oLanguage": {
 				            "sUrl": "js/datatable/pt_BR.txt"
 				        }
@@ -25,7 +25,7 @@
 </script>
 <style>
 
-#pessoas_table{
+#dados_table{
 	width: 100%;
 	border-collapse:collapse;
 	hi
@@ -54,54 +54,43 @@ label:after{
 		<div class="bheadl"></div>
 		<div class="bheadr"></div>
 		
-		<h2>Pessoas</h2>	
-	</div>		<!-- .block_head ends -->
+		<h2>Informações Pessoais</h2>	
+	</div> 		<!-- .block_head ends -->
 
 	<div class="block_content">
 		
 		<div class="row">
 	    <div class="span14 columns">
-	    	<table id="pessoas_table">
+	    	<table id="dados_table">
 				<thead>
 					<tr>
 						<th>Nome</th>
-						<th>Email</th>
-						<th>Cel</th>
-						<th>Atuações</th>
-						<th style="width: 350px">Formacao</th>
-						<th>Status</th>
-						<th>Ações</th>
+						<th>Nascimento</th>
+						<th>Estado civil</th>
+						<th>Sexo</th>
+						<th>CPF</th>
+						<th>RG</th>
+						<th>Orgão emissor</th>
+						<th>Nacionalidade</th>
+						<th>Naturalidade</th>
+						<th>Pai</th>
+						<th>Mãe</th>
 					</tr>
 				</thead>
 				<tbody>
 					<?php foreach ($pessoas as $pessoa): ?>
 						<tr>
 							<td><?php echo $pessoa['Pessoa']['nome']; ?></td>
-							<td><?php echo $pessoa['Pessoa']['email']; ?></td>
-							<td><?php echo $pessoa['Pessoa']['cel']; ?></td>
-							<td>
-								<?php foreach ($pessoa["Atuacao"] as $atuacao): ?>
-									<?php echo $atuacao['Funcao']['funcao']." - ".$atuacao["ano"].".".$atuacao["semestre"]; ?><br />
-								<?php endforeach; ?>
-							</td>
-							<td>
-								<?php foreach ($pessoa["Formacao"] as $formacao): ?>
-									<?php echo $formacao["curso"]." - ".$formacao["instituicao"]."/".$formacao["conclusao"] ?><br />
-								<?php endforeach; ?>
-							</td>
-							<td>
-								<div class="status">
-									<?php echo $this->Html->link(__($this->Util->showStatus($pessoa['Pessoa']['status']), true), array('action' => 'status', $pessoa['Pessoa']['id'])); ?>
-								</div>
-								<?php 
-									
-									
-								?>
-							</td>
-							<td>
-								<?php echo $this->Html->link(__('Ver', true), array('action' => 'view', $pessoa['Pessoa']['id'])); ?>
-								<?php echo $this->Html->link(__('Apagar', true), array('action' => 'delete', $pessoa['Pessoa']['id']), null, sprintf(__('Você tem certeza que deseja apagar essa pessoa?', true), $pessoa['Pessoa']['id'])); ?>
-							</td>
+							<td><?php echo $pessoa['Pessoa']['nascimento']; ?></td>
+							<td><?php echo $pessoa['Pessoa']['estadocivil']; ?></td>
+							<td><?php echo $pessoa['Pessoa']['sexo']; ?> </td>
+							<td><?php echo $pessoa['Pessoa']['cpf']; ?></td>
+							<td><?php echo $pessoa['Pessoa']['rg']; ?></td>
+							<td><?php echo $pessoa['Pessoa']['rg_orgao']; ?></td>
+							<td><?php echo $pessoa['Pessoa']['nacionalidade']; ?></td>
+							<td><?php echo $pessoa['Pessoa']['naturalidade']; ?></td>
+							<td><?php echo $pessoa['Pessoa']['pai']; ?></td>
+							<td><?php echo $pessoa['Pessoa']['mae']; ?></td>
 						</tr>	  	 
 					<?php endforeach; ?>
 				</tbody>
@@ -120,12 +109,17 @@ label:after{
 
 </div>		<!-- .block.small.left ends -->
 
-	<!-- Icon XlS para gerar a planilha -->
-    <?php echo $this->Html->link(
+
+
+<!-- link para gerar o relatório -->
+<?php echo $this->Html->link(
 			$this->Html->image('planilha.ico', array('alt'=> __('Download da planilha', true), 'border' => '0')),
 			'/pessoas/export_xls/',
 			array('target' => '_blank', 'escape' => false)
 		);
 	?>
+
+	
+    
 	
 
