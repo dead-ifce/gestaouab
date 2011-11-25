@@ -99,12 +99,13 @@
 					<dt>Nome</dt><dd><?php echo $pessoa["Pessoa"]["nome"] ?></dd>
 					<dt>Nascimento</dt><dd><?php echo date("d/m/Y", strtotime($pessoa["Pessoa"]["nascimento"])); ?></dd>
 					<dt>Estado Civil</dt><dd><?php echo $pessoa["Pessoa"]["estadocivil"] ?></dd>
-					<dt>Sexo</dt><dd><?php echo $pessoa["Pessoa"]["sexo"] ?></dd>
+					<dt>Sexo</dt><dd><?php echo $pessoa["Pessoa"]["sexo"] ?></dd>					
 					<dt>CPF</dt><dd><?php echo $pessoa["Pessoa"]["cpf"] ?></dd>
 					<dt>RG</dt><dd><?php echo $pessoa["Pessoa"]["rg"] ?></dd>
 					<dt>Naturalidade</dt><dd><?php echo $pessoa["Pessoa"]["naturalidade"] ?></dd>
 					<dt>Pai</dt><dd><?php echo $pessoa["Pessoa"]["pai"] ?></dd>
 					<dt>Mae</dt><dd><?php echo $pessoa["Pessoa"]["mae"] ?></dd>
+					<dt>Vínculo</dt><dd><?php echo $pessoa["Pessoa"]["vinculo"] ?></dd>
 					
 				</dl>
 	    	</div>

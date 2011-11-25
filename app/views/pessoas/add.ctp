@@ -78,6 +78,15 @@
 																		   'Divorciado(a)' => 'Divorciado(a)',
 																		   'Viúvo(a)' => 'Viúvo(a)')));
 			?>
+			<?php echo $this->Form->input('vinculo', array("class" => "xlarge validate[required]", 
+														"type" => "text", 
+														"label" => "vinculo",
+														"type" => "select", 
+														"options" => array('UAB' => 'UAB', 
+																		   'TICs - Edital 15' => 'TICs - Edital 15',
+																		   'SECAD' => 'SECAD',
+																		   'ETEC' => 'ETEC')));
+			?>
 			<?php echo $this->Form->input('sexo', array("class" => "xlarge", "type" => "select", "options" => array('Masculino' => 'Masculino', 'Feminino' => 'Feminino')));?>
 			<?php echo $this->Form->input('cpf', array("class" => "xlarge validate[required, funcCall[validaCPF], ajax[ajaxUserCall]]", "type" => "text", "label" => "CPF"));?>
 			<?php echo $this->Form->input('rg', array("class" => "xlarge validate[required,custom[onlyNumberSp]]", "type" => "text", "label" => "RG")); ?>
