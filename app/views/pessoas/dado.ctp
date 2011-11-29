@@ -3,15 +3,55 @@
 
 <?php echo $javascript->link(array("/js/jquery/jquery-1.5.2.min",
 								   "/js/jquery/jquery-ui-1.8.16.custom.min",
-								   "/js/datatable/jquery.dataTables.min"),false); ?>
-<?php echo $this->Html->css(array('jquery-ui-1.8.13.custom',"style_white","/css/white_label/jquery.datatables")); ?>
+								   "/js/datatable/jquery.dataTables.min",
+								   "/js/datatable/ZeroClipboard",
+								   "/js/datatable/TableTools.min"),false); ?>
+
+
+<?php echo $this->Html->css(array('jquery-ui-1.8.13.custom',"style_white","/css/white_label/jquery.datatables",'TableTools')); ?>
+
+<script>
+	$(document).ready( function () {
+    $('#dados_table').dataTable( {
+        "sDom": 'T<"clear">lfrtip',
+        "oTableTools":
+        {
+            "sSwfPath": "<?php echo Dispatcher::baseUrl();?>/swf/copy_cvs_xls_pdf.swf"            
+        },
+        "sPaginationType": "full_numbers",
+        "oLanguage":
+        {
+		    "sUrl": "<?php echo Dispatcher::baseUrl();?>/js/datatable/pt_BR.txt"
+        }
+    } );
+} );
+
+</script>
+<!--
 <script>
 	$(document).ready(function(){
     	oTable = $('#dados_table').dataTable({
+    		    "sDom": 'T<"clear">lfrtip',
+    		    "bFilter": false,
+    			"oTableTools": {
+    				"sSwfPath": "<?php echo Dispatcher::baseUrl();?>/swf/copy_cvs_xls_pdf.swf",
+    				
+            "aButtons": [
+                "copy",
+                "print",
+                {
+                    "sExtends":    "collection",
+                    "sButtonText": "Save",
+                    "aButtons":    [ "csv", "xls", "pdf" ]
+                }
+            ]
+        },
 		        "sPaginationType": "full_numbers",		        
 				"oLanguage": {
-				            "sUrl": "js/datatable/pt_BR.txt"
-				        }
+				            "sUrl": "<?php echo Dispatcher::baseUrl();?>/js/datatable/pt_BR.txt"
+				        },
+				       
+
 		    });
 		
 		// $("#pessoas_table tbody .status").click(function(){
@@ -23,6 +63,10 @@
 		
    	});
 </script>
+
+-->
+
+
 <style>
 
 #dados_table{
@@ -57,11 +101,11 @@ label:after{
 		<h2>Informações Pessoais</h2>	
 	</div> 		<!-- .block_head ends -->
 
-	<div class="block_content">
+	<div class='block_content'>
 		
 		<div class="row">
-	    <div class="span14 columns">
-	    	<table id="dados_table">
+	    <div class="span14 columns"> 
+	    	<table id='dados_table'>
 				<thead>
 					<tr>
 						<th>Nome</th>
@@ -96,16 +140,16 @@ label:after{
 				</tbody>
 			</table>
 			
-	    </div>
+	    </div> 
 	   
-	    </div>
+	    </div> 
 		
 		
 	
 	</div>		<!-- .block_content ends -->
 
 	 <div class="bendl"></div>
-	 <div class="bendr"></div>
+	 <div class="bendr"></div> 
 
 </div>		<!-- .block.small.left ends -->
 

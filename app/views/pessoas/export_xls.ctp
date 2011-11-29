@@ -1,5 +1,5 @@
 		
-<h2>Informações Pessoais</h2>	
+<h2>Informacoes Pessoais</h2>	
 	
 	    	<table id="dado_table">
 				

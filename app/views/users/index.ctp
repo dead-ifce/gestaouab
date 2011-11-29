@@ -37,9 +37,19 @@
 				<tr>
 					<td><?php echo $user['User']['nome']; ?></td>
 					<td><?php echo $user['User']['email']; ?></td>
+					<!--
 					<td>
 						<?php echo $this->Html->link(__('Editar', true), array('action' => 'edit', $user['User']['id'])); ?>
 						<?php echo $this->Html->link(__('Apagar', true), array('action' => 'delete', $user['User']['id']), null, sprintf(__('Você tem certeza que deseja apagar essa usuário?', true), $user['User']['id'])); ?>
+					</td>
+					-->
+					<td>
+						<?php echo $this->Html->link(
+							$this->Html->image('edit.ico',array('alt'=> __('Visualizar pessoas', true), 'border' => '0')),array('action'=>'edit', $user['User']['id']),array('target' => '_blank', 'escape' => false)); ?>
+
+						<?php echo $this->Html->link(
+							$this->Html->image('del_btn.png',array('alt'=> __('Deletar pessoas', true), 'border' => '0')),array('action'=>'delete', $user['User']['id']),array('target' => '_blank', 'escape' => false), sprintf(__('Você tem certeza que deseja apagar essa pessoa?', true), $user['User']['id'])); ?>
+					     												
 					</td>
 				</tr>
 				<?php endforeach; ?>

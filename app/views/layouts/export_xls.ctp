@@ -6,5 +6,6 @@ header ("Pragma: no-cache");
 header ("Content-type: application/vnd.ms-excel");
 header ("Content-Disposition: attachment; filename=\"Report.xls" );
 header ("Content-Description: Generated Report" );
+
 ?>
 <?php echo $content_for_layout ?>

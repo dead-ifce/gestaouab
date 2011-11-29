@@ -3,25 +3,29 @@
 
 <?php echo $javascript->link(array("/js/jquery/jquery-1.5.2.min",
 								   "/js/jquery/jquery-ui-1.8.16.custom.min",
-								   "/js/datatable/jquery.dataTables.min"),false); ?>
-<?php echo $this->Html->css(array('jquery-ui-1.8.13.custom',"style_white","/css/white_label/jquery.datatables")); ?>
+								   "/js/datatable/jquery.dataTables.min",
+								   "/js/datatable/ZeroClipboard",
+								   "/js/datatable/TableTools.min"),false); ?>
+
+
+<?php echo $this->Html->css(array('jquery-ui-1.8.13.custom',"style_white","/css/white_label/jquery.datatables",'TableTools')); ?>
+
 <script>
-	$(document).ready(function(){
-    	oTable = $('#pessoas_table').dataTable({
-		        "sPaginationType": "full_numbers",
-				"oLanguage": {
-				            "sUrl": "js/datatable/pt_BR.txt"
-				        }
-		    });
-		
-		// $("#pessoas_table tbody .status").click(function(){
-		// 			$("#pessoas_table tbody .status").hide();
-		// 			$("#pessoas_table tbody .statusOptions").show();
-		// 		});
-		
-	
-		
-   	});
+	$(document).ready( function () {
+    $('#pessoas_table').dataTable( {
+        "sDom": 'T<"clear">lfrtip',
+        "oTableTools":
+        {
+            "sSwfPath": "<?php echo Dispatcher::baseUrl();?>/swf/copy_cvs_xls_pdf.swf"            
+        },
+        "sPaginationType": "full_numbers",
+        "oLanguage":
+        {
+		    "sUrl": "<?php echo Dispatcher::baseUrl();?>/js/datatable/pt_BR.txt"
+        }
+    } );
+} );
+
 </script>
 <style>
 
@@ -66,7 +70,7 @@ label:after{
 					<tr>
 						<th>Nome</th>
 						<th>Email</th>
-						<th>Cel</th>
+						<th>Contato</th>
 						<th>Atuações</th>
 						<th style="width: 350px">Formacao</th>
 						<th>Status</th>
@@ -78,7 +82,7 @@ label:after{
 						<tr>
 							<td><?php echo $pessoa['Pessoa']['nome']; ?></td>
 							<td><?php echo $pessoa['Pessoa']['email']; ?></td>
-							<td><?php echo $pessoa['Pessoa']['cel']; ?></td>
+							<td><?php echo $pessoa['Pessoa']['cel']." / ".$pessoa['Pessoa']['tel'] ; ?></td>
 							<td>
 								<?php foreach ($pessoa["Atuacao"] as $atuacao): ?>
 									<?php echo $atuacao['Funcao']['funcao']." - ".$atuacao["ano"].".".$atuacao["semestre"]; ?><br />
@@ -98,10 +102,22 @@ label:after{
 									
 								?>
 							</td>
-							<td>
+
+						<!--<td>
 								<?php echo $this->Html->link(__('Ver', true), array('action' => 'view', $pessoa['Pessoa']['id'])); ?>
 								<?php echo $this->Html->link(__('Apagar', true), array('action' => 'delete', $pessoa['Pessoa']['id']), null, sprintf(__('Você tem certeza que deseja apagar essa pessoa?', true), $pessoa['Pessoa']['id'])); ?>
 							</td>
+						-->	 
+							<td>
+								<?php echo $this->Html->link(
+									$this->Html->image('lupa.ico',array('alt'=> __('Visualizar pessoas', true), 'border' => '0')),array('action'=>'view', $pessoa['Pessoa']['id']),array('target' => '_blank', 'escape' => false)); ?>
+
+								<?php echo $this->Html->link(
+									$this->Html->image('del_btn.png',array('alt'=> __('Deletar pessoas', true), 'border' => '0')),array('action'=>'delete', $pessoa['Pessoa']['id']),array('target' => '_blank', 'escape' => false), sprintf(__('Você tem certeza que deseja apagar essa pessoa?', true), $pessoa['Pessoa']['id'])); ?>
+							     									
+									
+								
+							</td> 
 						</tr>	  	 
 					<?php endforeach; ?>
 				</tbody>

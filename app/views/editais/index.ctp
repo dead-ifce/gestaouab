@@ -33,12 +33,27 @@
 					<td><?php echo $edital['Edital']['ano']; ?></td>
 					<td><?php echo date('d/m/Y', strtotime($edital['Edital']['inicio'])); ?></td>
 					<td><?php echo date('d/m/Y', strtotime($edital['Edital']['fim'])); ?></td>
-					
+					<!--
 					<td class="actions">
 						<?php echo $this->Html->link(__('Ver', true), array('action' => 'view', $edital['Edital']['id'])); ?>
 						<?php echo $this->Html->link(__('Editar', true), array('action' => 'edit', $edital['Edital']['id'])); ?>
 						<?php echo $this->Html->link(__('Apagar', true), array('action' => 'delete', $edital['Edital']['id']), null, sprintf(__('Você tem certeza que deseja apagar este edital?', true), $edital['Edital']['id'])); ?>
 						<?php echo $this->Html->link(__('Vagas', true), array('action' => 'add', 'controller' => 'vagas', $edital['Edital']['id'])); ?>
+					</td>
+					-->
+					<td>
+					    
+					    <?php echo $this->Html->link(
+									$this->Html->image('lupa.ico',array('alt'=> __('Visualizar pessoas', true), 'border' => '0')),array('action'=>'view', $edital['Edital']['id']),array('target' => '_blank', 'escape' => false)); ?>
+
+						<?php echo $this->Html->link(
+							$this->Html->image('edit.ico',array('alt'=> __('Visualizar pessoas', true), 'border' => '0')),array('action'=>'edit', $edital['Edital']['id']),array('target' => '_blank', 'escape' => false)); ?>
+
+						<?php echo $this->Html->link(
+							$this->Html->image('del_btn.png',array('alt'=> __('Deletar pessoas', true), 'border' => '0')),array('action'=>'delete', $edital['Edital']['id']),array('target' => '_blank', 'escape' => false), sprintf(__('Você tem certeza que deseja apagar essa pessoa?', true), $edital['Edital']['id'])); ?>
+							
+						<?php echo $this->Html->link(__('Vagas', true), array('action' => 'add', 'controller' => 'vagas', $edital['Edital']['id'])); ?>	
+					     												
 					</td>
 				</tr>
 			<?php endforeach; ?>

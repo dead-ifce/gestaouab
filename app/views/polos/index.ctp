@@ -35,9 +35,20 @@
 				?>
 				<tr>
 					<td><?php echo $polo['Polo']['nome']; ?>&nbsp;</td>
+					<!--
 					<td class="actions">
 						<?php echo $this->Html->link(__('Editar', true), array('action' => 'edit', $polo['Polo']['id'])); ?>
 						<?php echo $this->Html->link(__('Apagar', true), array('action' => 'delete', $polo['Polo']['id']), null, sprintf(__('Você tem certeza que deseja apagar este pólo?', true), $polo['Polo']['id'])); ?>
+					</td>
+					-->
+
+					<td class="actions">
+						<?php echo $this->Html->link(
+							$this->Html->image('edit.ico',array('alt'=> __('Editar pessoas', true), 'border' => '0')),array('action'=>'edit', $polo['Polo']['id']),array('target' => '_blank', 'escape' => false)); ?>
+
+						<?php echo $this->Html->link(
+							$this->Html->image('del_btn.png',array('alt'=> __('Deletar pessoas', true), 'border' => '0')),array('action'=>'delete', $polo['Polo']['id']),array('target' => '_blank', 'escape' => false), sprintf(__('Você tem certeza que deseja apagar essa pessoa?', true), $polo['Polo']['id'])); ?>
+					     												
 					</td>
 				</tr>
 			<?php endforeach; ?>

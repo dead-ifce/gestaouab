@@ -27,10 +27,20 @@
 				?>
 				<tr>
 					<td><?php echo $curso['Curso']['nome']; ?>&nbsp;</td>
+					<!--
 					<td class="actions">
 						<?php echo $this->Html->link(__('Editar', true), array('action' => 'edit', $curso['Curso']['id'])); ?>
 						<?php echo $this->Html->link(__('Apagar', true), array('action' => 'delete', $curso['Curso']['id']), null, sprintf(__('Você tem certeza que deseja apagar este curso?', true), $curso['Curso']['id'])); ?>
 					</td>
+					-->
+					<td>
+						<?php echo $this->Html->link(
+							$this->Html->image('edit.ico',array('alt'=> __('Visualizar pessoas', true), 'border' => '0')),array('action'=>'edit', $curso['Curso']['id']),array('target' => '_blank', 'escape' => false)); ?>
+
+						<?php echo $this->Html->link(
+							$this->Html->image('del_btn.png',array('alt'=> __('Deletar pessoas', true), 'border' => '0')),array('action'=>'delete', $curso['Curso']['id']),array('target' => '_blank', 'escape' => false), sprintf(__('Você tem certeza que deseja apagar essa pessoa?', true), $curso['Curso']['id'])); ?>
+					     												
+					</td> 
 				</tr>
 			<?php endforeach; ?>
 				</table>

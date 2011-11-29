@@ -39,9 +39,19 @@
 		<td><?php echo $disciplina['Disciplina']['nome']; ?>&nbsp;</td>
 		<td><?php echo $disciplina['Disciplina']['carga']; ?>h</td>
 		<td><?php echo $disciplina['Disciplina']['semestre']; ?>&nbsp;</td>
+		<!--
 		<td >
 			<?php echo $this->Html->link(__('Editar', true), array('action' => 'edit', $disciplina['Disciplina']['id'])); ?>
 			<?php echo $this->Html->link(__('Apagar', true), array('action' => 'delete', $disciplina['Disciplina']['id']), null, sprintf(__('Você gostaria de apagar esta disciplina?', true), $disciplina['Disciplina']['id'])); ?>
+		</td>
+		-->
+		<td>
+			<?php echo $this->Html->link(
+				$this->Html->image('edit.ico',array('alt'=> __('Editar pessoas', true), 'border' => '0')),array('action'=>'edit', $disciplina['Disciplina']['id']),array('target' => '_blank', 'escape' => false)); ?>
+
+			<?php echo $this->Html->link(
+				$this->Html->image('del_btn.png',array('alt'=> __('Deletar pessoas', true), 'border' => '0')),array('action'=>'delete', $disciplina['Disciplina']['id']),array('target' => '_blank', 'escape' => false), sprintf(__('Você tem certeza que deseja apagar essa pessoa?', true), $disciplina['Disciplina']['id'])); ?>
+		     												
 		</td>
 	</tr>
 <?php endforeach; ?>

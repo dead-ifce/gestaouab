@@ -58,6 +58,7 @@
 						<ul>
 							<li><a href="<?php echo Dispatcher::baseUrl();?>/disciplinas/index/">Mostrar</a></li>
 							<li><a href="<?php echo Dispatcher::baseUrl();?>/disciplinas/add/">Adicionar</a></li>
+							<li><a href="<?php echo Dispatcher::baseUrl();?>/disciplinas/export_xls/">Relatório</a></li>
 							</li>
 						</ul>
 					</li>

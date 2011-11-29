@@ -78,6 +78,15 @@ class DisciplinasController extends AppController {
 			echo "<option value=$key>$val</option>";
 		  }						
 	}
+
+	function export_xls() {
+		$this->Disciplina->recursive = 0;
+		$data = $this->Disciplina->find('all');
+		
+		$this->set('disciplinas',$data);
+		$this->render('export_xls','export_xls');
+
+	}
 	
 	
 }

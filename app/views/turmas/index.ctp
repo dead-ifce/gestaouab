@@ -39,10 +39,19 @@
 					<td>
 						<?php echo $this->Html->link($turma['Curso']['nome'], array('controller' => 'cursos', 'action' => 'view', $turma['Curso']['id'])); ?>
 					</td>
-				
+					<!--
 					<td>
 						<?php echo $this->Html->link(__('Editar', true), array('action' => 'edit', $turma['Turma']['id'])); ?>
 						<?php echo $this->Html->link(__('Apagar', true), array('action' => 'delete', $turma['Turma']['id']), null, sprintf(__('Você tem certeza que deseja apagar essa turma?', true), $turma['Turma']['id'])); ?>
+					</td>
+					-->
+					<td>
+						<?php echo $this->Html->link(
+							$this->Html->image('edit.ico',array('alt'=> __('Visualizar pessoas', true), 'border' => '0')),array('action'=>'edit', $turma['Turma']['id']),array('target' => '_blank', 'escape' => false)); ?>
+
+						<?php echo $this->Html->link(
+							$this->Html->image('del_btn.png',array('alt'=> __('Deletar pessoas', true), 'border' => '0')),array('action'=>'delete', $turma['Turma']['id']),array('target' => '_blank', 'escape' => false), sprintf(__('Você tem certeza que deseja apagar essa pessoa?', true), $turma['Curso']['id'])); ?>
+					     												
 					</td>
 				</tr>
 				<?php endforeach; ?>

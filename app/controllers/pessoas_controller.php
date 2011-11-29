@@ -20,7 +20,7 @@ class PessoasController extends AppController {
     
     //Lista de pessoas com dados pessoais
     function dado() {
-		$this->Pessoa->recursive = 2;
+	
 		$pessoas = $this->Pessoa->find("all");
 		$this->set("pessoas",$pessoas);	
 		
