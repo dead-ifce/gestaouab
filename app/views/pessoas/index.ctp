@@ -110,10 +110,10 @@ label:after{
 						-->	 
 							<td>
 								<?php echo $this->Html->link(
-									$this->Html->image('lupa.ico',array('alt'=> __('Visualizar pessoas', true), 'border' => '0')),array('action'=>'view', $pessoa['Pessoa']['id']),array('target' => '_blank', 'escape' => false)); ?>
+									$this->Html->image('lupa.ico',array('alt'=> __('Visualizar pessoas', true),'title'=>'visualizar', 'border' => '0')),array('action'=>'view', $pessoa['Pessoa']['id']),array('target' => '_blank', 'escape' => false)); ?>
 
 								<?php echo $this->Html->link(
-									$this->Html->image('del_btn.png',array('alt'=> __('Deletar pessoas', true), 'border' => '0')),array('action'=>'delete', $pessoa['Pessoa']['id']),array('target' => '_blank', 'escape' => false), sprintf(__('Você tem certeza que deseja apagar essa pessoa?', true), $pessoa['Pessoa']['id'])); ?>
+									$this->Html->image('del_btn.png',array('alt'=> __('Deletar pessoas', true),'title'=>'excluir','border' => '0')),array('action'=>'delete', $pessoa['Pessoa']['id']),array('target' => '_blank', 'escape' => false), sprintf(__('Você tem certeza que deseja apagar essa pessoa?', true), $pessoa['Pessoa']['id'])); ?>
 							     									
 									
 								
@@ -138,7 +138,7 @@ label:after{
 
 	<!-- Icon XlS para gerar a planilha -->
     <?php echo $this->Html->link(
-			$this->Html->image('planilha.ico', array('alt'=> __('Download da planilha', true), 'border' => '0')),
+			$this->Html->image('planilha.ico', array('alt'=> __('Download da planilha', true),'title'=>'relatório', 'border' => '0')),
 			'/pessoas/export_xls/',
 			array('target' => '_blank', 'escape' => false)
 		);
