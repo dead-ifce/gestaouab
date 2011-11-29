@@ -57,7 +57,7 @@ $(document).ready(function() {
 							-->
 							<td>
 							<?php echo $this->Html->link(
-							$this->Html->image('del_btn.png',array('alt'=> __('Deletar pessoas', true), 'border' => '0')),array('action'=>'delete', $vaga['Vaga']['id']),array('target' => '_blank', 'escape' => false), sprintf(__('Você tem certeza que deseja apagar essa pessoa?', true), $vaga['Vaga']['id'])); ?>
+							$this->Html->image('del_btn.png',array('alt'=> __('Deletar pessoas', true), 'border' => '0')),array('action'=>'delete', $vaga['Vaga']['id']),array('target' => '_self', 'escape' => false), sprintf(__('Você tem certeza que deseja apagar essa pessoa?', true), $vaga['Vaga']['id'])); ?>
 							</td>
 						</tr>
 					<?php endforeach; ?>
