@@ -99,6 +99,7 @@ label{
 									
 								?>
 							</td>
+						<!--coluna anteriorr -->
 
 						<!--<td>
 								<?php echo $this->Html->link(__('Ver', true), array('action' => 'view', $pessoa['Pessoa']['id'])); ?>
