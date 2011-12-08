@@ -1,9 +1,10 @@
 <?php
 class PessoasController extends AppController {
+    
 
 	var $name = 'Pessoas';
 	var $helpers = array('Javascript',"Estudo", "Util",'Html','Form');
-	var $uses = array('Pessoa','Formacao', "Atuacao", "Curso", "Disciplina", "Funcao", 'Vaga','Inscricao','Edital');
+	var $uses = array('Pessoa','Formacao', "Atuacao", "Curso", "Disciplina", "Funcao", 'Vaga','Inscricao','Edital', 'Vinculo');
 	
 	
 	function beforeFilter() {
@@ -17,7 +18,7 @@ class PessoasController extends AppController {
 		$this->set("pessoas",$pessoas);	
 		
 	}
-    
+
     //Lista de pessoas com dados pessoais
     function dado() {
 	
@@ -66,7 +67,13 @@ class PessoasController extends AppController {
         
 		$funcoes = $this->Funcao->find("list",array("fields" => array("Funcao.id","Funcao.funcao")));
 		$this->set("funcoes", $funcoes);
-		
+
+		$vinculos = $this->Vinculo->find("list",array("fields" => array("Vinculo.id","Vinculo.vinculo")));
+		$this->set("vinculos", $vinculos);
+
+		/*$vinculos = $this->Vinculo->find("list",array("fields" => array("Vinculo.id","Vinculo.vinculo")));
+		$this->set("vinculos", $vinculos);
+        */		
 		
 	}
 	
@@ -109,7 +116,7 @@ class PessoasController extends AppController {
 	function vaga($edital_id = null){
 		if (!empty($this->data)) {
 			$this->salvarDadosPessoa();
-			$last_pessoa = $this->Pessoa->find('first', array("order" => "id DESC", 'fields' => array('id'), 'recursive' => 0));
+			$last_pessoa = $this->Pessoa->find('first', array("order" => "Pessoa.id DESC", 'fields' => array('Pessoa.id'), 'recursive' => 0));
 			$this->data['Inscricao']['pessoa_id'] = $last_pessoa['Pessoa']['id'];
 			
 			$vaga = $this->Vaga->find('first', array('conditions' => array('edital_id' => $this->data['Inscricao']['edital_id'],

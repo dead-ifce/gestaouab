@@ -113,6 +113,7 @@
 					</p>
 				<?php endif; ?>
 			</div>		<!-- #header ends -->
+			     
 			
 			<?php echo $this->Session->flash(); ?>
 			

@@ -135,6 +135,7 @@ label{
 </div>		<!-- .block.small.left ends -->
 
 	<!-- Icon XlS para gerar a planilha -->
+	<!--
     <?php echo $this->Html->link(
 			$this->Html->image('planilha.ico', array('alt'=> __('Download da planilha', true),'title'=>'relatório', 'border' => '0')),
 			'/pessoas/export_xls/',
@@ -142,4 +143,5 @@ label{
 		);
 	?>
 	
-
+   -->
+  

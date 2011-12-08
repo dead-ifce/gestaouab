@@ -105,8 +105,8 @@
 					<dt>Naturalidade</dt><dd><?php echo $pessoa["Pessoa"]["naturalidade"] ?></dd>
 					<dt>Pai</dt><dd><?php echo $pessoa["Pessoa"]["pai"] ?></dd>
 					<dt>Mae</dt><dd><?php echo $pessoa["Pessoa"]["mae"] ?></dd>
-					<dt>Vínculo</dt><dd><?php echo $pessoa["Pessoa"]["vinculo"] ?></dd>
 					<dt>Lattes</dt><dd><?php echo $pessoa["Pessoa"]["lattes"] ?></dd>
+					<dt>Vínculo</dt><dd><?php echo $pessoa["Vinculo"]["vinculo"] ?></dd> 
 					
 				</dl>
 	    	</div>

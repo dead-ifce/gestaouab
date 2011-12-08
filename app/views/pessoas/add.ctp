@@ -78,15 +78,10 @@
 																		   'Divorciado(a)' => 'Divorciado(a)',
 																		   'Viúvo(a)' => 'Viúvo(a)')));
 			?>
-			<?php echo $this->Form->input('vinculo', array("class" => "xlarge validate[required]", 
-														"type" => "text", 
-														"label" => "vinculo",
-														"type" => "select", 
-														"options" => array('UAB' => 'UAB', 
-																		   'TICs - Edital 15' => 'TICs - Edital 15',
-																		   'SECAD' => 'SECAD',
-																		   'ETEC' => 'ETEC')));
-			?>
+			
+			<?php echo $this->Form->input('vinculo_id', array("options" => $vinculos, "class" => "xlarge")); ?>
+
+
 			<?php echo $this->Form->input('lattes', array("class" => "xlarge" , "type" => "text")); ?>
 
 			<?php echo $this->Form->input('sexo', array("class" => "xlarge", "type" => "select", "options" => array('Masculino' => 'Masculino', 'Feminino' => 'Feminino')));?>
