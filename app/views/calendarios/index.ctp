@@ -1,47 +1,55 @@
-<?php echo $javascript->link(array('jquery/jquery-1.5.2.min.js','jquery/jquery-ui-1.8.13.custom.min.js'),false); ?>
-<?php echo $this->Html->css(array('jquery-ui-1.8.13.custom','bootstrap','custom')); ?>
+<div class="calendarios index">
+	<h2><?php __('Calendarios');?></h2>
+	<table cellpadding="0" cellspacing="0">
+	<tr>
+			<th><?php echo $this->Paginator->sort('id');?></th>
+			<th><?php echo $this->Paginator->sort('curso_id');?></th>
+			<th><?php echo $this->Paginator->sort('ano');?></th>
+			<th><?php echo $this->Paginator->sort('semestre');?></th>
+			<th class="actions"><?php __('Actions');?></th>
+	</tr>
+	<?php
+	$i = 0;
+	foreach ($calendarios as $calendario):
+		$class = null;
+		if ($i++ % 2 == 0) {
+			$class = ' class="altrow"';
+		}
+	?>
+	<tr<?php echo $class;?>>
+		<td><?php echo $calendario['Calendario']['id']; ?>&nbsp;</td>
+		<td>
+			<?php echo $this->Html->link($calendario['Curso']['id'], array('controller' => 'cursos', 'action' => 'view', $calendario['Curso']['id'])); ?>
+		</td>
+		<td><?php echo $calendario['Calendario']['ano']; ?>&nbsp;</td>
+		<td><?php echo $calendario['Calendario']['semestre']; ?>&nbsp;</td>
+		<td class="actions">
+			<?php echo $this->Html->link(__('View', true), array('action' => 'view', $calendario['Calendario']['id'])); ?>
+			<?php echo $this->Html->link(__('Edit', true), array('action' => 'edit', $calendario['Calendario']['id'])); ?>
+			<?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $calendario['Calendario']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $calendario['Calendario']['id'])); ?>
+		</td>
+	</tr>
+<?php endforeach; ?>
+	</table>
+	<p>
+	<?php
+	echo $this->Paginator->counter(array(
+	'format' => __('Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%', true)
+	));
+	?>	</p>
 
-<script type="text/javascript" charset="utf-8">
-	$(document).ready(function() {
-		
-		$("#curso").val(0);
-		
-		$("#curso").bind('change', function() {
-			$.post("<?php echo Dispatcher::baseUrl();?>/calendarios/getTurmasByCurso/" + $(this).val(), function(data) {
-		        $("#turma_id").empty().append(data);
-		    }, 'html');
-		});
-		
-		$("#button").click(function(){
-			var value = $('#turma_id :selected').val();
-			window.location = "<?php echo Dispatcher::baseUrl();?>/calendarios/view/"+value;
-		});
-		
-	});
-</script>
-
-<div class="block small left">
-
-	<div class="block_head">
-		<div class="bheadl"></div>
-		<div class="bheadr"></div>
-		
-		<h2>Selecionar turma</h2>	
-	</div>		<!-- .block_head ends -->
-	
-	<div class="block_content">
-		
-		<form id="form" method="post" class="form-stacked">
-			<?php echo $this->Form->input('curso',array('options' => $cursos,'empty' => 'Selecione...','class' => "styled"));?>
-			<p><?php echo $this->Form->input('turma_id',array('type' => "select",'empty' => 'Selecione...','class' => "styled")); ?></p>
-			
-			
-		</form>
-		<p style="margin-left: 20px">
-			<input type="submit" class="btn primary" value="Ver calendários" id="button"/>
-		</p>
-
-</div>		<!-- .block_content ends -->
-<div class="bendl"></div>
-<div class="bendr"></div>
-</div>		<!-- .block.small.left ends -->
+	<div class="paging">
+		<?php echo $this->Paginator->prev('<< ' . __('previous', true), array(), null, array('class'=>'disabled'));?>
+	 | 	<?php echo $this->Paginator->numbers();?>
+ |
+		<?php echo $this->Paginator->next(__('next', true) . ' >>', array(), null, array('class' => 'disabled'));?>
+	</div>
+</div>
+<div class="actions">
+	<h3><?php __('Actions'); ?></h3>
+	<ul>
+		<li><?php echo $this->Html->link(__('New Calendario', true), array('action' => 'add')); ?></li>
+		<li><?php echo $this->Html->link(__('List Cursos', true), array('controller' => 'cursos', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(__('New Curso', true), array('controller' => 'cursos', 'action' => 'add')); ?> </li>
+	</ul>
+</div>
