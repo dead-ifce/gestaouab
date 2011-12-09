@@ -15,7 +15,7 @@ class AulaComponent extends Object {
 			$encontro['Evento']['turma_id'] = $turma;
 			$encontro['Evento']['diatodo'] = 0;
 			$encontro['Evento']['carga_horaria'] = 4;
-			$encontro['Polo'] = $polos;
+			//$encontro['Polo'] = $polos;
 			
 			
 			switch($i){
@@ -61,7 +61,7 @@ class AulaComponent extends Object {
 			$encontro['Evento']['turma_id'] = $turma;
 			$encontro['Evento']['diatodo'] = 0;
 			$encontro['Evento']['carga_horaria'] = 4;
-			$encontro['Polo'] = $polos;
+			//$encontro['Polo'] = $polos;
 			
 			
 			switch($i){
@@ -108,7 +108,7 @@ class AulaComponent extends Object {
 			$encontro['Evento']['turma_id'] = $turma;
 			$encontro['Evento']['diatodo'] = 0;
 			$encontro['Evento']['carga_horaria'] = 4;
-			$encontro['Polo'] = $polos;
+			//$encontro['Polo'] = $polos;
 			
 			switch($i){
 				case 0:	
@@ -175,7 +175,7 @@ class AulaComponent extends Object {
 			$encontro['Evento']['turma_id'] = $turma;
 			$encontro['Evento']['diatodo'] = 0;
 			$encontro['Evento']['carga_horaria'] = 4;
-			$encontro['Polo'] = $polos;
+			//$encontro['Polo'] = $polos;
 			
 			switch($i){
 				case 0:	
