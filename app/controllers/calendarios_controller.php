@@ -4,7 +4,7 @@ class CalendariosController extends AppController {
 	var $name = 'Calendarios';
 	var $uses = array('Curso','Disciplina','Turma','Polo','Tipoevento','Evento','Conflito','Calendario');
 	var $helpers = array('Javascript','Date');
-	var $components = array('Date','RequestHandler','Aula', 'EventosHelper');
+	var $components = array('Date','RequestHandler','Aula', 'EventosHelper', 'CalendarioHelper');
 	
 	
 	function beforeRender(){
@@ -14,8 +14,11 @@ class CalendariosController extends AppController {
 	   }
 	}
 	
+	function teste(){
+	    debug($this->Turma->findById(4));
+	}
+	
 	function index(){
-		//$this->layout = "teste";
 		$cursos = $this->Curso->find('list',array('fields' => array('Curso.id','Curso.nome')));
 		$this->set('cursos', $cursos);
 		//file_put_contents("/Users/luiz/tes/teste","adashdada");
@@ -26,11 +29,10 @@ class CalendariosController extends AppController {
 		$this->set('cursos', $cursos);
 		
 		if(!empty($this->data)){
-		    //$this->Calendario->criarCalendario($this->data);
+		    $this->CalendarioHelper->criarCalendario($this->data);
 			$this->Evento->saveAll($this->EventosHelper->gerar_aulas($this->data));
 			$this->Evento->saveAll($this->EventosHelper->gerar_encontros($this->data));
 
-			//$this->Session->setFlash(__('The evento has been saved', true));
 			$this->redirect(array('action' => 'view',$this->data['Calendario']['turma_id']));
 			
 		}
@@ -130,23 +132,19 @@ class CalendariosController extends AppController {
 			} else {
 				$ev['Evento']['diatodo'] = 0;
 			}
-		$dia_conflito = $ev['Evento']['inicio'];
+		    $dia_conflito = $ev['Evento']['inicio'];
 		
-		//3 - Start
-		$ev['Evento']['fim']=date('Y-m-d H:i:s',strtotime(''.$dayDelta.' days '.$minDelta.' minutes',strtotime($ev['Evento']['fim'])));
-		$ev['Evento']['inicio']=date('Y-m-d H:i:s',strtotime(''.$dayDelta.' days '.$minDelta.' minutes',strtotime($ev['Evento']['inicio'])));
-		$this->Evento->create();
+    		//3 - Start
+    		$ev['Evento']['fim']=date('Y-m-d H:i:s',strtotime(''.$dayDelta.' days '.$minDelta.' minutes',strtotime($ev['Evento']['fim'])));
+    		$ev['Evento']['inicio']=date('Y-m-d H:i:s',strtotime(''.$dayDelta.' days '.$minDelta.' minutes',strtotime($ev['Evento']['inicio'])));
+    		$this->Evento->create();
 		
-		$this->Evento->save($ev); //4 - Save the event with the new data
+    		$this->Evento->save($ev); //4 - Save the event with the new data
 		
 		
-		if($response = $this->EventosHelper->remover_conflito($dia_conflito, $ev['Evento']['turma_id'])){
-			echo $response;
-		}
-		
-		//$this->redirect(array('action'=>'index'));
-		//5 - redirect and reload
-		//$this->redirect(array('controller' => "calendarios", 'action' => "view",substr($ev['Evento']['inicio'],0,4),substr($ev['Evento']['inicio'],5,2),substr($ev['Evento']['inicio'],8,2)));
+    		if($response = $this->EventosHelper->remover_conflito($dia_conflito, $ev['Evento']['turma_id'])){
+    			echo $response;
+    		}
 		
 		}
 	}
@@ -166,7 +164,6 @@ class CalendariosController extends AppController {
 		$this->data['Evento']['inicio'] = $inicio;
 		$this->data['Evento']['fim'] = $fim;
 		
-		// $this->log("Inicio: ".$inicio." Fim: ".$fim,'date');
 		
 		$this->Evento->create();
 		
