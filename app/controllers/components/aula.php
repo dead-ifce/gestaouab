@@ -4,7 +4,7 @@ class AulaComponent extends Object {
  	
 	public function __construct() {
 	    $this->Evento = ClassRegistry::init('Evento');
-			$this->Conflito = ClassRegistry::init('Conflito');
+		$this->Conflito = ClassRegistry::init('Conflito');
 	
 	}
 	

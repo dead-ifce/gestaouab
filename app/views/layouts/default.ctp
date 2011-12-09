@@ -9,25 +9,6 @@
 		<?php echo $scripts_for_layout; ?>
 		<!--[if lt IE 8]><style type="text/css" media="all">@import url("/adminus/css/ie.css");</style><![endif]-->
 		
-		<script>
-			$(document).ready(function(){
-				<!--
-				<?php
-					if(!$this->Session->read('Auth.User')){
-						echo "\$(\"#nav\").hide();";
-					}
-				?>
-				//-->
-				
-				$(".alert-message").click(function(){
-					$(this).hide("slow");
-				});
-				
-				
-		   	});
-		</script>
-		
-		
 </head>
 <body>
 	<div id="hld">
@@ -134,7 +115,23 @@
 	
 	
 	<!--[if IE]><script type="text/javascript" src="<?php echo Dispatcher::baseUrl();?>/js/adminus/excanvas.js"></script><![endif]-->	
-	
-	
+    	<script>
+			$(document).ready(function(){
+				<!--
+				<?php
+					if(!$this->Session->read('Auth.User')){
+						echo "\$(\"#nav\").hide();";
+					}
+				?>
+				//-->
+				
+				$(".alert-message").click(function(){
+					$(this).hide("slow");
+				});
+				
+				
+		   	});
+		</script>
+
 </body>
 </html>
