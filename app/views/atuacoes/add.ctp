@@ -59,7 +59,7 @@
 			<h1>Atuações de <?php echo $pessoa["Pessoa"]["nome"] ?></h1>
 		</div>
 		-->
-		<?php echo debug($this->Session->read('Atuacao')); ?>
+		<?php //echo debug($this->Session->read('Atuacao')); ?>
 		<?php if ($this->Session->check('Atuacao')): ?>	
 
 		<div class="row">
@@ -77,11 +77,11 @@
 					<tbody>
 						<?php foreach($this->Session->read('Atuacao') as $atuacao): ?>
 						<tr>
-							<td><?php echo $atuacao["Curso"]["nome"]; ?></td>
-							<td><?php echo $atuacao["Disciplina"]["nome"]; ?></td>
-							<td><?php echo $atuacao["Atuacao"]["ano"]; ?></td>
-							<td><?php echo $atuacao["Atuacao"]["semestre"]; ?></td>
-							<td><?php echo $atuacao["Funcao"]["funcao"]; ?></td>
+							<td><?php echo $cursos[$atuacao['curso_id']]; ?></td>
+							<td><?php echo $disciplinas[$atuacao['disciplina_id']]; ?></td>
+							<td><?php echo $atuacao["ano"]; ?></td>
+							<td><?php echo $atuacao["semestre"]; ?></td>
+							<td><?php echo $funcoes[$atuacao['funcao_id']]; ?></td>
 						</tr>
 						<?php endforeach; ?>
 						

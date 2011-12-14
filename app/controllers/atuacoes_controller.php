@@ -55,11 +55,11 @@ class AtuacoesController extends AppController {
 				$this->Session->delete('Atuacao');
 				$atuacoes[] = $this->data['Atuacao'];
 				$this->Session->write('Atuacao', $atuacoes);
-				$this->redirect(array('controller' => 'atuacoes', 'action' => 'add'));
+				
 			}else{
 				$atuacoes[] = $this->data['Atuacao'];
 				$this->Session->write('Atuacao', $atuacoes);
-				$this->redirect(array('controller' => 'atuacoes', 'action' => 'add'));
+				
 			}
 		
 		}

@@ -113,6 +113,9 @@ class PessoasController extends AppController {
 	}
 	
 	
+	
+    
+
 	function vaga($edital_id = null){
 		if (!empty($this->data)) {
 

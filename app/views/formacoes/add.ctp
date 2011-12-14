@@ -41,7 +41,7 @@
 		<div class="page-header">
 			<h1>Formações de <?php echo $this->Session->read('Pessoa.nome') ?></h1>
 		</div>
-		<?php echo debug($this->Session->read('Formacao')); ?>
+		<?php //echo debug($this->Session->read('Formacao')); ?>
 		<?php if ($this->Session->check('Formacao')): ?>	
 		<div class="row">
 			<div class="span15 columns">
@@ -77,8 +77,9 @@
 			<p><input id="add-btn" class="btn primary" type="submit" value="Adicionar Formação"></p>
 		<?php else: ?>
 				<p><input id="add-btn" class="btn primary" type="submit" value="Adicionar Formação"></p>
-				<p><?php echo $this->Html->link("Continuar",array('action' => 'vaga',"controller" => "pessoas"), array("class" => "btn success")) ?>
-				</p>
+				 <p><?php echo $this->Html->link("Continuar",array('action' => 'salvarDadosPessoa',"controller" => "pessoas"), array("class" => "btn success")) ?>
+				</p> 
+
 		<?php endif; ?>
 		
 		

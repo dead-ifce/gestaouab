@@ -45,6 +45,7 @@ class FormacoesController extends AppController {
 				$this->Session->delete('Formacao');
 				$formacoes[] = $this->data['Formacao'];
 				$this->Session->write('Formacao', $formacoes);
+				
 			}else{
 				$formacoes[] = $this->data['Formacao'];
 				$this->Session->write('Formacao', $formacoes);
