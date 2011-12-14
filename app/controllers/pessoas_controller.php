@@ -51,11 +51,11 @@ class PessoasController extends AppController {
 			
 			$this->Session->write('Pessoa', $this->data['Pessoa']);
 			
-			if ($this->Session->read('Auth.User')){
+			//if ($this->Session->read('Auth.User')){
 				$this->redirect(array('controller' => 'atuacoes','action' => 'add', $this->Pessoa->getLastInsertID()));
-			}else{
+			//}else{
 				$this->redirect(array('controller' => 'formacoes','action' => 'add', $this->Pessoa->getLastInsertID()));
-			}
+			//}
 			
 		}
 		
@@ -115,7 +115,9 @@ class PessoasController extends AppController {
 	
 	function vaga($edital_id = null){
 		if (!empty($this->data)) {
+
 			$this->salvarDadosPessoa();
+
 			$last_pessoa = $this->Pessoa->find('first', array("order" => "Pessoa.id DESC", 'fields' => array('Pessoa.id'), 'recursive' => 0));
 			$this->data['Inscricao']['pessoa_id'] = $last_pessoa['Pessoa']['id'];
 			
@@ -147,25 +149,45 @@ class PessoasController extends AppController {
 	function salvarDadosPessoa(){
 		$pessoa['Pessoa'] = $this->Session->read('Pessoa');
 		
-		$formacoes['Formacao'] = $this->Session->read('Formacao');
+		
 		
 		$this->Pessoa->create();
 		
 		if($this->Pessoa->save($pessoa)){
 			$pessoa_id = $this->Pessoa->find('first',array('order'=>array('Pessoa.id DESC'), 'fields' => array('Pessoa.id')));
-			foreach($formacoes['Formacao'] as $key => $formacao){
-				$formacoes['Formacao'][$key]['pessoa_id'] = $pessoa_id['Pessoa']['id'];
-			}
-			$this->Formacao->create();
-			if($this->Formacao->saveAll($formacoes['Formacao'])){
-				$this->log('Salvou tudo corretamente', LOG_DEBUG);
-			}
+			$this->salvarDadosAtuacao($pessoa_id);
+			$this->salvarDadosFormacao($pessoa_id);
 			
 		}
 	}
 
+	function salvarDadosAtuacao($pessoa_id){
+		
+		$pessoa_id = $this->Pessoa->find('first',array('order'=>array('Pessoa.id DESC'), 'fields' => array('Pessoa.id')));
+		$atuacoes['Atuacao'] = $this->Session->read('Atuacao');
 
-	
+		foreach($atuacoes['Atuacao'] as $key => $atuacao){
+			$atuacoes['Atuacao'][$key]['pessoa_id'] = $pessoa_id['Pessoa']['id'];
+		}
+		$this->Atuacao->create();
+		if($this->Atuacao->saveAll($atuacoes['Atuacao'])){
+			$this->log('Salvou tudo corretamente', LOG_DEBUG);
+		}
+			
+	}
+
+	function salvarDadosFormacao($pessoa_id){
+		$formacoes['Formacao'] = $this->Session->read('Formacao');
+
+		foreach($formacoes['Formacao'] as $key => $formacao){
+			$formacoes['Formacao'][$key]['pessoa_id'] = $pessoa_id['Pessoa']['id'];
+		}
+		$this->Formacao->create();
+		if($this->Formacao->saveAll($formacoes['Formacao'])){
+			$this->log('Salvou tudo corretamente', LOG_DEBUG);
+		}
+	}
+
 	//AJAX
 	function getPolos($edital_id){
 		$polos = $this->Vaga->find('all', array('conditions' => array("edital_id" => $edital_id),'fields' => array('DISTINCT Polo.id','Polo.nome'))); 

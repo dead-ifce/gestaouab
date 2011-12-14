@@ -25,12 +25,12 @@
 			return false;
 		});
 		
-		$.post("<?php echo Dispatcher::baseUrl();?>/atuacoes/getDisciplinasByCurso/" + $("#AtuacaoCursoId").val(), function(data) {
+		$.get("<?php echo Dispatcher::baseUrl();?>/atuacoes/getDisciplinasByCurso/" + $("#AtuacaoCursoId").val(), function(data) {
 	        $("#AtuacaoDisciplinaId").empty().append(data);
 	    }, 'html');
 	
 		$("#AtuacaoCursoId").bind('change', function() {
-			$.post("<?php echo Dispatcher::baseUrl();?>/atuacoes/getDisciplinasByCurso/" + $(this).val(), function(data) {
+			$.get("<?php echo Dispatcher::baseUrl();?>/atuacoes/getDisciplinasByCurso/" + $(this).val(), function(data) {
 		        $("#AtuacaoDisciplinaId").empty().append(data);
 		    }, 'html');
 		});
@@ -50,10 +50,18 @@
 	<div class="block_content">
 		
 		<div class="page-header">
+			<h1>Atuações de <?php echo $this->Session->read('Pessoa.nome') ?></h1>
+		</div>	
+
+
+		<!-- Alterando
+		<div class="page-header">
 			<h1>Atuações de <?php echo $pessoa["Pessoa"]["nome"] ?></h1>
 		</div>
-		
-		<?php if (!empty($atuacoes)): ?>	
+		-->
+		<?php echo debug($this->Session->read('Atuacao')); ?>
+		<?php if ($this->Session->check('Atuacao')): ?>	
+
 		<div class="row">
 			<div class="span15 columns">
 				<table id="atuacoesTable" class="zebra-striped">
@@ -67,13 +75,13 @@
 						</tr>
 					</thead>
 					<tbody>
-						<?php foreach($atuacoes as $atuacao): ?>
+						<?php foreach($this->Session->read('Atuacao') as $atuacao): ?>
 						<tr>
 							<td><?php echo $atuacao["Curso"]["nome"]; ?></td>
 							<td><?php echo $atuacao["Disciplina"]["nome"]; ?></td>
 							<td><?php echo $atuacao["Atuacao"]["ano"]; ?></td>
 							<td><?php echo $atuacao["Atuacao"]["semestre"]; ?></td>
-							<td><?php echo $atuacao["Funcao"]["funcao"] ?></td>
+							<td><?php echo $atuacao["Funcao"]["funcao"]; ?></td>
 						</tr>
 						<?php endforeach; ?>
 						
@@ -88,10 +96,12 @@
 	   	<?php endif; ?>
 		
 		<p><input id="add-btn" class="btn primary" type="submit" value="Adicionar Atuação"></p>
-		<p>
+		 <p>
 				<?php echo $this->Html->link("Continuar cadastro", array("controller" => "formacoes", "action" => "add",$pessoa["Pessoa"]["id"]),array("class" => "btn success")); ?>
 		</p>
-		
+		 
+
+
 		
 	</div>		<!-- .block_content ends -->
 

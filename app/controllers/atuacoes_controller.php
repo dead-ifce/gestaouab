@@ -8,14 +8,14 @@ class AtuacoesController extends AppController {
 	
 	function beforeFilter() {
     	parent::beforeFilter();
-    	$this->Auth->allow('add');
+    	$this->Auth->allow('add','getDisciplinasByCurso');
 	}
 	
 	function index() {
 	}
 	
 	
-	
+	/*//function original
 	function add($pessoa_id = null){
 		
 		if (!empty($this->data)) {
@@ -44,6 +44,46 @@ class AtuacoesController extends AppController {
 		$this->set("funcoes", $funcoes);
 	
 	}
+*/
+    
+    function add($pessoa_id = null){
+		
+		if (!empty($this->data)) {
+			
+			if($this->Session->check('Atuacao')){
+				$atuacoes = $this->Session->read('Atuacao');
+				$this->Session->delete('Atuacao');
+				$atuacoes[] = $this->data['Atuacao'];
+				$this->Session->write('Atuacao', $atuacoes);
+				$this->redirect(array('controller' => 'atuacoes', 'action' => 'add'));
+			}else{
+				$atuacoes[] = $this->data['Atuacao'];
+				$this->Session->write('Atuacao', $atuacoes);
+				$this->redirect(array('controller' => 'atuacoes', 'action' => 'add'));
+			}
+		
+		}
+
+		$pessoa = $this->Pessoa->findById($pessoa_id);
+		$this->set("pessoa", $pessoa);
+		
+		$atuacoes = $this->Atuacao->findAllByPessoaId($pessoa_id);
+		$this->set("atuacoes",$atuacoes);
+		
+		$cursos = $this->Curso->find("list",array("fields" => array("Curso.id","Curso.nome")));
+		$this->set("cursos", $cursos);
+		
+		$disciplinas = $this->Disciplina->find("list",array("fields" => array("Disciplina.id","Disciplina.nome")));
+		$this->set("disciplinas", $disciplinas);
+		
+		$funcoes = $this->Funcao->find("list",array("fields" => array("Funcao.id","Funcao.funcao")));
+		$this->set("funcoes", $funcoes);
+	
+	}
+	
+
+    	
+
 	
 	function add_by_admin($pessoa_id = null){
 		$this->layout = 'ajax';

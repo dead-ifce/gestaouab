@@ -41,7 +41,7 @@
 		<div class="page-header">
 			<h1>Formações de <?php echo $this->Session->read('Pessoa.nome') ?></h1>
 		</div>
-		
+		<?php echo debug($this->Session->read('Formacao')); ?>
 		<?php if ($this->Session->check('Formacao')): ?>	
 		<div class="row">
 			<div class="span15 columns">
