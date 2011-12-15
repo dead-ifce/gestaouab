@@ -150,6 +150,8 @@ class PessoasController extends AppController {
 	}
 	
 	function salvarDadosPessoa(){
+		
+	
 		$pessoa['Pessoa'] = $this->Session->read('Pessoa');
 		
 		
