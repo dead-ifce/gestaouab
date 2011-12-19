@@ -46,7 +46,7 @@ class PessoasController extends AppController {
 			$this->data["Pessoa"]["endereco"] = $this->data["Pessoa"]["rua"].", ".$this->data["Pessoa"]["numero"]." ".$this->data["Pessoa"]["complemento"]." - ".$this->data["Pessoa"]["bairro"].", ".$this->data["Pessoa"]["cidade"]." - ".$this->data["Pessoa"]["estado"].", ".$this->data["Pessoa"]["cep"];
 			
 			if ($this->Session->check('Pessoa')) {
-				$this->Session->destroy();
+				$this->Session->delete('Pessoa');
 			}
 			
 			$this->Session->write('Pessoa', $this->data['Pessoa']);
@@ -161,6 +161,11 @@ class PessoasController extends AppController {
 			$this->salvarDadosAtuacao($pessoa_id);
 			$this->salvarDadosFormacao($pessoa_id);
 			
+			$this->Session->setFlash(__('Inscricao salva', true),"default",array("class" => "alert-message success"));
+			$this->redirect(array('action' => 'view',$pessoa_id['Pessoa']['id']));
+			//$this->set('pes',$pessoa_id);
+
+
 		}
 	}
 

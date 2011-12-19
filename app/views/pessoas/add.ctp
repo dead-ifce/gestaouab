@@ -45,10 +45,12 @@
 
 <style type="text/css" media="screen">
 	.loading{
+
 		display:none;
 	}
 	
 </style>
+
 <div class="block">
 
 	<div class="block_head">

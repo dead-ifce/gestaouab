@@ -36,6 +36,8 @@ class FormacoesController extends AppController {
 	}
 	
 	function add($pessoa_id = null){
+
+		
 		
 
 		if (!empty($this->data)) {

@@ -77,7 +77,8 @@
 			<p><input id="add-btn" class="btn primary" type="submit" value="Adicionar Formação"></p>
 		<?php else: ?>
 				<p><input id="add-btn" class="btn primary" type="submit" value="Adicionar Formação"></p>
-				 <p><?php echo $this->Html->link("Continuar",array('action' => 'salvarDadosPessoa',"controller" => "pessoas"), array("class" => "btn success")) ?>
+				<p>
+				 <?php echo $this->Html->link("Continuar", array('action' => 'salvarDadosPessoa','controller' => 'pessoas'), array("class" => "btn success")) ; ?> 
 				</p> 
 
 		<?php endif; ?>
