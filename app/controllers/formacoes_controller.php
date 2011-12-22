@@ -23,7 +23,7 @@ class FormacoesController extends AppController {
 		}
 		if (!empty($this->data)) {
 			if ($this->Formacao->save($this->data)) {
-				$this->Session->setFlash(__('TFormação salva corretamente', true),"default",array("class" => "alert-message success"));
+				$this->Session->setFlash(__('Formação salva corretamente', true),"default",array("class" => "alert-message success"));
 				$this->redirect(array('controller' => 'pessoas', 'action' => 'view', $this->data["Formacao"]["pessoa_id"]));
 			} else {
 				$this->Session->setFlash(__('Formação não pode ser salva. Por favor, tente novamente', true),"default",array("class" => "alert-message error"));
