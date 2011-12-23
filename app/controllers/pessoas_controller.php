@@ -161,7 +161,7 @@ class PessoasController extends AppController {
 			$this->salvarDadosAtuacao($pessoa_id);
 			$this->salvarDadosFormacao($pessoa_id);
 			
-			$this->Session->setFlash(__('Inscricao salva', true),"default",array("class" => "alert-message success"));
+			$this->Session->setFlash(__('Cadastro efetuado com sucesso !', true),"default",array("class" => "alert-message success"));
 			$this->redirect(array('action' => 'view',$pessoa_id['Pessoa']['id']));
 			//$this->set('pes',$pessoa_id);
 
