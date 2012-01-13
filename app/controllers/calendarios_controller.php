@@ -3,12 +3,17 @@ class CalendariosController extends AppController {
 
 	var $name = 'Calendarios';
 	var $uses = array('Curso','Disciplina','Turma','Polo','Tipoevento','Evento','Conflito','Calendario');
-	var $helpers = array('Javascript','Date');
+	var $helpers = array('Javascript','Date','Util');
 	var $components = array('Date','RequestHandler','Aula', 'EventosHelper', 'CalendarioHelper');
 	
+	function beforeFilter() {
+    	parent::beforeFilter();
+    	$this->Auth->allow('ver');
+	}
 	
 	function beforeRender(){
 	   // prevent useless warnings for Ajax
+	
 	   if($this->RequestHandler->isAjax()){
 	       Configure::write('debug', 0);
 	   }
@@ -29,9 +34,9 @@ class CalendariosController extends AppController {
 		$this->set('cursos', $cursos);
 		
 		if(!empty($this->data)){
-		    $this->CalendarioHelper->criarCalendario($this->data);
-			$this->Evento->saveAll($this->EventosHelper->gerar_aulas($this->data));
-			$this->Evento->saveAll($this->EventosHelper->gerar_encontros($this->data));
+		    $cal_id = $this->CalendarioHelper->criarCalendario($this->data);
+			$this->Evento->saveAll($this->EventosHelper->gerar_aulas($this->data, $cal_id['Calendario']['id']));
+			$this->Evento->saveAll($this->EventosHelper->gerar_encontros($this->data, $cal_id['Calendario']['id']));
 
 			$this->redirect(array('action' => 'view',$this->data['Calendario']['turma_id']));
 			
@@ -39,9 +44,23 @@ class CalendariosController extends AppController {
 		
 	}
 	
-	function view($turma_id = null){
-		
-		$this->Evento->recursive = -1;
+	function filterDisciplinas($eventos){
+	    $disciplina_atual = null;
+	    $disciplinas = array();
+	    foreach($eventos as $evento){
+	        if($disciplina_atual != $evento['Disciplina']['nome']){
+	            array_push($disciplinas, $evento['Disciplina']);
+	            $disciplina_atual = $evento['Disciplina']['nome'];
+	        }
+	    }
+	    
+	    return $disciplinas;
+	}
+	
+	
+	function ver($turma_id = null){
+		$this->layout = 'ajax';
+		/*$this->Evento->recursive = -1;
 		//$this->layout = "ajax";
 		
 		$this->set('turma_id', $turma_id);
@@ -58,8 +77,44 @@ class CalendariosController extends AppController {
 		}
     
 		$this->set("disciplinas",$disciplinas);
+		*/
+		
+		$this->Calendario->recursive = 1;
+		$conditions = array("Calendario.curso_id" => 1, "Calendario.ano" => 2012, "Calendario.semestre" => 1);
+		$calendarios = $this->Calendario->find('all', array("conditions" => $conditions));
+		$eventos = array();
+		//debug($calendarios);
+		$disciplinas = $this->filterDisciplinas($eventos);
+		//debug($disciplinas);
 		
 		
+		$this->set('calendarios', $calendarios);
+		$this->set('disciplinas',$disciplinas );
+		//debug($eventos);
+		//debug($this->analisaDisciplinas($eventos));
+	}
+	
+	//Conta quantos eventos de cada disciplina para que possa se montada a tabela corretamente usando o rowspan
+	function analisaDisciplinas($eventos){
+	    
+	    $quantidades = array();
+	    $disciplina_current = $eventos[0]['Disciplina']['nome'];
+	    $count = 0;
+	    $qtde_eventos = count($eventos);
+	    
+	    for($i = 0; $i <= $qtde_eventos ; $i++){
+	        
+	        if( $i!= $qtde_eventos && $disciplina_current == $eventos[$i]['Disciplina']['nome'] ){
+                $count++;
+               
+	        }else{
+	            array_push($quantidades, $count);
+                $disciplina_current = $i != $qtde_eventos ? $eventos[$i]['Disciplina']['nome']: null;
+                $count = 0;
+	        }
+	    }
+	    
+	    return $quantidades;
 	}
 	
 	function imprimir($turma_id = null, $disc_id = null){
@@ -174,6 +229,7 @@ class CalendariosController extends AppController {
 	}
 	
 	function getTurmasByCurso($curso_id){
+		
 		$this->layout = 'ajax';
 		$this->beforeRender();
 		$this->autoRender = false;
