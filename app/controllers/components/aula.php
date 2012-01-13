@@ -8,15 +8,14 @@ class AulaComponent extends Object {
 	
 	}
 	
-	function gerar_aula_40_horas(&$encontros, $polos, $turma, $disciplina, $data_inicio_disciplina, $data_fim_disciplina){
+	function gerar_aula_40_horas(&$encontros, $polos, $turma, $disciplina, $data_inicio_disciplina, $data_fim_disciplina, $cal_id){
 		
 		for($i = 0; $i < 5; $i++){ 
 			$encontro['Evento']['disciplina_id'] = $disciplina;
 			$encontro['Evento']['turma_id'] = $turma;
 			$encontro['Evento']['diatodo'] = 0;
 			$encontro['Evento']['carga_horaria'] = 4;
-			//$encontro['Polo'] = $polos;
-			
+			$encontro['Evento']['calendario_id'] = $cal_id;
 			
 			switch($i){
 				case 0:	
@@ -55,14 +54,14 @@ class AulaComponent extends Object {
 	
 	}
 	
-	function gerar_aula_60_horas(&$encontros, $polos, $turma, $disciplina, $data_inicio_disciplina, $data_fim_disciplina){
+	function gerar_aula_60_horas(&$encontros, $polos, $turma, $disciplina, $data_inicio_disciplina, $data_fim_disciplina, $cal_id){
 		for($i = 0; $i < 8; $i++){ 
 			$encontro['Evento']['disciplina_id'] = $disciplina;
 			$encontro['Evento']['turma_id'] = $turma;
 			$encontro['Evento']['diatodo'] = 0;
 			$encontro['Evento']['carga_horaria'] = 4;
 			//$encontro['Polo'] = $polos;
-			
+			$encontro['Evento']['calendario_id'] = $cal_id;
 			
 			switch($i){
 				case 0:	
@@ -100,7 +99,7 @@ class AulaComponent extends Object {
 		}//FIM DO FOR
 	}
 	
-	function gerar_aula_80_horas(&$encontros, $polos, $turma, $disciplina, $data_inicio_disciplina, $data_fim_disciplina){
+	function gerar_aula_80_horas(&$encontros, $polos, $turma, $disciplina, $data_inicio_disciplina, $data_fim_disciplina, $cal_id){
 		
 		for($i = 0; $i < 8; $i++){ 
 			
@@ -109,7 +108,7 @@ class AulaComponent extends Object {
 			$encontro['Evento']['diatodo'] = 0;
 			$encontro['Evento']['carga_horaria'] = 4;
 			//$encontro['Polo'] = $polos;
-			
+			$encontro['Evento']['calendario_id'] = $cal_id;
 			switch($i){
 				case 0:	
 					//ADICIONA PRIMEIRO ENCONTRO
@@ -167,7 +166,7 @@ class AulaComponent extends Object {
 		}//FIM DO FOR
 	}	//fim 80h
 
-	function gerar_aula_100_horas(&$encontros, $polos, $turma, $disciplina, $data_inicio_disciplina, $data_fim_disciplina){
+	function gerar_aula_100_horas(&$encontros, $polos, $turma, $disciplina, $data_inicio_disciplina, $data_fim_disciplina, $cal_id){
 		
 		for($i = 0; $i < 8; $i++){ 
 			
@@ -176,7 +175,7 @@ class AulaComponent extends Object {
 			$encontro['Evento']['diatodo'] = 0;
 			$encontro['Evento']['carga_horaria'] = 4;
 			//$encontro['Polo'] = $polos;
-			
+			$encontro['Evento']['calendario_id'] = $cal_id;
 			switch($i){
 				case 0:	
 					//ADICIONA PRIMEIRO ENCONTRO

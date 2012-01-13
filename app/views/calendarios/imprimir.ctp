@@ -11,15 +11,15 @@ foreach($eventos as $evento){
 		case 1:
 			echo $this->Date->printEncontro($evento['Evento']['inicio'],$evento['Evento']['fim'])."<br />";
 			break;
-	  case 2:
-	 	 echo $this->Date->printExame($evento['Evento']['inicio'],$evento['Evento']['fim'])."<br />";
-	 	 break;
+	    case 2:
+	 	    echo $this->Date->printExame($evento['Evento']['inicio'],$evento['Evento']['fim'])."<br />";
+	 	    break;
 		case 3:
-	 	 echo $this->Date->printSegundaChamada($evento['Evento']['inicio'],$evento['Evento']['fim'])."<br />";
-	 	 break;
+	 	    echo $this->Date->printSegundaChamada($evento['Evento']['inicio'],$evento['Evento']['fim'])."<br />";
+	 	    break;
 		case 4:
-	 	 echo $this->Date->printExameFinal($evento['Evento']['inicio'],$evento['Evento']['fim'])."<br />";
-	 	 break;
+	 	    echo $this->Date->printExameFinal($evento['Evento']['inicio'],$evento['Evento']['fim'])."<br />";
+	 	    break;
 		default:
 			
 			break;

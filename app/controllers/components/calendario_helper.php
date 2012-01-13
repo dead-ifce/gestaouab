@@ -22,7 +22,8 @@ class CalendarioHelperComponent extends Object {
 	
     	$calendario["Calendario"] = array("curso_id" => $dados["Calendario"]["curso"],
     	                                  "ano"      => $ano,
-    	                                  "semestre" => $semestre
+    	                                  "semestre" => $semestre,
+										  "disciplina_id" => $dados["Calendario"]["disciplina_id"]
     	                           );
 	    
 	    //CRIA ARRAY DOS POLOS DA DISCIPLINA

@@ -11,11 +11,11 @@ class EventosHelperComponent extends Object {
 	
 	}
 	
-	function gerar_aulas($dados){
+	function gerar_aulas($dados, $cal_id){
 		$this->Disciplina->recursive = 2;
 		$disciplina = $this->Disciplina->findById($dados['Calendario']['disciplina_id']);
 		
-		$polosDisciplina = $disciplina["Turma"]["0"]['Polo'];
+		//$polosDisciplina = $disciplina["Turma"]["0"]['Polo'];
 		$numSemanas      = $disciplina['Disciplina']['numsemanas']; 
 		
 		$data_inicio_disciplina = $dados['Calendario']['inicio'];
@@ -23,14 +23,6 @@ class EventosHelperComponent extends Object {
 		
 		
 		$aulas = array();
-		
-		/*
-		//CRIA ARRAY DOS POLOS DA DISCIPLINA
-		      $polos['Polo'] = array();
-		      foreach($polosDisciplina as $polo){
-		          array_push($polos['Polo'],$polo['id']);
-		      }*/
-		
 		
 		//ADICIONA TODOS AS AULAS NUM ARRAY
 		for($i = 1; $i <= $numSemanas; $i++){
@@ -41,6 +33,7 @@ class EventosHelperComponent extends Object {
 			$aula['Evento']['turma_id']      = $dados['Calendario']['turma_id'];
 			$aula['Evento']['carga_horaria'] = 0;
 			$aula['Evento']['diatodo']       = 0;
+			$aula['Evento']['calendario_id'] = $cal_id;
 			
 			
 			//É necessário o condicional pois se mandar pegar o próximo domingo, ele irá pegar o imediatamente após o dia inicial
@@ -61,8 +54,6 @@ class EventosHelperComponent extends Object {
 				
 			}
 			
-			//ADICIONA OS POLOS PARA CADA EVENTO
-			//$aula['Polo'] = $polos;
 			
 			//ADICIONA OS EVENTOS NO ARRAY
 			array_push($aulas,$aula);
@@ -71,7 +62,7 @@ class EventosHelperComponent extends Object {
 		return $aulas;
 	}
 
-	function gerar_encontros($dados){
+	function gerar_encontros($dados, $cal_id){
 		$this->Disciplina->recursive = 2;
 		$disciplina = $this->Disciplina->findById($dados['Calendario']['disciplina_id']);
 		$polosDisciplina = $disciplina["Turma"]["0"]['Polo'];
@@ -80,14 +71,9 @@ class EventosHelperComponent extends Object {
 		$data_inicio_disciplina = $dados['Calendario']['inicio'];
 		$data_fim_disciplina = $dados['Calendario']['fim'];
 								
-	   //CRIA ARRAY DOS POLOS DA DISCIPLINA
-	   // $polos['Polo'] = array();
-	   //     foreach($polosDisciplina as $polo){
-	   //          array_push($polos['Polo'],$polo['id']);
-	   //     }
-	
+	  
 	  $encontros = array();
-	 $polos = array();
+	  $polos = array();
 		switch ($disciplina['Disciplina']['numsemanas']) {
 			case 4:
 				$this->Aula->gerar_aula_40_horas($encontros,
@@ -95,7 +81,8 @@ class EventosHelperComponent extends Object {
 												 $dados['Calendario']['turma_id'],
 												 $dados['Calendario']['disciplina_id'],
 												 $data_inicio_disciplina,
-												 $data_fim_disciplina);
+												 $data_fim_disciplina,
+												 $cal_id);
 				break;
 			case 6:
 				$this->Aula->gerar_aula_60_horas($encontros,
@@ -103,7 +90,8 @@ class EventosHelperComponent extends Object {
 												 $dados['Calendario']['turma_id'],
 												 $dados['Calendario']['disciplina_id'],
 												 $data_inicio_disciplina,
-												 $data_fim_disciplina);
+												 $data_fim_disciplina,
+ 												 $cal_id);
 				break;
 			case 8:
 				$this->Aula->gerar_aula_80_horas($encontros,
@@ -111,7 +99,8 @@ class EventosHelperComponent extends Object {
 												 $dados['Calendario']['turma_id'],
 												 $dados['Calendario']['disciplina_id'],
 												 $data_inicio_disciplina,
-												 $data_fim_disciplina);
+												 $data_fim_disciplina,
+ 												 $cal_id);
 				break;
 			case 10:
 				$this->Aula->gerar_aula_100_horas($encontros,
@@ -119,7 +108,8 @@ class EventosHelperComponent extends Object {
 												  $dados['Calendario']['turma_id'],
 												  $dados['Calendario']['disciplina_id'],
 												  $data_inicio_disciplina,
-												  $data_fim_disciplina);
+												  $data_fim_disciplina,
+  												  $cal_id);
 				break;
 		}
 		
