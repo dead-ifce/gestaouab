@@ -1,9 +1,9 @@
 <?php
 class Calendario extends AppModel {
 	var $name = 'Calendario';
-	var $useDbConfig = 'default';
+	var $useDbConfig = 'schema_uab';
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
-    //var $hasAndBelongsToMany = array('Polo');
+    var $hasAndBelongsToMany = array('Polo', "Pessoa");
 	
 	var $hasMany = array('Evento');
 	
