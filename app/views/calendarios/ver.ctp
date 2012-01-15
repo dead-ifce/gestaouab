@@ -154,6 +154,8 @@
                 <?php endforeach; ?>
             </tbody>
         </table>
+        <?php $paramestros = "curso_id=".$this->params['curso_id']."&ano=".$this->params['ano']."&semestre=".$this->params['semestre'] ?>
+        <a href="http://localhost/cgi-bin/print_calendario?<?php echo $paramestros; ?>" >Gerar PDF</a>
     </div>		<!-- .block_content ends -->
 
 		<div class="bendl"></div>
