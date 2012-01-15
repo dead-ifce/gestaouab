@@ -116,38 +116,16 @@ class CalendariosController extends AppController {
 	
 	function print_cal($curso_id, $ano, $semestre){
 		$this->layout = 'ajax';
-		/*$this->Evento->recursive = -1;
-		//$this->layout = "ajax";
-		
-		$this->set('turma_id', $turma_id);
-		
-		$conflitos = $this->Conflito->find('all',array('conditions' => array('Conflito.turma_id' => $turma_id)));
-		$this->set('conflitos', $conflitos);
-		
-		$detalhes_turma = $this->Turma->findById($turma_id);
-		$this->set("detalhes_turma",$detalhes_turma);
-		
-		$disciplinas = array();
-		foreach($detalhes_turma['Disciplina'] as $disciplina){
-			$disciplinas[$disciplina['id']] = $disciplina['nome'];
-		}
-    
-		$this->set("disciplinas",$disciplinas);
-		*/
 		
 		$this->Calendario->recursive = 1;
 		$conditions = array("Calendario.curso_id" => $curso_id, "Calendario.ano" => $ano, "Calendario.semestre" => $semestre);
-		$calendarios = $this->Calendario->find('all', array("conditions" => $conditions));
+		$calendarios = $this->Calendario->find('all', array("conditions" => $conditions, "order" => "Calendario.created ASC"));
 		$eventos = array();
 		//debug($calendarios);
 		$disciplinas = $this->filterDisciplinas($eventos);
-		//debug($disciplinas);
-		
 		
 		$this->set('calendarios', $calendarios);
 		$this->set('disciplinas',$disciplinas );
-		//debug($eventos);
-		//debug($this->analisaDisciplinas($eventos));
 	}
 	
 	//Conta quantos eventos de cada disciplina para que possa se montada a tabela corretamente usando o rowspan
