@@ -1,5 +1,6 @@
 <?php
 class Tipoevento extends AppModel {
+	var $useDbConfig = 'schema_uab';
 	var $name = 'Tipoevento';
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 

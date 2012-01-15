@@ -2,13 +2,13 @@
 class CalendariosController extends AppController {
 
 	var $name = 'Calendarios';
-	var $uses = array('Curso','Disciplina','Turma','Polo','Tipoevento','Evento','Conflito','Calendario');
+	var $uses = array('Curso','Disciplina','Turma','Polo','Tipoevento','Evento','Conflito','Calendario', 'Pessoa');
 	var $helpers = array('Javascript','Date','Util');
 	var $components = array('Date','RequestHandler','Aula', 'EventosHelper', 'CalendarioHelper');
 	
 	function beforeFilter() {
     	parent::beforeFilter();
-    	$this->Auth->allow('ver');
+    	$this->Auth->allow('print_cal');
 	}
 	
 	function beforeRender(){
@@ -57,8 +57,64 @@ class CalendariosController extends AppController {
 	    return $disciplinas;
 	}
 	
+	function add_pessoas($calendario_id){
+		if (!empty($this->data)) {
+			if ($this->Calendario->save($this->data)) {
+				$this->Session->setFlash(__('The companhia has been saved', true));
+				$this->redirect(array('controller' => 'calendarios', 
+									  'action' => 'ver',
+									  $this->data['Calendario']['curso_id'],
+									  $this->data['Calendario']['ano'],
+									  $this->data['Calendario']['semestre']));
+			} else {
+				$this->Session->setFlash(__('The companhia could not be saved. Please, try again.', true));
+			}
+		}
+		if (empty($this->data)) {
+			$this->data = $this->Calendario->read(null, $calendario_id);
+			$pessoas = $this->Pessoa->find('list', array("fields" => array("id", "nome")));
+			$this->set("pessoas", $pessoas);
+		}
+		
+	}
 	
-	function ver($turma_id = null){
+	function add_polos($calendario_id){
+		if (!empty($this->data)) {
+			if ($this->Calendario->save($this->data)) {
+				$this->Session->setFlash(__('The companhia has been saved', true));
+				$this->redirect(array('controller' => 'calendarios', 
+									  'action' => 'ver',
+									  $this->data['Calendario']['curso_id'],
+									  $this->data['Calendario']['ano'],
+									  $this->data['Calendario']['semestre']));
+			} else {
+				$this->Session->setFlash(__('The companhia could not be saved. Please, try again.', true));
+			}
+		}
+		if (empty($this->data)) {
+			$this->data = $this->Calendario->read(null, $calendario_id);
+			$polos = $this->Polo->find('list', array("fields" => array("id", "nome")));
+			$this->set("polos", $polos);
+		}
+		
+	}
+	
+	
+	function ver(){
+		
+		$this->Calendario->recursive = 1;
+		$conditions = array("Calendario.curso_id" => $this->params['curso_id'], 
+							"Calendario.ano" => $this->params['ano'], 
+							"Calendario.semestre" => $this->params['semestre']);
+		$calendarios = $this->Calendario->find('all', array("conditions" => $conditions, "order" => "Calendario.created ASC"));
+		$eventos = array();
+		//debug($calendarios);
+		$disciplinas = $this->filterDisciplinas($eventos);
+		$pessoas = $this->Pessoa->find('list', array("fields" => array("id", "nome")));
+		$this->set('calendarios', $calendarios);
+	}
+	
+	function print_cal($curso_id, $ano, $semestre){
 		$this->layout = 'ajax';
 		/*$this->Evento->recursive = -1;
 		//$this->layout = "ajax";
@@ -80,7 +136,7 @@ class CalendariosController extends AppController {
 		*/
 		
 		$this->Calendario->recursive = 1;
-		$conditions = array("Calendario.curso_id" => 1, "Calendario.ano" => 2012, "Calendario.semestre" => 1);
+		$conditions = array("Calendario.curso_id" => $curso_id, "Calendario.ano" => $ano, "Calendario.semestre" => $semestre);
 		$calendarios = $this->Calendario->find('all', array("conditions" => $conditions));
 		$eventos = array();
 		//debug($calendarios);

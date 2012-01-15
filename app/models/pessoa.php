@@ -6,8 +6,8 @@ class Pessoa extends AppModel {
 	
 	var $hasMany = array("Atuacao","Formacao"); 
 	
-	var $hasAndBelongsToMany = "Funcao";
-	
+	//var $hasAndBelongsToMany = "Funcao";
+	var $hasAndBelongsToMany = array('Funcao', "Calendario");
 	
 	function ajustarData(){
 		if (preg_match('/\d{1,2}\/\d{1,2}\/\d{2,4}/', $this->data["Pessoa"]["nascimento"])){	

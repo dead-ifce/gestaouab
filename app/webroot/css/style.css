@@ -330,7 +330,7 @@ a:hover {
 	float: left;
 	}
 	
-.block .block_head ul {
+/*.block .block_head ul {
 	float: right;
 	text-transform: uppercase;
 	font-size: 11px;
@@ -354,7 +354,7 @@ a:hover {
 	}
 
 .block .block_head ul li.active a { color: #888; }
-.block .block_head ul li a:hover { color: #008ee8; }
+.block .block_head ul li a:hover { color: #008ee8; }*/
 
 .block .block_head form {
 	float: right;
@@ -504,7 +504,7 @@ a:hover {
 	border: 1px solid #d77011;
 	}
 
-.block .block_content ul {
+/*.block .block_content ul {
 	padding-left: 15px;
 	padding-bottom: 15px;
 	}
@@ -523,7 +523,7 @@ a:hover {
  	
 .block .block_content ol li {
 	margin-bottom: 5px;
-	}
+	}*/
 	
 .block hr {
 	height: 1px;
@@ -743,7 +743,7 @@ a:hover {
 	height: 100px;
 	}
 
-.block .block_content .imglist li ul {
+/*.block .block_content .imglist li ul {
 	position: absolute;
 	z-index: 10;
 	background: url(../img/imgo.gif) center no-repeat;
@@ -783,7 +783,7 @@ a:hover {
 	
 .block .block_content .imglist li ul li.view a:hover { background: url(../img/imgt.gif) bottom center no-repeat; }
 .block .block_content .imglist li ul li.delete a:hover { background: url(../img/imgb.gif) top center no-repeat; }
-
+*/
 
 /* Footer */
 

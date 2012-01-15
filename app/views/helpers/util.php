@@ -18,6 +18,11 @@ class UtilHelper extends AppHelper {
 		}
 	}	
 	
+	function printNome($nome){
+		$nome = split(" ", $nome);
+		return $nome[0]. " " . $nome[count($nome) - 1];
+	}
+	
 	function filterEvento($eventos, $disciplina){
 	    $eventos_filtered = array();
 	    foreach($eventos as $evento){

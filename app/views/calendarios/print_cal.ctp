@@ -4,9 +4,6 @@
 <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
 <style type="text/css">
     
-    .pessoas{
-/*        display: none;*/
-    }
     .span4 {
         width: 140px;
     }
@@ -108,57 +105,39 @@
 </style>
 
 
-<div class="block">
-
-	<div class="block_head">
-		<div class="bheadl"></div>
-		<div class="bheadr"></div>
-		
-		<h2>Calendário</h2>	
-	</div>		<!-- .block_head ends -->
-
-	<div class="block_content">
+<?php //echo $this->Html->css(array("bootstrap")); ?>
     
-        <table class="bordered-table">
+<table class="bordered-table">
         
-            <tbody>
-                <tr>
-                    <td colspan=5>
-                        <img src="http://virtual.ifce.edu.br/moodle/theme/aardvark_pro/images/core/logoA.png"/>
-                    </td>
-                </tr>
-                <?php foreach($calendarios as $calendario): ?>
-                <tr>
-                    <td class="span2"><?php echo $calendario['Disciplina']['nome'] ?></td>
-                    <td class="span6">
-                        <?php foreach($calendario['Pessoa'] as $pessoa): ?>
-                            <div class="pessoa_info">
-                                 <?php echo $this->Util->printNome($pessoa['nome']); ?><br />
-                                 <?php echo $pessoa['email']; ?><br />
-                                 <?php echo $pessoa['cel']; ?><br />
-                            </div>
-                        <?php endforeach; ?>
-                        <a href="/sisgest/calendarios/add_pessoas/<?php echo $calendario['Calendario']['id']  ?>" class="add_pessoa">Adicionar pessoas</button> 
-                     </td>
-                    <td class="span3">
-                         <?php foreach($calendario['Polo'] as $polo): ?>
-                                <?php echo $polo['nome']; ?><br />
-                            <?php endforeach; ?>
-                        <a href="/sisgest/calendarios/add_polos/<?php echo $calendario['Calendario']['id']  ?>" class="add_pessoa">Adicionar pólos</button>
-                    </td>
-                    <td class="span1"><?php echo $calendario['Disciplina']['carga']."h" ?></td>
-                    <td class="span6">
-                        <?php $this->Util->printEventos($calendario['Evento']); ?>
-                    </td>
-                </tr>
+    <tbody>
+        <tr>
+            <td colspan=5>
+                <img src="http://virtual.ifce.edu.br/moodle/theme/aardvark_pro/images/core/logoA.png"/>
+            </td>
+        </tr>
+        <?php foreach($calendarios as $calendario): ?>
+        <tr>
+            <td class="span2"><?php echo $calendario['Disciplina']['nome'] ?></td>
+            <td class="span3"> 
+                <?php foreach($calendario['Pessoa'] as $pessoa): ?>
+                    <div class="pessoa_info">
+                         <?php echo $this->Util->printNome($pessoa['nome']); ?><br />
+                         <?php echo $pessoa['email']; ?><br />
+                         <?php echo $pessoa['cel']; ?><br />
+                    </div>
                 <?php endforeach; ?>
-            </tbody>
-        </table>
-    </div>		<!-- .block_content ends -->
-
-		<div class="bendl"></div>
-		<div class="bendr"></div>
-
-</div>
-
-
+            </td>
+            <td class="span3">
+                <?php foreach($calendario['Polo'] as $polo): ?>
+                    <?php echo $polo['nome']; ?><br />
+                <?php endforeach; ?>
+            </td>
+            <td class="span1"><?php echo $calendario['Disciplina']['carga']."h" ?></td>
+            <td class="span4">
+                <?php $this->Util->printEventos($calendario['Evento']); ?>
+                <?php //$this->Util->printEventos($this->Util->filterEvento($eventos, $disciplina['nome'])); ?>
+            </td>
+        </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
