@@ -17,6 +17,10 @@
 		background: none;
 		margin-bottom: 5px;
 	}
+	.btn{
+	    margin-left: 55px;
+	    margin-bottom: 15px
+	}
 </style>	
 
 		
@@ -26,7 +30,7 @@
 		<div class="bheadl"></div>
 		<div class="bheadr"></div>
 		
-		<h2>Calendário: <?php echo $detalhes_turma["Curso"]["nome"]." - ".$detalhes_turma["Turma"]["nome"] ?></h2>	
+		<h2>Edição de calendário</h2>	
 	</div>		<!-- .block_head ends -->
 
 	<div class="block_content">
@@ -35,18 +39,7 @@
 		<?php endif; ?>
 		
 		<div id="calendar"  class="reset_fc"></div>
-	
-		<div id="imprimir-button">
-			<form method="post" class="form-stacked">
-					<p><?php echo $form->input('Disciplina',array('options' => $disciplinas,
-																										 'empty' => 'Selecione...',
-																										 'class' => "styled")); ?></p>
-																									
-			</form>
-				<input style="margin-left: 40px" type="submit" class="btn primary" value="Imprimir calendário" id="button"/>	
-		</div>
-		
-		
+		<a style="" class="btn primary" href="/sisgest/calendarios/ver/<?php echo $this->params['turma_id']."/".$this->params['ano']."/".$this->params['semestre'] ?>">Visualizar</a>
 	</div>		<!-- .block_content ends -->
 	
 	<div class="bendl"></div>
@@ -95,13 +88,12 @@
 </div>
 
 <div style="display: none" id="edit-event">
-	<label>Turma:</label><br />
-	<span id="turma"><?php echo $detalhes_turma["Curso"]["nome"]." - ".$detalhes_turma["Turma"]["nome"] ?></span><br />
-	<label>Evento:</label><br />
+	
+	 <b>Evento:</b>
 	<span id="evento-title"></span>
 	<form>
-	  <label>Dia</label><br/>
-	  <input type="text" focus="remove" class="input_date" name="dia" id="dia"/><br/>
+	  <b>Dia</b>
+	  <input type="text" focus="remove" class="small input_date" name="dia" id="dia"/><br/>
 	 </form>
 </div>
 
@@ -131,7 +123,7 @@
 						center: 'title',
 						right:'month,agendaWeek,agendaDay'
 					},
-	        events: "<?php echo Dispatcher::baseUrl();?>/calendarios/feed/<?php echo $turma_id?>",
+	        events: "<?php echo Dispatcher::baseUrl();?>/calendarios/feed/<?php echo $this->params['turma_id']?>/<?php echo $this->params['ano']?>/<?php echo $this->params['semestre']?>",
 			eventClick: function(calEvent, jsEvent, view) {
 				
 				$("#evento-title").html(calEvent.title);
@@ -151,7 +143,7 @@
 								text: "Ok",
 								click: function() {
 									var dia = $('#dia').val();
-									$.post("<?php echo Dispatcher::baseUrl();?>/calendarios/edit_evento/"+calEvent.id,
+									$.post("<?php echo Dispatcher::baseUrl();?>/calendarios/edit_evento/"+ calEvent.id,
 									{novaData: dia, velhaData: calEvent.start.toString()},
 									function(data) {
 										$('#edit-event').dialog("close");

@@ -1,8 +1,6 @@
-<link rel="stylesheet" href="/sisgest/css/print-preview.css" type="text/css" media="screen">
-<script src="http://cdn.jquerytools.org/1.2.5/full/jquery.tools.min.js"></script>
-<script src="/sisgest/js/jquery.print-preview.js" type="text/javascript" charset="utf-8"></script>
-<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
-<style type="text/css">
+<?php echo $javascript->link(array("/js/jquery/jquery-1.5.2.min"),false); ?>
+
+<style type="text/css" media="print">
     
     .pessoas{
 /*        display: none;*/
@@ -102,11 +100,18 @@
     table .span6 {
       width: 220px;
     }
+    
+</style>
+<?php echo $this->Html->css(array("bootstrap")); ?>
+<style type="text/css" media="screen">
+    .danger{
+        display:none;
+        margin-top: 10px;
+    }
     .pessoa_info{
         margin-bottom: 10px;
     }
 </style>
-
 
 <div class="block">
 
@@ -129,7 +134,10 @@
                 </tr>
                 <?php foreach($calendarios as $calendario): ?>
                 <tr>
-                    <td class="span2"><?php echo $calendario['Disciplina']['nome'] ?></td>
+                    <td class="nome_disciplina span2"><?php echo $calendario['Disciplina']['nome'] ?>
+                    <br />
+                    <a class="btn danger" href="/sisgest/calendarios/delete/<?php echo $calendario['Calendario']['id']."/".$this->params['turma_id']."/".$this->params['ano']."/".$this->params['semestre'] ?>">Apagar</a>
+                    </td>
                     <td class="span6">
                         <?php foreach($calendario['Pessoa'] as $pessoa): ?>
                             <div class="pessoa_info">
@@ -144,7 +152,7 @@
                          <?php foreach($calendario['Polo'] as $polo): ?>
                                 <?php echo $polo['nome']; ?><br />
                             <?php endforeach; ?>
-                        <a href="/sisgest/calendarios/add_polos/<?php echo $calendario['Calendario']['id']  ?>" class="add_pessoa">Adicionar pólos</button>
+                        <a href="/sisgest/calendarios/add_polos/<?php echo $calendario['Calendario']['id']  ?>" class="add_pessoa">Adicionar polos</button>
                     </td>
                     <td class="span1"><?php echo $calendario['Disciplina']['carga']."h" ?></td>
                     <td class="span6">
@@ -154,8 +162,9 @@
                 <?php endforeach; ?>
             </tbody>
         </table>
-        <?php $paramestros = "curso_id=".$this->params['curso_id']."&ano=".$this->params['ano']."&semestre=".$this->params['semestre'] ?>
-        <a href="http://localhost/cgi-bin/print_calendario?<?php echo $paramestros; ?>" >Gerar PDF</a>
+        <?php $parametros = "turma_id=".$this->params['turma_id']."&ano=".$this->params['ano']."&semestre=".$this->params['semestre'] ?>
+        <a class="btn primary" href="http://localhost/cgi-bin/print_calendario?<?php echo $parametros; ?>" >Gerar PDF</a>
+        <a class="btn primary" href="/sisgest/calendarios/view/<?php echo $this->params['turma_id']."/".$this->params['ano']."/".$this->params['semestre'] ?>">Editar</a>
     </div>		<!-- .block_content ends -->
 
 		<div class="bendl"></div>
@@ -163,4 +172,10 @@
 
 </div>
 
-
+<script type="text/javascript" charset="utf-8">
+    $(".nome_disciplina").mouseover(function(){
+        $(this).find(".danger").css("display", "inline-block");
+    }).mouseout(function(){
+         $(this).find(".danger").hide();
+    });
+</script>

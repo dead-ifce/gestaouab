@@ -16,13 +16,13 @@
             <?php echo $this->Form->input("Calendario.id", array("type" => 'hidden')) ?>
             <?php echo $this->Form->input("Calendario.ano", array("type" => 'hidden')) ?>
             <?php echo $this->Form->input("Calendario.semestre", array("type" => 'hidden')) ?>
-            <?php echo $this->Form->input("Calendario.curso_id", array("type" => 'hidden')) ?>
+            <?php echo $this->Form->input("Calendario.turma_id", array("type" => 'hidden')) ?>
             <?php echo $this->Form->input("Pessoa", array("type" => 'select', "multiple" => true, "label" => false, "class" => "chzn-select xlarge")) ?>
             <p style="padding-top:10px">
     			<input type="submit" class="btn primary" value="Salvar" id="button"/>
     		</p>
     		<p style="padding-top:10px">
-    			<a href="/sisgest/calendarios/ver/<?php echo $this->data['Calendario']['curso_id'].'/'.$this->data['Calendario']['ano']. '/'. $this->data['Calendario']['semestre'] ?>" class="btn">Voltar</a>
+    			<a href="/sisgest/calendarios/ver/<?php echo $this->data['Calendario']['turma_id'].'/'.$this->data['Calendario']['ano']. '/'. $this->data['Calendario']['semestre'] ?>" class="btn">Voltar</a>
     		</p>
         </div>
     </div>		<!-- .block_content ends -->

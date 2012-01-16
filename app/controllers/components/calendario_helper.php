@@ -21,6 +21,7 @@ class CalendarioHelperComponent extends Object {
     	    $semestre = 2;
 	
     	$calendario["Calendario"] = array("curso_id" => $dados["Calendario"]["curso"],
+										  "turma_id" => $dados["Calendario"]["turma_id"],
     	                                  "ano"      => $ano,
     	                                  "semestre" => $semestre,
 										  "disciplina_id" => $dados["Calendario"]["disciplina_id"]

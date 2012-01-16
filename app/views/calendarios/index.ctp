@@ -13,8 +13,12 @@
 		});
 		
 		$("#button").click(function(){
-			var value = $('#turma_id :selected').val();
-			window.location = "<?php echo Dispatcher::baseUrl();?>/calendarios/view/"+value;
+			var turma = $('#turma_id :selected').val();
+			var ano = $('#anoYear :selected').val();
+			var semestre = $('#semestre :selected').val();
+			
+			window.location = "<?php echo Dispatcher::baseUrl();?>/calendarios/ver/"+ turma + "/" + ano + "/" + semestre;
+			
 		});
 		
 	});
@@ -34,7 +38,14 @@
 		<form id="form" method="post" class="form-stacked">
 			<?php echo $this->Form->input('curso',array('options' => $cursos,'empty' => 'Selecione...','class' => "styled"));?>
 			<p><?php echo $this->Form->input('turma_id',array('type' => "select",'empty' => 'Selecione...','class' => "styled")); ?></p>
-			
+			<div class="input select">
+			    <label for="curso">Ano</label>
+			<?php echo $this->Form->year('ano', 2008, date('Y'),null, array('empty' => 'Selecione...','class' => "styled", "label" => 'Ano')); ?>
+			</div>
+			<?php echo $this->Form->input('semestre',array('type' => "select",
+			                                               'empty' => 'Selecione...',
+			                                               'class' => "styled",
+			                                               'options' => array("1" => "1", "2" => "2"))); ?></p>
 			
 		</form>
 		<p style="margin-left: 20px">
