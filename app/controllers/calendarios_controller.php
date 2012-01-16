@@ -26,7 +26,6 @@ class CalendariosController extends AppController {
 	function index(){
 		$cursos = $this->Curso->find('list',array('fields' => array('Curso.id','Curso.nome')));
 		$this->set('cursos', $cursos);
-		//file_put_contents("/Users/luiz/tes/teste","adashdada");
 	}
 	
 	function add(){
@@ -34,11 +33,13 @@ class CalendariosController extends AppController {
 		$this->set('cursos', $cursos);
 		
 		if(!empty($this->data)){
-		    $cal_id = $this->CalendarioHelper->criarCalendario($this->data);
-			$this->Evento->saveAll($this->EventosHelper->gerar_aulas($this->data, $cal_id['Calendario']['id']));
-			$this->Evento->saveAll($this->EventosHelper->gerar_encontros($this->data, $cal_id['Calendario']['id']));
+		    $cal = $this->CalendarioHelper->criarCalendario($this->data);
+			$this->Evento->saveAll($this->EventosHelper->gerar_aulas($this->data, $cal['Calendario']['id']));
+			$this->Evento->saveAll($this->EventosHelper->gerar_encontros($this->data, $cal['Calendario']['id']));
 
-			$this->redirect(array('action' => 'view',$this->data['Calendario']['turma_id']));
+			$this->redirect(array('action' => 'view', $cal['Calendario']['turma_id'], 
+													  $cal['Calendario']['ano'],
+													  $cal['Calendario']['semestre'] ));
 			
 		}
 		
@@ -63,7 +64,7 @@ class CalendariosController extends AppController {
 				$this->Session->setFlash(__('The companhia has been saved', true));
 				$this->redirect(array('controller' => 'calendarios', 
 									  'action' => 'ver',
-									  $this->data['Calendario']['curso_id'],
+									  $this->data['Calendario']['turma_id'],
 									  $this->data['Calendario']['ano'],
 									  $this->data['Calendario']['semestre']));
 			} else {
@@ -84,7 +85,7 @@ class CalendariosController extends AppController {
 				$this->Session->setFlash(__('The companhia has been saved', true));
 				$this->redirect(array('controller' => 'calendarios', 
 									  'action' => 'ver',
-									  $this->data['Calendario']['curso_id'],
+									  $this->data['Calendario']['turma_id'],
 									  $this->data['Calendario']['ano'],
 									  $this->data['Calendario']['semestre']));
 			} else {
@@ -99,11 +100,38 @@ class CalendariosController extends AppController {
 		
 	}
 	
+	function view(){
+
+		$this->Evento->recursive = -1;
+		//$this->layout = "ajax";
+
+		$conflitos = $this->Conflito->find('all',array('conditions' => array('Conflito.turma_id' => $this->params['turma_id'])));
+
+		$this->set('turma_id', $this->params['turma_id']);
+
+		
+		//debug($conflitos);
+		$this->set('conflitos', $conflitos);
+
+		$detalhes_turma = $this->Turma->findById($this->params['turma_id']);
+		$this->set("detalhes_turma",$detalhes_turma);
+
+		// $disciplinas = array();
+		// 		foreach($detalhes_turma['Disciplina'] as $disciplina){
+		// 		$disciplinas[$disciplina['id']] = $disciplina['nome'];
+		// 		}
+
+		// $this->set("disciplinas",$disciplinas);
+
+
+	}
+
+	
 	
 	function ver(){
 		
 		$this->Calendario->recursive = 1;
-		$conditions = array("Calendario.curso_id" => $this->params['curso_id'], 
+		$conditions = array("Calendario.turma_id" => $this->params['turma_id'], 
 							"Calendario.ano" => $this->params['ano'], 
 							"Calendario.semestre" => $this->params['semestre']);
 		$calendarios = $this->Calendario->find('all', array("conditions" => $conditions, "order" => "Calendario.created ASC"));
@@ -114,11 +142,11 @@ class CalendariosController extends AppController {
 		$this->set('calendarios', $calendarios);
 	}
 	
-	function print_cal($curso_id, $ano, $semestre){
+	function print_cal($turma_id, $ano, $semestre){
 		$this->layout = 'ajax';
 		
 		$this->Calendario->recursive = 1;
-		$conditions = array("Calendario.curso_id" => $curso_id, "Calendario.ano" => $ano, "Calendario.semestre" => $semestre);
+		$conditions = array("Calendario.turma_id" => $turma_id, "Calendario.ano" => $ano, "Calendario.semestre" => $semestre);
 		$calendarios = $this->Calendario->find('all', array("conditions" => $conditions, "order" => "Calendario.created ASC"));
 		$eventos = array();
 		//debug($calendarios);
@@ -159,23 +187,45 @@ class CalendariosController extends AppController {
 
 	}
 	
+	function delete($id = null, $turma_id, $ano, $semestre) {
+		if (!$id) {
+			$this->Session->setFlash(__('Invalid id for companhia', true));
+			$this->redirect(array('action'=>'index'));
+		}
+		if ($this->Calendario->delete($id)) {
+			$this->Session->setFlash(__('Companhia deleted', true));
+			$this->redirect(array('controller' => 'calendarios', 
+								  'action' => 'ver',
+								  $turma_id,
+								  $ano,
+								  $semestre));
+		}
+		//$this->Session->setFlash(__('Companhia was not deleted', true));
+		$this->redirect(array('action' => 'index'));
+	}
 	
 	/**
 	*
 	*AJAX REQUESTS
 	*/
 	
-	function feed($turma_id=null){
+	function feed($turma_id=null, $ano = null, $semestre = null){
 		$start = date( 'Y-m-d H:i:s', $this->params['url']['start']);
 		$end = date( 'Y-m-d H:i:s', $this->params['url']['end']);
 		
 		// $start = "2011-04-01";
 		// $end = "2011-04-30";
 		
+		$conditions = array("Calendario.turma_id" => $turma_id, 
+							"Calendario.ano" => $ano, 
+							"Calendario.semestre" => $semestre);
+		
+		$calendarios = $this->Calendario->find('list', array("conditions" => $conditions));
+		
 		$this->Evento->recursive = 0;
 		$conditions = array('Evento.inicio BETWEEN ? AND ?' => array($start,$end),
 							'Evento.tipoevento_id NOT' => "5",
-							'Evento.turma_id' => $turma_id);
+							"Evento.calendario_id" => $calendarios);
 		
 		
 		
