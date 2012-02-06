@@ -15,7 +15,7 @@
 		
 		<?php
 
-		    echo $this->Form->create(array('action'=>'login', 'class' => "form-stacked"));
+		    echo $this->Form->create('User' ,array('action'=>'login', 'class' => "form-stacked"));
 			echo $this->Form->input('email', array("type" => "text"));
 			echo $this->Form->input('password',array("label" => "Senha"));
 		?>

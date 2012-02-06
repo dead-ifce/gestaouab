@@ -18,6 +18,7 @@
 			 echo $this->Form->input("id");
 			 echo $this->Form->input('nome', array("type" => "text"));
 		     echo $this->Form->input('email', array("type" => "text","label" => "Email"));
+		     echo $this->Form->input('group_id', array("options" => $groups)); 
 		     echo $this->Form->input('password', array("label" => "Senha"));
 			 echo $this->Form->input('password_confirm', array("type"=> "password", "label" => "Confirmar senha"));
 		?>

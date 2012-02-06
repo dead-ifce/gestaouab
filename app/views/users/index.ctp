@@ -29,6 +29,7 @@
 				<tr>
 					<th>Nome</th>
 					<th>Email</th>
+					<th>Grupo</th>
 					<th>Ações</th>
 				</tr>
 			</thead>
@@ -37,6 +38,7 @@
 				<tr>
 					<td><?php echo $user['User']['nome']; ?></td>
 					<td><?php echo $user['User']['email']; ?></td>
+					<td><?php echo $user['Group']['nome']; ?></td>
 					<!--
 					<td>
 						<?php echo $this->Html->link(__('Editar', true), array('action' => 'edit', $user['User']['id'])); ?>

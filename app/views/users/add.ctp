@@ -26,6 +26,7 @@
 		     echo $this->Form->create(array('class' => "form-stacked"));
 			 echo $this->Form->input('nome', array("type" => "text","class" => "validate[required]"));
 		     echo $this->Form->input('email', array("type" => "text","label" => "Email","class" => "validate[required,custom[email]]"));
+		     echo $this->Form->input('group_id', array("options" => $groups)); 
 		     echo $this->Form->input('password', array("label" => "Senha","class" => "validate[required,minSize[6]]"));
 			 echo $this->Form->input('password_confirm', array("type"=> "password", "label" => "Confirmar senha","class" => "validate[required,minSize[6]]"));
 		?>
