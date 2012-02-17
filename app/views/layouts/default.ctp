@@ -71,7 +71,7 @@
 					</li>
 					<li><a href="#">Pessoas</a>
 						<ul>
-							<li><a href="<?php echo Dispatcher::baseUrl();?>">Mostrar</a></li>
+							<li><a href="<?php echo Dispatcher::baseUrl();?>/pessoas/index/">Mostrar</a></li>
 							<li><a href="<?php echo Dispatcher::baseUrl();?>/pessoas/add/">Adicionar</a></li>
 							<li><a href="<?php echo Dispatcher::baseUrl();?>/inscricoes/index/">Inscrições</a></li>
 							<li>
@@ -115,7 +115,7 @@
 			</div>		<!-- #header ends -->
 			     
 			
-			<?php echo $this->Session->flash(); ?>
+			<?php //echo $this->Session->flash(); ?>
 
 			<?php echo $this->Session->flash('auth'); ?>
 			
