@@ -71,7 +71,7 @@ class EventosHelperComponent extends Object {
 		$data_inicio_disciplina = $dados['Calendario']['inicio'];
 		$data_fim_disciplina = $dados['Calendario']['fim'];
 								
-	  
+	  	//$this->log(debug($dados), 'debug');
 	  $encontros = array();
 	  $polos = array();
 		switch ($disciplina['Disciplina']['numsemanas']) {
@@ -118,22 +118,27 @@ class EventosHelperComponent extends Object {
 		
 	}
     
-    function remover_conflito($dia,$turma_id){
+    function remover_conflito($dia,$encontro){
 		$this->Evento->recursive = -1;
 		$dia = date('Y-m-d',strtotime($dia));
 		
 		$eventos = $this->Evento->find('all', array('conditions' => array('Evento.inicio BETWEEN ? AND ?' => array($dia." 00:00:00",$dia." 23:59:59"), 
-																		  'Evento.turma_id' => $turma_id,
+																		  'Evento.turma_id' => $encontro["Evento"]["turma_id"],
 																		  'Evento.tipoevento_id NOT' => 5)));
 		
-		$num_eventos = count($eventos);
+		$num_horas = 0;
+		foreach($eventos as $evento){
+			$num_horas += $evento["Evento"]["carga_horaria"];
+		}
+        
+		//$num_horas -= $encontro["Evento"]["carga_horaria"];
 	
-		if($num_eventos <= 2){
+		if($num_horas <= 8){
 			
 			$conflito = $this->Conflito->findByDia($dia);
 			if($this->Conflito->delete($conflito['Conflito']['id'])) {
 				
-				$conflitos = $this->Conflito->find('all',array('conditions' => array('Conflito.turma_id' => $turma_id)));
+				$conflitos = $this->Conflito->find('all',array('conditions' => array('Conflito.turma_id' => $encontro["Evento"]["turma_id"])));
 				
 				$response = ($conflitos != null)? "":"-";
 				foreach($conflitos as $conflito){
