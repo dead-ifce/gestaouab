@@ -281,7 +281,7 @@ class CalendariosController extends AppController {
     		$this->Evento->save($ev); //4 - Save the event with the new data
 		
 		
-    		if($response = $this->EventosHelper->remover_conflito($dia_conflito, $ev['Evento']['turma_id'])){
+    		if($response = $this->EventosHelper->remover_conflito($dia_conflito, $ev)){
     			echo $response;
     		}
 		
