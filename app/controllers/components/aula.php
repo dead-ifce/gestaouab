@@ -129,35 +129,34 @@ class AulaComponent extends Object {
 					 $this->adicionar_encontro($encontros, $encontro, $exame_presencial, 2 );
 					 break;
 				case 3:
-					//ADICIONA SEGUNDA CHAMADA
-					$seg_chamada_1 = $this->format_data('+1 week',$encontro_2);
-					
-					$this->adicionar_encontro($encontros, $encontro, $seg_chamada_1, 3 );
-					break;
-				case 4:
 					//ADICIONA TERCEIRO ENCONTRO
 					$encontro_3 = $this->format_data('9 saturday', $data_inicio_disciplina);
 					
 					$this->adicionar_encontro($encontros, $encontro, $encontro_3, 1 );
 					break;
-				case 5:
-				 	//ADICIONA EXAME PRESENCIAL
+				case 4:
+					//ADICIONA EXAME PRESENCIAL
 					$exame_presencial = $this->format_data('9 saturday',$data_inicio_disciplina);
 
-           
 					$this->adicionar_encontro($encontros, $encontro, $exame_presencial, 2 );
 					
 					break;
+				case 5:
+					//ADICIONA SEGUNDA CHAMADA
+					$seg_chamada_1 = $this->format_data('+6 days',$encontro_3);
+					
+					$this->adicionar_encontro($encontros, $encontro, $seg_chamada_1, 3 );
+					break;
 				case 6:
 					//ADICIONA SEGUNDA CHAMADA
-					$seg_chamada_2 = $this->format_data('+1 week',$encontro_3);
+					//$seg_chamada_2 = $this->format_data('+1 week',$encontro_3);
 					
-					$this->adicionar_encontro($encontros, $encontro, $seg_chamada_2, 3 );
+					//$this->adicionar_encontro($encontros, $encontro, $seg_chamada_2, 3 );
 
 					break;
 				case 7:
 					//ADICIONA EXAME FINAL
-					$exame_final = $data_fim_disciplina;
+					$exame_final = $this->format_data('+1 week',$seg_chamada_1);
 					
 					$this->adicionar_encontro($encontros, $encontro,$exame_final, 4 );
 					
@@ -384,7 +383,7 @@ class AulaComponent extends Object {
 		
 		$num_horas += $encontro["Evento"]["carga_horaria"];
 		
-		if($num_horas >= 8){
+		if($num_horas > 8){
 			
 			$conflitos = $this->Conflito->find("count", array('conditions' => array('Conflito.dia' => $dia)));
 			if($conflitos == 0){

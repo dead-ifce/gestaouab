@@ -226,12 +226,12 @@ class CalendariosController extends AppController {
 		$conditions = array('Evento.inicio BETWEEN ? AND ?' => array($start,$end),
 							'Evento.tipoevento_id NOT' => "5",
 							"Evento.calendario_id" => $calendarios);
+							
 		
-		
-		
-		$events = $this->Evento->find('all',array('conditions' =>$conditions));
+		$events = $this->Evento->find('all',array('conditions' => $conditions));
 		
 		//debug($events);
+		$this->log($events, 'debug');
 		
 		//3. Create the json array
 		$rows = array();
