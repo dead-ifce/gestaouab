@@ -9,6 +9,7 @@
 	$(document).ready(function(){
 		$("#PessoaAddForm").validationEngine();
 		$("#PessoaNascimento").mask("99/99/9999")
+		$("#PessoaLattes").mask("http://lAttes.cnpq.br/9999999999999999")
 		$("#PessoaCpf").mask("999.999.999-99");
 		$("#PessoaCel").mask("(99) 9999-9999")
 		$("#PessoaTel").mask("(99) 9999-9999")

@@ -263,7 +263,7 @@ class PessoasController extends AppController {
 	}
 
 
-	function export_xls() {
+	/*function export_xls() {
 		$this->Pessoa->recursive = 2;
 		$data = $this->Pessoa->find('all');
 		
@@ -271,6 +271,23 @@ class PessoasController extends AppController {
 		$this->render('export_xls','export_xls');
 
 	}
+*/
+
+		function export_xls()
+		{
+			if(!empty($this->data)) {
+				$this->Pessoa->recursive = -1;
+				$fields = $this->data['Pessoa']['fields'];
+				$data = $this->Pessoa->find('all',array('fields' => $fields));
+
+				$this->set('pessoas',$data);
+				$this->set('fields',$fields);
+				$this->render('export_xls','export_xls');	
+			} 
+
+
+			$this->render('preparar_xls');
+		}
 	
 }	
 	

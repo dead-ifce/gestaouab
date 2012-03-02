@@ -118,6 +118,7 @@
 	
 	
 	<!--[if IE]><script type="text/javascript" src="<?php echo Dispatcher::baseUrl();?>/js/adminus/excanvas.js"></script><![endif]-->	
+
     	<script>
 			$(document).ready(function(){
 				<!--
@@ -135,6 +136,5 @@
 				
 		   	});
 		</script>
-
 </body>
 </html>
