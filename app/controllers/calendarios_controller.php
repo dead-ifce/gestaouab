@@ -221,7 +221,7 @@ class CalendariosController extends AppController {
 							"Calendario.semestre" => $semestre);
 		
 		$calendarios = $this->Calendario->find('list', array("conditions" => $conditions));
-		
+		//debug($calendarios);
 		$this->Evento->recursive = 0;
 		$conditions = array('Evento.inicio BETWEEN ? AND ?' => array($start,$end),
 							'Evento.tipoevento_id NOT' => "5",

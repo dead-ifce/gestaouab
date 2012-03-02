@@ -55,8 +55,8 @@
 			<label>Inicio:</label> 
 			<input type="text" class="text datepicker" name="data[Calendario][inicio]" />
 
-			<label>Fim:</label> 
-			<input type="text" class="text datepicker" name="data[Calendario][fim]" />
+      <!-- <label>Fim:</label>  -->
+		  <input type="hidden" class="text datepicker" name="data[Calendario][fim]" value="30/12/2012" />
 
 			<p style="margin-top: 20px">
 				<input type="submit" style="" class="btn primary" value="Adicionar" id="button"/>

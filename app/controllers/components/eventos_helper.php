@@ -70,16 +70,16 @@ class EventosHelperComponent extends Object {
 		
 		$data_inicio_disciplina = $dados['Calendario']['inicio'];
 		$data_fim_disciplina = $dados['Calendario']['fim'];
-								
-	  	//$this->log(debug($dados), 'debug');
+		
+		//debug($dados);						
+	  //$this->log($dados, 'debug');
 	  $encontros = array();
 	  $polos = array();
 		switch ($disciplina['Disciplina']['numsemanas']) {
 			case 4:
 				$this->Aula->gerar_aula_40_horas($encontros,
 												 $polos,
-												 $dados['Calendario']['turma_id'],
-												 $dados['Calendario']['disciplina_id'],
+												 $dados,
 												 $data_inicio_disciplina,
 												 $data_fim_disciplina,
 												 $cal_id);
@@ -87,8 +87,7 @@ class EventosHelperComponent extends Object {
 			case 6:
 				$this->Aula->gerar_aula_60_horas($encontros,
 												 $polos,
-												 $dados['Calendario']['turma_id'],
-												 $dados['Calendario']['disciplina_id'],
+												 $dados,
 												 $data_inicio_disciplina,
 												 $data_fim_disciplina,
  												 $cal_id);
@@ -96,8 +95,7 @@ class EventosHelperComponent extends Object {
 			case 8:
 				$this->Aula->gerar_aula_80_horas($encontros,
 												 $polos,
-												 $dados['Calendario']['turma_id'],
-												 $dados['Calendario']['disciplina_id'],
+												 $dados,
 												 $data_inicio_disciplina,
 												 $data_fim_disciplina,
  												 $cal_id);
@@ -105,8 +103,7 @@ class EventosHelperComponent extends Object {
 			case 10:
 				$this->Aula->gerar_aula_100_horas($encontros,
 												  $polos,
-												  $dados['Calendario']['turma_id'],
-												  $dados['Calendario']['disciplina_id'],
+												  $dados,
 												  $data_inicio_disciplina,
 												  $data_fim_disciplina,
   												  $cal_id);

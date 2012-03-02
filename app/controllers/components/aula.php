@@ -8,11 +8,11 @@ class AulaComponent extends Object {
 	
 	}
 	
-	function gerar_aula_40_horas(&$encontros, $polos, $turma, $disciplina, $data_inicio_disciplina, $data_fim_disciplina, $cal_id){
+	function gerar_aula_40_horas(&$encontros, $polos, $dados_calendario, $data_inicio_disciplina, $data_fim_disciplina, $cal_id){
 		
 		for($i = 0; $i < 5; $i++){ 
-			$encontro['Evento']['disciplina_id'] = $disciplina;
-			$encontro['Evento']['turma_id'] = $turma;
+			$encontro['Evento']['disciplina_id'] = $dados_calendario["Calendario"]["disciplina_id"];
+			$encontro['Evento']['turma_id'] = $dados_calendario['Calendario']['turma_id'];
 			$encontro['Evento']['diatodo'] = 0;
 			$encontro['Evento']['carga_horaria'] = 4;
 			$encontro['Evento']['calendario_id'] = $cal_id;
@@ -21,43 +21,70 @@ class AulaComponent extends Object {
 				case 0:	
 					//ADICIONA PRIMEIRO ENCONTRO
 					$encontro_1 = $data_inicio_disciplina;
-					$this->adicionar_encontro_40_horas($encontros, $encontro, $encontro_1, 1 );
+					if($dados_calendario["Calendario"]["curso"] == 2){
+						$this->adicionar_encontro_40_horas($encontros, $encontro, $encontro_1, 1 );	
+					}else{
+						$this->adicionar_encontro($encontros, $encontro, $encontro_1, 1 );	
+					}
+					
 				
 					break;
 				case 1:
 					//ADICIONA SEGUNDO ENCONTRO
 					$encontro_2 = $this->format_data('fourth saturday',$data_inicio_disciplina);
+					if($dados_calendario["Calendario"]["curso"] == 2){
+						$this->adicionar_encontro_40_horas($encontros, $encontro, $encontro_2, 1 );
+					}else{
+						$this->adicionar_encontro($encontros, $encontro, $encontro_2, 1 );	
+					}
 					
-					$this->adicionar_encontro_40_horas($encontros, $encontro, $encontro_2, 1 );
 					break;
 				case 2:
 				 	//ADICIONA EXAME PRESENCIAL
 					 $exame_presencial = $this->format_data('fourth saturday',$data_inicio_disciplina);
-				    
-					 $this->adicionar_encontro_40_horas($encontros, $encontro, $exame_presencial, 2 );
+				    if($dados_calendario["Calendario"]["curso"] == 2){
+						$this->adicionar_encontro_40_horas($encontros, $encontro, $exame_presencial, 2 );
+					}else{
+						$this->adicionar_encontro($encontros, $encontro, $exame_presencial, 2 );	
+					}
+					 
 					 break;
 				case 3:
 					//ADICIONA SEGUNDA CHAMADA
-					$seg_chamada_1 = $this->format_data('+6 days',$encontro_2);
+					if($dados_calendario["Calendario"]["curso"] == 2){
+						$seg_chamada_1 = $this->format_data('+6 days',$encontro_2);
+					}else{
+						$seg_chamada_1 = $this->format_data('+1 week',$encontro_2);
+					}
 					
-					$this->adicionar_encontro_40_horas($encontros, $encontro, $seg_chamada_1, 3 );
+					if($dados_calendario["Calendario"]["curso"] == 2){
+						$this->adicionar_encontro_40_horas($encontros, $encontro, $seg_chamada_1, 3 );
+					}else{
+						$this->adicionar_encontro($encontros, $encontro, $seg_chamada_1, 3  );	
+					}
+					
+					
 					break;
 				case 4:
 					//ADICIONA EXAME FINAL
 					$exame_final = $this->format_data('+1 week',$seg_chamada_1);
 					
-					$this->adicionar_encontro_40_horas($encontros, $encontro,$exame_final, 4 );
+					if($dados_calendario["Calendario"]["curso"] == 2){
+						$this->adicionar_encontro_40_horas($encontros, $encontro,$exame_final, 4 );
+					}else{
+						$this->adicionar_encontro($encontros, $encontro,$exame_final, 4 );	
+					}
+					
 					break;
-				
 			}//FIM DO SWITCH
 		}//FIM DO FOR
 	
 	}
 	
-	function gerar_aula_60_horas(&$encontros, $polos, $turma, $disciplina, $data_inicio_disciplina, $data_fim_disciplina, $cal_id){
+	function gerar_aula_60_horas(&$encontros, $polos, $dados_calendario, $data_inicio_disciplina, $data_fim_disciplina, $cal_id){
 		for($i = 0; $i < 8; $i++){ 
-			$encontro['Evento']['disciplina_id'] = $disciplina;
-			$encontro['Evento']['turma_id'] = $turma;
+			$encontro['Evento']['disciplina_id'] = $dados_calendario["Calendario"]["disciplina_id"];
+			$encontro['Evento']['turma_id'] = $dados_calendario['Calendario']['turma_id'];
 			$encontro['Evento']['diatodo'] = 0;
 			$encontro['Evento']['carga_horaria'] = 4;
 			//$encontro['Polo'] = $polos;
@@ -84,14 +111,16 @@ class AulaComponent extends Object {
 					 break;
 				case 3:
 					//ADICIONA SEGUNDA CHAMADA
-					$seg_chamada_1 = $this->format_data('+1 week',$encontro_2);
-					
+					if($dados_calendario["Calendario"]["curso"] == 2){
+						$seg_chamada_1 = $this->format_data('+6 days',$encontro_2);
+					}else{
+					 	$seg_chamada_1 = $this->format_data('+1 week',$encontro_2);
+					}
 					$this->adicionar_encontro($encontros, $encontro, $seg_chamada_1, 3 );
 					break;
 				case 4:
 					//ADICIONA EXAME FINAL
-					$exame_final = $data_fim_disciplina;
-					
+					$exame_final = $this->format_data('+1 week',$seg_chamada_1);
 					$this->adicionar_encontro($encontros, $encontro,$exame_final, 4 );
 					break;
 				
@@ -99,12 +128,12 @@ class AulaComponent extends Object {
 		}//FIM DO FOR
 	}
 	
-	function gerar_aula_80_horas(&$encontros, $polos, $turma, $disciplina, $data_inicio_disciplina, $data_fim_disciplina, $cal_id){
+	function gerar_aula_80_horas(&$encontros, $polos, $dados_calendario, $data_inicio_disciplina, $data_fim_disciplina, $cal_id){
 		
 		for($i = 0; $i < 8; $i++){ 
 			
-			$encontro['Evento']['disciplina_id'] = $disciplina;
-			$encontro['Evento']['turma_id'] = $turma;
+			$encontro['Evento']['disciplina_id'] = $dados_calendario["Calendario"]["disciplina_id"];
+			$encontro['Evento']['turma_id'] = $dados_calendario['Calendario']['turma_id'];
 			$encontro['Evento']['diatodo'] = 0;
 			$encontro['Evento']['carga_horaria'] = 4;
 			//$encontro['Polo'] = $polos;
@@ -143,8 +172,11 @@ class AulaComponent extends Object {
 					break;
 				case 5:
 					//ADICIONA SEGUNDA CHAMADA
-					$seg_chamada_1 = $this->format_data('+6 days',$encontro_3);
-					
+					if($dados_calendario["Calendario"]["curso"] == 2){
+						$seg_chamada_1 = $this->format_data('+6 days',$encontro_3);
+					}else{
+						$seg_chamada_1 = $this->format_data('+1 week',$encontro_3);
+					}
 					$this->adicionar_encontro($encontros, $encontro, $seg_chamada_1, 3 );
 					break;
 				case 6:
@@ -165,12 +197,12 @@ class AulaComponent extends Object {
 		}//FIM DO FOR
 	}	//fim 80h
 
-	function gerar_aula_100_horas(&$encontros, $polos, $turma, $disciplina, $data_inicio_disciplina, $data_fim_disciplina, $cal_id){
+	function gerar_aula_100_horas(&$encontros, $polos, $dados_calendario, $data_inicio_disciplina, $data_fim_disciplina, $cal_id){
 		
-		for($i = 0; $i < 8; $i++){ 
+		for($i = 0; $i < 10; $i++){ 
 			
-			$encontro['Evento']['disciplina_id'] = $disciplina;
-			$encontro['Evento']['turma_id'] = $turma;
+			$encontro['Evento']['disciplina_id'] = $dados_calendario["Calendario"]["disciplina_id"];
+			$encontro['Evento']['turma_id'] = $dados_calendario['Calendario']['turma_id'];
 			$encontro['Evento']['diatodo'] = 0;
 			$encontro['Evento']['carga_horaria'] = 4;
 			//$encontro['Polo'] = $polos;
@@ -196,9 +228,9 @@ class AulaComponent extends Object {
 					 break;
 				case 3:
 					//ADICIONA SEGUNDA CHAMADA
-					$seg_chamada_1 = $this->format_data('+1 week',$encontro_2);
+					//$seg_chamada_1 = $this->format_data('+1 week',$encontro_2);
 					
-					$this->adicionar_encontro($encontros, $encontro, $seg_chamada_1, 3 );
+					//$this->adicionar_encontro($encontros, $encontro, $seg_chamada_1, 3 );
 					break;
 				case 4:
 					//ADICIONA TERCEIRO ENCONTRO
@@ -216,14 +248,19 @@ class AulaComponent extends Object {
 					break;
 				case 6:
 					//ADICIONA SEGUNDA CHAMADA
-					$seg_chamada_2 = $this->format_data('+1 week',$encontro_3);
+					//$seg_chamada_2 = $this->format_data('+1 week',$encontro_3);
+					if($dados_calendario["Calendario"]["curso"] == 2){
+						$seg_chamada_1 = $this->format_data('+6 days',$encontro_3);
+					}else{
+						$seg_chamada_1 = $this->format_data('+1 week',$encontro_3);
+					}
 					
-					$this->adicionar_encontro($encontros, $encontro, $seg_chamada_2, 3 );
+					$this->adicionar_encontro($encontros, $encontro, $seg_chamada_1, 3 );
 
 					break;
 				case 7:
 					//ADICIONA EXAME FINAL
-					$exame_final = $data_fim_disciplina;
+					$exame_final = $this->format_data('+1 week', $seg_chamada_1);
 					
 					$this->adicionar_encontro($encontros, $encontro,$exame_final, 4 );
 					
