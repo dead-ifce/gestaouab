@@ -8,7 +8,7 @@ class CalendariosController extends AppController {
 	
 	function beforeFilter() {
     	parent::beforeFilter();
-    	$this->Auth->allow('print_cal');
+    	$this->Auth->allow('*');
 	}
 	
 	function beforeRender(){
