@@ -14,7 +14,7 @@
 						<?php if(isset($pessoas[0]['Pessoa']['nacionalidade'])): ?><th>Nacionalidade</th><?php endif; ?>
 						<?php if(isset($pessoas[0]['Pessoa']['naturalidade'])): ?><th>Naturalidade</th><?php endif; ?>
 						<?php if(isset($pessoas[0]['Pessoa']['pai'])): ?><th>Pai</th><?php endif; ?>
-						<?php if(isset($pessoas[0]['Pessoa']['mãe'])): ?><th>Mãe</th><?php endif; ?>
+						<?php if(isset($pessoas[0]['Pessoa']['mae'])): ?><th>Mãe</th><?php endif; ?>
 					</tr>
 					<?php foreach ($pessoas as $pessoa): ?>
 						<tr>

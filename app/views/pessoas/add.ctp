@@ -85,7 +85,7 @@
 			<?php echo $this->Form->input('vinculo_id', array("options" => $vinculos, "class" => "xlarge")); ?>
 
 
-			<?php echo $this->Form->input('lattes', array("class" => "xlarge" , "type" => "text")); ?>
+			<?php echo  $this->Form->input('lattes', array("class" => "xlarge" , "type" => "text")); ?>
 
 			<?php echo $this->Form->input('sexo', array("class" => "xlarge", "type" => "select", "options" => array('Masculino' => 'Masculino', 'Feminino' => 'Feminino')));?>
 			<?php echo $this->Form->input('cpf', array("class" => "xlarge validate[required, funcCall[validaCPF], ajax[ajaxUserCall]]", "type" => "text", "label" => "CPF"));?>

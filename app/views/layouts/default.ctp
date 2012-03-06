@@ -39,11 +39,12 @@
 						<ul>
 							<li><a href="<?php echo Dispatcher::baseUrl();?>/disciplinas/index/">Mostrar</a></li>
 							<li><a href="<?php echo Dispatcher::baseUrl();?>/disciplinas/add/">Adicionar</a></li>
-							<li><a href="<?php echo Dispatcher::baseUrl();?>/disciplinas/export_xls/">Relatório</a></li>
+							<!--
+							<li><a href="<?php echo Dispatcher::baseUrl();?>/disciplinas/export_xls/">Relatório</a></li>-->
 							</li>
 						</ul>
 					</li>
-					<li><a href="#">Pólos</a>
+					<li><a href="#">Polos</a>
 						<ul>
 							<li><a href="<?php echo Dispatcher::baseUrl();?>/polos/index/">Mostrar</a></li>
 							<li><a href="<?php echo Dispatcher::baseUrl();?>/polos/add/">Adicionar</a></li>
