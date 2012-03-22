@@ -3,12 +3,22 @@ class TurmasController extends AppController {
 
 	var $name = 'Turmas';
 	var $helpers = array("Html","Javascript");
+	var $uses = array('Turma', 'Group','Curso','Polo', 'Pessoa', 'User');
 	
+	function beforeFilter() {
+    	parent::beforeFilter();
+    	$this->Auth->allow();
+	}
+
 	function index() {
-		//$this->Turma->recursive = 1;
+		$this->Turma->recursive = 2;
+		//testando
+		$group =& $this->User->Group;
+		$this->set('grupo', $this->Auth->user("group_id"));
+
 		$this->set('turmas', $this->paginate());
 		
-		//debug($this->Turma->find('all'));
+		
 	}
 
 	function view($id = null) {
@@ -17,6 +27,7 @@ class TurmasController extends AppController {
 			$this->redirect(array('action' => 'index'));
 		}
 		$this->set('turma', $this->Turma->read(null, $id));
+
 	}
 
 	function add() {
@@ -33,6 +44,8 @@ class TurmasController extends AppController {
 		$polos = $this->Turma->Polo->find('list', array("fields" => array("Polo.id", "Polo.nome")));
 		$disciplinas = array();
 		$this->set(compact('polos', 'disciplinas',"cursos"));
+
+
 	}
 
 	function edit($id = null) {

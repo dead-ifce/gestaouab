@@ -104,6 +104,10 @@ class UsersController extends AppController {
 		    $group->id = 2;
 		    $this->Acl->allow($group, 'controllers');
 		    $this->Acl->deny($group, 'controllers/Users');
+
+		    $group->id = 3;
+		    $this->Acl->allow($group, 'controllers');
+		    
 		    
 		    // nós adcionamos um exit para evitar que seja exibido o erro de missing views
 		    echo "all done";

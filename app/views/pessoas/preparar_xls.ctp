@@ -44,7 +44,10 @@
 																		   'nacionalidade' => 'Nacionalidade',
 																		   'naturalidade' => 'Naturalidade',
 																		   'pai' => 'Pai',
-																		   'mae' => 'Mãe')));
+																		   'mae' => 'Mãe'
+
+
+																		   )));
 			?>
 		
 				<p><?php echo $this->Form->end(__('Adicionar', true));?></p>
