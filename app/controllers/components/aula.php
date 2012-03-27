@@ -21,12 +21,12 @@ class AulaComponent extends Object {
 				case 0:	
 					//ADICIONA PRIMEIRO ENCONTRO
 					$encontro_1 = $data_inicio_disciplina;
-					if($dados_calendario["Calendario"]["curso"] == 2){
+					/*if($dados_calendario["Calendario"]["curso"] == 2){
 						$this->adicionar_encontro_40_horas($encontros, $encontro, $encontro_1, 1 );	
 					}else{
 						$this->adicionar_encontro($encontros, $encontro, $encontro_1, 1 );	
-					}
-					
+					}*/
+					$this->adicionar_encontro($encontros, $encontro, $encontro_1, 1 );	
 				
 					break;
 				case 1:
@@ -142,8 +142,8 @@ class AulaComponent extends Object {
 				case 0:	
 					//ADICIONA PRIMEIRO ENCONTRO
 					$encontro_1 = $data_inicio_disciplina;
-					$this->adicionar_encontro($encontros, $encontro, $encontro_1, 1 );
-				
+					//$this->adicionar_encontro($encontros, $encontro, $encontro_1, 1 );
+					$this->adicionar_primeiro_encontro($encontros, $encontro, $encontro_1, 1);
 					break;
 				case 1:
 					//ADICIONA SEGUNDO ENCONTRO
@@ -270,6 +270,21 @@ class AulaComponent extends Object {
 	}	//FIM 100H
 	
 	//Helper metodos
+	
+	function adicionar_primeiro_encontro(&$encontros, &$encontro, $dia, $tipoevento){
+		$encontro['Evento']['tipoevento_id'] = $tipoevento;
+		$encontro['Evento']['carga_horaria'] = 8;
+		
+		if($this->verificar_conflitos($dia, $encontro)){
+			$this->adiciona_conflito($dia, $encontro['Evento']['turma_id']);
+		}
+		
+		$encontro['Evento']['inicio'] = $dia." 08:00:00";
+		$encontro['Evento']['fim'] = $dia." 18:00:00";
+		
+		array_push($encontros, $encontro);
+	}
+	
 	function adicionar_encontro(&$encontros, &$encontro, $dia, $tipoevento){
 		$encontro['Evento']['tipoevento_id'] = $tipoevento;
 		
